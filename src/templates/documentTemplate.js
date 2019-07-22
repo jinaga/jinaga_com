@@ -24,6 +24,7 @@ export default function Template({ data }) {
         <Breadcrumb className="breadcrumb" chapters={chapters} slug={slug} />
         <h1>{frontmatter.title}</h1>
         <div
+          className="try-it"
           dangerouslySetInnerHTML={{ __html: html }}
         />
         { currentDocument.children.length > 0 ? (
