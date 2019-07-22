@@ -6,7 +6,7 @@ import Breadcrumb from "../outline/breadcrumb";
 import ChildLinks from "../outline/childLinks";
 import NextLink from "../outline/next-link";
 import TableOfContents from "../outline/tableOfContents";
-import { findNode, mapNodes, toTree } from "../outline/tree";
+import { findNode, toTree } from "../outline/tree";
 
 export default function Template({ data }) {
   const { document, documents } = data;
@@ -26,7 +26,7 @@ export default function Template({ data }) {
         <div
           dangerouslySetInnerHTML={{ __html: html }}
         />
-        { currentDocument.children.length > 0 ? (
+        { !currentDocument ? <></> : currentDocument.children.length > 0 ? (
           <>
             <h2>See Also</h2>
             <ChildLinks className="child-links" children={currentDocument.children} />
@@ -73,9 +73,5 @@ export const pageQuery = graphql`
 
 function findDocumentBySlug(chapters, slug) {
   const document = findNode(chapters, x => x.slug === slug);
-  if (!document) {
-    const allSlugs = chapters.length === 0 ? 'none' : mapNodes(chapters, x => x.slug).join(',');
-    throw new Error(`Could not find document for slug ${slug}. Available slugs: ${allSlugs}`);
-  }
   return document;
 }
