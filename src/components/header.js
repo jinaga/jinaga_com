@@ -20,6 +20,10 @@ const Header = () => (
         {' '}
         DOCS{' '}
       </Link>
+      <Link className="nav-link" to="/yourfirstpwa/gatsby/">
+        {' '}
+        PWA{' '}
+      </Link>
       <Link className="nav-link" to="/about/">
         {' '}
         ABOUT{' '}
