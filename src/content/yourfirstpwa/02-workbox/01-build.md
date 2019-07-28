@@ -11,12 +11,12 @@ Then change directories into the repo and clean up the Git association so you ca
 git clone https://github.com/michaellperry/starter-javascript-workbox-react.git workboxpwa
 cd workboxpwa
 rm -rf .git
+npm install
 ```
 
 Then you can build and run the solution.
 
 ```bash
-npm install
 npm run build
 npm run dev
 ```

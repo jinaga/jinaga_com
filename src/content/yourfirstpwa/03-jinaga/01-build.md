@@ -9,6 +9,7 @@ We'll use the one based on JavaScript and React.
 git clone https://github.com/jinaga/starter-javascript-react.git jinagapwa
 cd jinagapwa
 rm -rf .git
+npm install
 ```
 
 Then build and run the application.
