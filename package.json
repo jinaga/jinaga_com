@@ -24,7 +24,7 @@
     "graphql": "^14.4.2",
     "jinaga": "^2.4.1",
     "jsonc-parser": "^2.1.0",
-    "monaco-editor": "^0.17.1",
+    "monaco-editor": "^0.18.0",
     "monaco-editor-webpack-plugin": "^1.7.0",
     "node-sass": "^4.12.0",
     "prismjs": "^1.17.1",
