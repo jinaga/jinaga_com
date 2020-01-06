@@ -25,7 +25,7 @@
     "jinaga": "^2.4.4",
     "jsonc-parser": "^2.2.0",
     "monaco-editor": "^0.19.2",
-    "monaco-editor-webpack-plugin": "^1.7.0",
+    "monaco-editor-webpack-plugin": "^1.8.2",
     "node-sass": "^4.13.0",
     "prismjs": "^1.17.1",
     "prop-types": "^15.7.2",
