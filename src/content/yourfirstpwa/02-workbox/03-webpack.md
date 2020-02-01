@@ -12,6 +12,42 @@ It creates a bundle for every `html` and `jsx` pair that it finds.
 We currently only have `index`.
 
 The configuration is broken into three sections.
+Here's the basic structure.
+Please see the real file for details.
+
+```javascript
+return {
+  // Input
+  entry: [],
+  resolve: {
+    extensions: []
+  },
+  
+  // Processing
+  module: {
+    rules: [
+      {
+        test: /$/,
+        include: [],
+        use: [],
+        exclude: /$/
+      }
+    ]
+  },
+  plugins: [],
+  
+  // Output
+  mode: '',
+  target: '',
+  devtool: '',
+  output: {
+    filename: '',
+    path: '',
+    publicPath: '/'
+  }
+};
+```
+
 The *Input* section tells Webpack where to find the source `jsx` files, and what extensions to resolve.
 The *Processing* section tells it how to handle files of each extension: `jsx` or `scss`.
 It also sets up a the HTML, Workbox, and file copy plugins, which we will look at more closely.
