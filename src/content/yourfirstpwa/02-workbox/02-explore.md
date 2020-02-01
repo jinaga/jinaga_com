@@ -25,61 +25,58 @@ You can inspect this file by first clicking on the *Service Worker* item in the 
 
 ![Open the service worker code file](./service-worker.png)
 
-There are a few important parts of this file.
-The first two parts use the `importScripts` function built into the browser.
-This function plays the same role as the `<script>` tag in HTML, loading a JavaScript file into the sandbox so it can run.
-The first line imports the Workbox runtime from a CDN.
-You could serve it from your site, but this takes advantage of Google's caches.
+This file is pretty big.
+That's because it inlines Workbox.
+If you scroll all the way to the bottom, you'll see the important bits.
+
+The last thing in the file is the precache manifest.
+This is a list of all of the files that make up your application.
+The Workbox plugin for Webpack produced this list from the chunks that Webpack built.
+They include revision information so that each version has its own distinct cache entry.
 
 ```javascript
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+/**
+ * The precacheAndRoute() method efficiently caches and responds to
+ * requests for URLs in the manifest.
+ * See https://goo.gl/S9QRab
+ */
+
+precacheAndRoute([{
+  "url": "/index.html",
+  "revision": "8433a7bcffd06b9a856a09e973b970bb"
+}, {
+  "url": "/scripts/index-1f3321d540a29bdb3907.js",
+  "revision": "ee09fecc72f7e3572b27bad9dc104e72"
+}], {});
 ```
 
-The second line imports a manifest.
+Scroll up just a little bit and you will see an important event listener.
+This listens for `SKIP_WAITING` messages to be raised from the front end.
 
 ```javascript
-importScripts(
-  "/scripts/precache-manifest.8c5c2c7cb2a8b7d6f6bef8d24aa4ecfc.js"
-);
-```
+/**
+* Welcome to your Workbox-powered service worker!
+*
+* You'll need to register this file in your web app.
+* See https://goo.gl/nhQhGp
+*
+* The rest of the code is auto-generated. Please don't update this file
+* directly; instead, make changes to your Workbox build configuration
+* and re-run your build process.
+* See https://goo.gl/2aRDsh
+*/
 
-You can find that manifest file in the `dist` folder.
-The contents look like this:
-
-```javascript
-self.__precacheManifest = (self.__precacheManifest || []).concat([
-  {
-    "revision": "1cfc8b99c615edfd463556ed301e6349",
-    "url": "/index.html"
-  },
-  {
-    "url": "/scripts/index-6ec404ee52828515bfc0.js"
-  }
-]);
-```
-
-This adds a couple of entries to the precache manifest.
-The `index.html` file has a revision hash so that Workbox can put a cache-busting query string parameter on it.
-The JavaScript file, however, has the hash built into filename, so it doesn't need a revision hash.
-
-Now back to the service worker.
-The next section adds an event listener that we will find useful soon.
-We'll get back to that.
-
-```javascript
-self.addEventListener('message', (event) => {
+self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
 ```
 
-Then finally, we use the precache manifest to call a Workbox function.
-
-```javascript
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
-```
+Each service worker is going to serve up its own precached content, so one service worker is associated with one version of your application.
+After your application starts, the browser will download and initialize the latest version.
+The new version will be ready as soon as the precached content is downloaded, but it will be in the waiting state.
+You can raise the `SKIP_WAITING` message when the user chooses to upgrade to the latest version of your application.
 
 The `precacheAndRoute` function fetches all of the assets from the server and puts them into *Cache Storage*.
 It then intercepts all calls from the browser for those URLs, and serves them from the cache.
