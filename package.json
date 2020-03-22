@@ -22,7 +22,7 @@
     "gatsby-transformer-remark": "^2.6.42",
     "gatsby-transformer-sharp": "^2.3.9",
     "graphql": "^14.5.8",
-    "jinaga": "^2.4.4",
+    "jinaga": "^2.5.1",
     "jsonc-parser": "^2.2.0",
     "monaco-editor": "^0.20.0",
     "monaco-editor-webpack-plugin": "^1.9.0",
