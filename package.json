@@ -21,7 +21,7 @@
     "gatsby-transformer-code": "^0.1.0",
     "gatsby-transformer-remark": "^2.6.42",
     "gatsby-transformer-sharp": "^2.3.9",
-    "graphql": "^14.5.8",
+    "graphql": "^14.6.0",
     "jinaga": "^2.4.4",
     "jsonc-parser": "^2.2.0",
     "monaco-editor": "^0.20.0",
