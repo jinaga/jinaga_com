@@ -34,7 +34,8 @@
     "react-helmet": "^6.0.0",
     "react-icons": "^3.10.0",
     "source-map-support": "^0.5.19",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "snyk": "^1.316.2"
   },
   "keywords": [
     "gatsby"
@@ -45,7 +46,9 @@
     "dev": "gatsby develop",
     "start": "npm run dev",
     "format": "prettier --write \"src/**/*.js\"",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
     "prettier": "^2.0.5"
@@ -56,5 +59,6 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
-  }
+  },
+  "snyk": true
 }
