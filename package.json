@@ -34,7 +34,7 @@
     "react-helmet": "^6.0.0",
     "react-icons": "^3.10.0",
     "source-map-support": "^0.5.19",
-    "typescript": "^3.9.4",
+    "typescript": "^3.9.5",
     "snyk": "^1.336.0"
   },
   "keywords": [
