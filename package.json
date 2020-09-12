@@ -33,7 +33,7 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
     "react-icons": "^3.10.0",
-    "snyk": "^1.374.0",
+    "snyk": "^1.393.0",
     "source-map-support": "^0.5.19",
     "typescript": "^3.9.7"
   },
