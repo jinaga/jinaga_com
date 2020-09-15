@@ -3672,3 +3672,5 @@ patch:
         patched: '2020-08-15T14:42:18.996Z'
     - gatsby > gatsby-cli > gatsby-recipes > contentful-management > contentful-sdk-core > lodash:
         patched: '2020-08-15T14:42:18.996Z'
+    - snyk > snyk-docker-plugin > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2020-09-15T01:15:02.508Z'
