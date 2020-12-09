@@ -36,6 +36,6 @@ And install the following development packages:
 
 ```bash
 npm install --save-dev \
-    webpack \
-    webpack-cli
+    webpack@4 \
+    webpack-cli@4
 ```

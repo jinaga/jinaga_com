@@ -6,7 +6,7 @@ The main event!
 You will need to include the client-side library.
 The best way is to use Webpack to bundle the script with your application.
 
-Create a new file at `src/main.js`:
+Create a new file at `src/index.js`:
 
 ```javascript
 import { JinagaBrowser } from "jinaga/dist/jinaga";
