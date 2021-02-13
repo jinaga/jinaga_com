@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="823" height="37">
+         <defs>
+            <style type="text/css">
+    @namespace "http://www.w3.org/2000/svg";
+    .line                 {fill: none; stroke: #332900; stroke-width: 1;}
+    .bold-line            {stroke: #141000; shape-rendering: crispEdges; stroke-width: 2;}
+    .thin-line            {stroke: #0F1400; shape-rendering: crispEdges}
+    .filled               {fill: #332900; stroke: none;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141400;
+                            font-weight: normal;
+                          }
+    text.regexp           {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #0F1400;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #332900; stroke: #332900;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #F9FF4D; stroke: #332900; stroke-width: 1;}
+    rect.text             {fill: none; stroke: none;}
+    polygon.regexp        {fill: #D0FF4D; stroke: #332900; stroke-width: 1;}
+  </style>
+         </defs>
+         <polygon points="9,17 1,13 1,21" />
+         <polygon points="17,17 9,13 9,21" />
+         <rect x="31" y="3" width="70" height="32" rx="10" />
+         <rect class="terminal" x="29" y="1" width="70" height="32" rx="10" />
+         <text class="terminal" x="39" y="21">j.watch</text>
+         <rect x="121" y="3" width="26" height="32" rx="10" />
+         <rect class="terminal" x="119" y="1" width="26" height="32" rx="10" />
+         <text class="terminal" x="129" y="21">(</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="starterFact" xlink:href="#starterFact">
+            <rect x="167" y="3" width="88" height="32" />
+            <rect class="nonterminal" x="165" y="1" width="88" height="32" />
+            <text class="nonterminal" x="175" y="21">starterFact</text></a><rect x="275" y="3" width="24" height="32" rx="10" />
+         <rect class="terminal" x="273" y="1" width="24" height="32" rx="10" />
+         <text class="terminal" x="283" y="21">,</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="preposition" xlink:href="#preposition">
+            <rect x="319" y="3" width="92" height="32" />
+            <rect class="nonterminal" x="317" y="1" width="92" height="32" />
+            <text class="nonterminal" x="327" y="21">preposition</text></a><rect x="431" y="3" width="24" height="32" rx="10" />
+         <rect class="terminal" x="429" y="1" width="24" height="32" rx="10" />
+         <text class="terminal" x="439" y="21">,</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="resultAdded" xlink:href="#resultAdded">
+            <rect x="475" y="3" width="96" height="32" />
+            <rect class="nonterminal" x="473" y="1" width="96" height="32" />
+            <text class="nonterminal" x="483" y="21">resultAdded</text></a><rect x="591" y="3" width="24" height="32" rx="10" />
+         <rect class="terminal" x="589" y="1" width="24" height="32" rx="10" />
+         <text class="terminal" x="599" y="21">,</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="resultRemoved" xlink:href="#resultRemoved">
+            <rect x="635" y="3" width="114" height="32" />
+            <rect class="nonterminal" x="633" y="1" width="114" height="32" />
+            <text class="nonterminal" x="643" y="21">resultRemoved</text></a><rect x="769" y="3" width="26" height="32" rx="10" />
+         <rect class="terminal" x="767" y="1" width="26" height="32" rx="10" />
+         <text class="terminal" x="777" y="21">)</text>
+         <path class="line" d="m 17 17 h 2 m 0 0 h 10 m 70 0 h 10 m 0 0 h 10 m 26 0 h 10 m 0 0 h 10 m 88 0 h 10 m 0 0 h 10 m 24 0 h 10 m 0 0 h 10 m 92 0 h 10 m 0 0 h 10 m 24 0 h 10 m 0 0 h 10 m 96 0 h 10 m 0 0 h 10 m 24 0 h 10 m 0 0 h 10 m 114 0 h 10 m 0 0 h 10 m 26 0 h 10 m 3 0 h -3" />
+         <polygon points="813,17 821,13 821,21" />
+         <polygon points="813,17 805,13 805,21" /></svg>
