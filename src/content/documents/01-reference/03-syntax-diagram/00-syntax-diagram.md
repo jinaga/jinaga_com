@@ -44,11 +44,10 @@ query    ::=  'j.query' '(' starterFact ',' preposition ')'
 
 watch    ::=  'j.watch' '(' starterFact ',' preposition ',' resultAdded ',' resultRemoved ')'
 
-preposition ::= 'j.for' '(' specification ')'   ('.' 'then' '(' specification ')' )*
+preposition ::= 'j.for' '(' specification ')' ( '.then' '(' specification ')' )*
 
-specification ::= 'j.match' '(' template ')' ('.' 'suchThat' '(' condition')' )?
+specification ::= 'j.match' '(' template ')' ( '.suchThat' '(' condition ')' )?
 
-condition ::=   'j.exists' '(' template ')' ('.' 'suchThat' '(' condition ')' )? | 'j.notExists' '(' template ')'  ('.' 'suchThat' '(' condition ')' )? | ('j.not' '(' condition ')')
-
+condition ::= 'j.exists' '(' template ')' ('.suchThat' '(' condition ')' )? | 'j.notExists' '(' template ')'  ('.suchThat' '(' condition ')' )? | ('j.not' '(' condition ')')
 
 -->
