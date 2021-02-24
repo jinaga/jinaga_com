@@ -62,6 +62,7 @@ module.exports = {
               maxWidth: 590
             }
           },
+          `gatsby-remark-pikchr`,
           `gatsby-remark-graphviz`,
           {
             resolve: `gatsby-remark-prismjs`,
