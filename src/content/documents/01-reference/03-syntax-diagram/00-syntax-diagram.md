@@ -2,14 +2,14 @@
 title: 'Syntax diagram'
 ---
 
-/*
+<!--
 Information about pikchr syntax:
 - https://pikchr.org/home/doc/trunk/doc/userman.md
 - https://pikchr.org/home/doc/trunk/doc/grammar.md
 
 Online testing:
 - https://pikchr.org/home/pikchrshow
-*/
+-->
 
 
 ```pikchr
