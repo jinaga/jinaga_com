@@ -1,0 +1,16 @@
+{
+  "name": "gatsby-remark-pikchr",
+  "version": "1.0.0",
+  "description": "Processes pikchr code blocks and renders to SVG",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jan Verhaegen <jan.verhaegen@tss.be",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.5",
+    "pikchr": "0.0.5",
+    "unist-util-visit": "^2.0.3"
+  }
+}
