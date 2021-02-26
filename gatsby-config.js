@@ -63,7 +63,7 @@ module.exports = {
             }
           },
           `gatsby-remark-pikchr`,
-          `gatsby-remark-graphviz`,
+          `mlp-remark-graphviz`,
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
