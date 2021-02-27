@@ -38,7 +38,6 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
 
         // Add default inline styling
         const $ = cheerio.load(svgString)
-        $(`svg`).attr(`style`, `max-width: 500px; height: auto;`)
 
         // Merge custom attributes if provided by user (adds and overwrites)
         if (attrString) {
