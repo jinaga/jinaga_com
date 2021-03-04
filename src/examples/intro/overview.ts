@@ -52,7 +52,7 @@ async function mutablePropertiesAreSuccessors(post) {
     console.log('Since facts are immutable, you can\'t store mutable properties in them.');
     console.log('The blog post as defined above has no title.');
     console.log('That\'s because the author should be able to change the title.');
-    console.log('In Jianga, we represent mutable properties as successors');
+    console.log('In Jinaga, we represent mutable properties as successors');
 
     const title = await j.fact({
         type: 'Blog.Post.Title',
