@@ -104,7 +104,7 @@ const messageMapping = mapProps(messageSpec).to(MessagePresenter);
 ## Containers
 
 Now that you've mapped the specified properties into a component, you can wrap that component in a container.
-Define a container component with the `jiangaContainer` function.
+Define a container component with the `jinagaContainer` function.
 Pass in the Jinaga instance (typically called `j`) and the mapping.
 
 ```javascript
