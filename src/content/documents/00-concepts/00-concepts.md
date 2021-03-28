@@ -6,7 +6,7 @@ Jinaga is a framework for building web applications, especially Progressive Web 
 When building an application with Jinaga, you perform three basic operations:
 
 - Storing information
-- Writing templates
+- Writing specifications
 - Retrieving information
 
 You store information whenever the user performs an action.
@@ -21,8 +21,8 @@ const post = await j.fact({
 });
 ```
 
-You write a template to describe the shape of the information you want to retrieve.
-A template is made of a match and a set of conditions.
+You write a specification to describe the shape of the information you want to retrieve.
+A specification function matches a template, and applies conditions.
 
 ```typescript
 function publishedPostsByAuthor(author) {
@@ -38,7 +38,7 @@ It could be a query that you run just when you need the data.
 
 ```typescript
 const titles = await j.query(person, j
-    .for(postsByAuthor)
+    .for(publishedPostsByAuthor)
     .then(titlesForPost));
 ```
 
