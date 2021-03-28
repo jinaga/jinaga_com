@@ -2,10 +2,15 @@
 title: "Retrieving Information"
 ---
 
-Once you've written a template function, you can query for facts matching that template.
-The function `j.query` returns the results as an array.
-It takes a starting fact and a *preposition*.
-Use `j.for` to start a preposition, passing in a template function.
+Once you've written a specification function, you can retrieve facts matching that specification.
+When you need those facts in a single snapshot, you will run a query.
+But when you need to be continuously informed about those facts, then you will start a watch.
+
+## Query
+
+The function `j.query` returns facts matching a specification as an array.
+The first parameter is a starting fact.
+The second is a *preposition*, which you create by calling `j.for` with a specification function.
 
 ```typescript
 const posts = await j.query(person, j.for(postsByAuthor));
@@ -14,7 +19,7 @@ const posts = await j.query(person, j.for(postsByAuthor));
 [Try it](/examples/query/successors)
 
 You can extend a preposition using `.then`.
-This take another template function which continues where the previous one left off.
+This take another specification function which continues where the previous one left off.
 
 ```typescript
 const tags = await j.query(person, j
@@ -24,22 +29,44 @@ const tags = await j.query(person, j
 
 [Try it](/examples/query/successors-of-successors)
 
+## Watch
+
 While `j.query` is done as soon as it returns the results, you might want to keep watching the results, for example to update a user interface.
 Call `j.watch` and pass in two functions: the first is called when a fact is added, and the second when a fact is removed.
 
 ```typescript
-const watch = j.watch(person,
-    j.for(postsByAuthor).then(titlesForPost),
-    addPostTitleToList,
-    removePostTitleFromList);
+const postWatch = j.watch(person,
+    j.for(publishedPostsByAuthor),
+    addPostToList,
+    removePostFromList);
 
-function addPostTitleToList(postTitle) {
+function addPostToList(post) {
     ...
+    return postListItem;
 }
 
-function removePostTitleFromList(postTitle) {
+function removePostFromList(postListItem) {
     ...
 }
+```
+
+You can chain watches together to continue loading details within a list.
+
+```typescript
+const titleWatch = postWatch.watch(
+    j.for(titlesForPost),
+    setPostTitle);
+
+function setPostTitle(postListItem, postTitle) {
+    postListItem.text(postTitle.value);
+}
+```
+
+When you are done, be sure to call `stop` on the top level.
+This stops the entire tree of watches so that no further updates are attempted.
+
+```typescript
+postWatch.stop();
 ```
 
 ```pikchr
