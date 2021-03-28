@@ -2,7 +2,7 @@
 title: "Concepts"
 ---
 
-Jinaga is a framework for building web applications, especially Progressive Web Applications that persist data for use while offline.
+Jinaga is a stae-management framework for building web applications, especially Progressive Web Applications that persist data for use while offline.
 When building an application with Jinaga, you perform three basic operations:
 
 - Storing information

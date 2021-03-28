@@ -63,11 +63,14 @@ function setPostTitle(postListItem, postTitle) {
 ```
 
 When you are done, be sure to call `stop` on the top level.
-This stops the entire tree of watches so that no further updates are attempted.
 
 ```typescript
 postWatch.stop();
 ```
+
+This stops the entire tree of watches so that no further updates are attempted.
+
+If you are using a front-end framework such as React, you will probably use an adapter like [Jinaga React](/documents/jinaga-react/) rather than creating watches directly.
 
 ```pikchr
 //========== COMMON SETUP ===============
