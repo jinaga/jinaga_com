@@ -19,7 +19,7 @@ const posts = await j.query(person, j.for(postsByAuthor));
 [Try it](/examples/query/successors)
 
 You can extend a preposition using `.then`.
-This take another specification function which continues where the previous one left off.
+This takes another specification function which continues where the previous one left off.
 
 ```typescript
 const tags = await j.query(person, j
@@ -49,6 +49,8 @@ function removePostFromList(postListItem) {
     ...
 }
 ```
+
+[Try it](/examples/watch/add-and-remove)
 
 You can chain watches together to continue loading details within a list.
 
