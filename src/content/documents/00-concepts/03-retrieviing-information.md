@@ -116,7 +116,7 @@ move down 175%
 move left until even with Z.w
 right
 
-box "watch:" big bold fit thick
+box "watch:" big bold fill 0xf0a1e6 fit thick
 move down 100%
 move left until even with Z.w
 right
@@ -145,6 +145,31 @@ oval ")" fit
 arrow 200%
 circle wid 10%
 
+move down 100%
+move left until even with Z.w
+right
+
+circle wid 10%
+arrow right 200%
+box "watch" bold italic fit fill 0xf0a1e6
+arrow
+oval ".watch" fit
+arrow
+oval "(" fit
+arrow
+box "preposition" bold italic fit fill 0x8dd3c7
+arrow
+oval "," fit
+arrow
+box "resultAdded" italic fit
+arrow
+oval "," fit
+arrow
+box "resultRemoved" italic fit
+arrow
+oval ")" fit
+arrow 200%
+circle wid 10%
 
 //========== Preposition ====================
 
