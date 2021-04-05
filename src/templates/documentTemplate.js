@@ -7,6 +7,7 @@ import ChildLinks from "../outline/childLinks";
 import NextLink from "../outline/next-link";
 import TableOfContents from "../outline/tableOfContents";
 import { findNode, mapNodes, toTree } from "../outline/tree";
+import { transform } from "../transforms/transform";
 
 export default function Template({ data }) {
   const { document, documents } = data;
@@ -24,8 +25,7 @@ export default function Template({ data }) {
         <Breadcrumb className="breadcrumb" chapters={chapters} slug={slug} />
         <h1>{frontmatter.title}</h1>
         <div
-          className="try-it"
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: transform(html) }}
         />
         { currentDocument.children.length > 0 ? (
           <>
