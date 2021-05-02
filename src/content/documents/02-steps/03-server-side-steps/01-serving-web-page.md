@@ -10,18 +10,18 @@ If you haven't already, install Express and a few other related packages.
 npm i express body-parser
 ```
 
-Start Express in your `index.js`.
+Start Express in a file called `src/server/index.js`.
 
 ```javascript
 const express = require('express');
 const http = require('http');
-const bodyParser = require('body-parser');
+const { json } = require('body-parser');
 
 const app = express();
 const server = http.createServer(app);
 
 app.set("port", process.env.PORT || 8080);
-app.use(bodyParser.json());
+app.use(json());
 
 server.listen(app.get("port"), () => {
     console.log(`  App is running at http://localhost:${app.get("port")} in ${app.get("env")} mode`);
@@ -29,10 +29,10 @@ server.listen(app.get("port"), () => {
 });
 ```
 
-Start your app and it will listen on port 8080.
+Start your app with `node src/server/index` and it will listen on port 8080.
 But right now it doesn't serve any pages.
 Do to that, define a route.
-I like to do this in a separate file called `routes.js`.
+I like to do this in a separate file called `src/server/routes.js`.
 
 ```javascript
 const path = require('path');
@@ -56,7 +56,7 @@ const { configureRoutes } = require('./routes');
 configureRoutes(app);
 ```
 
-Create a landing page at `index.html`.
+Create a landing page at `src/server/index.html`.
 
 ```html
 <html>
