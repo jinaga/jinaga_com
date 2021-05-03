@@ -1,5 +1,5 @@
 ---
-title: "Serving a Web Page"
+title: "Serve a Web Page"
 ---
 
 The very first thing that your server needs to do is serve a web page.
