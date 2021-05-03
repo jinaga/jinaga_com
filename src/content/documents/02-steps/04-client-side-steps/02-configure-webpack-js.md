@@ -1,5 +1,5 @@
 ---
-title: "Configure Webpack"
+title: "Configure Webpack (JavaScript)"
 ---
 
 If you prefer to use [Webpack](https://webpack.js.org/) to bundle your client-side code, then this will get you stared.
@@ -138,7 +138,10 @@ function configureRoutes(app) {
         res.sendFile(path.join(__dirname, "..", "..", "dist", "main.html"));
     });
 
-    app.use('/scripts', express.static(path.join(__dirname, "..", "..", "dist", "scripts")));
+    app.use('/scripts', express.static(
+        path.join(__dirname, "..", "..", "dist", "scripts"),
+        { maxAge: "365d" }
+    ));
 }
 
 module.exports = { configureRoutes };
