@@ -45,7 +45,7 @@ beforeEach(() => {
     j = JinagaTest.create({});
 })
 
-test("Can create a list", async () => {
+test("Can create a fact", async () => {
     const firstFact = await j.fact({
         type: "MyApplication.FirstFact",
         identifier: "my_fact_id"
