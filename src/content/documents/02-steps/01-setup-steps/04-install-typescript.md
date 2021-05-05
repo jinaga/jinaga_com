@@ -2,7 +2,7 @@
 title: "Install TypeScript"
 ---
 
-This assumes that you have [created a Node app](../create-node-app/).
+This assumes that you have [created a Node Application](../create-node-app/).
 
 Jinaga works well with [TypeScript](https://www.typescriptlang.org/).
 If you prefer to use it this way, you'll need to set up a few extra things.

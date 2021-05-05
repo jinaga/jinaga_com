@@ -2,7 +2,7 @@
 title: "Write Some Tests (TypeScript)"
 ---
 
-This assumes that you have [created a Node app](../../setup-steps/create-node-app/), [installed Jinaga](../../setup-steps/install-jinaga/), and [installed TypeScript](../../setup-steps/install-typescript/).
+This assumes that you have [created a Node Application](../../setup-steps/create-node-app/), [installed Jinaga](../../setup-steps/install-jinaga/), and [installed TypeScript](../../setup-steps/install-typescript/).
 
 Testing in TypeScript is almost as easy as with JavaScript.
 You just need to install a few additional packages.
