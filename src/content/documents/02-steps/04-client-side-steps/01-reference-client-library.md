@@ -6,7 +6,7 @@ The Jinaga package contains two scripts.
 One is for the server-side, and the other is for the client side.
 The client-side library is an AMD package, and is intended to be used with a module loader such as [Require.JS](https://requirejs.org/).
 
-If you prefer to use a packager like [Webpack](https://webpack.js.org/), then follow [that step](../configure-webpack/) instead.
+If you prefer to use a packager like [Webpack](https://webpack.js.org/), then follow [that step (for JS)](../configure-webpack-js/) or [that step (for TS)](../configure-webpack-ts/) instead.
 
 First install Require.js.
 
