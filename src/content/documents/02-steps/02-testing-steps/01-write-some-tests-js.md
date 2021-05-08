@@ -2,7 +2,7 @@
 title: "Write Some Tests (JavaScript)"
 ---
 
-This assumes that you have [created a Node app](../../setup-steps/create-node-app/) and [installed Jinaga](../../setup-steps/install-jinaga/).
+This assumes that you have [created a Node Application](../../setup-steps/create-node-app/) and [installed Jinaga](../../setup-steps/install-jinaga/).
 
 The easiest way to see Jinaga working is to write some tests.
 For that, you will need a test runner.

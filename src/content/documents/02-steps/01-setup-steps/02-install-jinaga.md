@@ -2,7 +2,7 @@
 title: "Install Jinaga"
 ---
 
-This assumes that you have [created a Node app](../create-node-app/).
+This assumes that you have [created a Node Application](../create-node-app/).
 
 Jinaga is published as an NPM package.
 To install it just run:

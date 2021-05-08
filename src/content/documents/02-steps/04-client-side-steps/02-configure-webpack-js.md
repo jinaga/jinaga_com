@@ -2,7 +2,7 @@
 title: "Configure Webpack (JavaScript)"
 ---
 
-If you prefer to use [Webpack](https://webpack.js.org/) to bundle your client-side code, then this will get you stared.
+If you prefer to use [Webpack](https://webpack.js.org/) to bundle your client-side code, then this will get you started.
 This is the way that we prefer to write Jinaga applications.
 These instructions work with Webpack 5.
 
