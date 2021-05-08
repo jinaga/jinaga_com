@@ -1,9 +1,9 @@
 ---
-title: "Configure Webpack (JavaScript)"
+title: "Load with Webpack (JavaScript)"
 ---
 
 If you prefer to use [Webpack](https://webpack.js.org/) to bundle your client-side code, then this will get you started.
-This is the way that we prefer to write Jinaga applications.
+We prefer bundling over a module loader, but the choice is yours.
 These instructions work with Webpack 5.
 
 ## Install Webpack
@@ -14,42 +14,11 @@ Install the Webpack package and the CLI:
 npm i -D webpack webpack-cli
 ```
 
-If you followed the RequireJS step, you can remove that package.
-
-```bash
-npm remove requirejs
-```
-
-## Reference the Jinaga Client-Side Bundle
-
-Now we can move the code in `src/client/index.js` out of the `define` function.
-We can also start using `import` instead of `require`.
-
-**IMPORTANT**: When using the `import` syntax, specify the client-side Jinaga bundle at `jinaga/dist/jinaga`.
-
-```javascript
-import { JinagaBrowser } from "jinaga/dist/jinaga";
-
-const j = JinagaBrowser.create({
-    httpEndpoint: "/jinaga"
-});
-
-j.fact({
-    type: "MyApplication.Visit",
-    date: new Date()
-});
-```
-
 ## Configure Webpack
 
-We don't need `src/client/app.js`.
-If you followed the RequireJS step, you can delete this file.
-
-Instead, we will bundle the client app using Webpack.
-The default expects the entrypoint to be at `src/index.js`, but we've split our client and server code into subfolders.
-So we will need to create a new configuration file.
-
-Create a file called `webpack.config.js`:
+The Webpack configuration file should be in the root of the project, where the `package.json` file is found.
+It should be called `webpack.config.js`.
+Create this file now:
 
 ```javascript
 const path = require('path');
@@ -58,6 +27,13 @@ module.exports = {
     // Inputs
     entry: {
         main: "./src/client/main.js"
+    },
+    resolve: {
+        extensions: [".js"],
+        alias: {
+            "@shared": path.resolve(__dirname, "./src/shared"),
+            "jinaga": "jinaga/dist/jinaga",
+        }
     },
 
     // Processing
@@ -71,12 +47,38 @@ module.exports = {
 };
 ```
 
-Then modify your `package.json` to run Webpack.
+This configuration expects to find the client-side code in the `src/client` folder.
+It creates an alias so that any reference to "jinaga" brings in the client-side bundle.
+It also creates an alias to `src/shared` for code that is shared between the client and the server.
+
+Modify your `package.json` to run Webpack.
 
 ```json
-"scripts": {
-    "build": "webpack",
-},
+{
+    "scripts": {
+        "build": "webpack",
+    },
+}
+```
+
+Run `npm run build` to build to the `dist` folder.
+
+## Write the Client Code
+
+Now we can import Jinaga and start coding the client.
+Create a new file at `src/client/main.js`:
+
+```javascript
+import { JinagaBrowser } from "jinaga";
+
+const j = JinagaBrowser.create({
+    httpEndpoint: "/jinaga"
+});
+
+j.fact({
+    type: "MyApplication.Visit",
+    date: new Date()
+});
 ```
 
 ## Load the Bundle Into the Page

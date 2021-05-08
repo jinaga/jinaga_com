@@ -1,11 +1,12 @@
 ---
-title: "Install TypeScript"
+title: "Install TypeScript (optional)"
 ---
 
 This assumes that you have [created a Node Application](../create-node-app/).
 
 Jinaga works well with [TypeScript](https://www.typescriptlang.org/).
-If you prefer to use it this way, you'll need to set up a few extra things.
+If you would rather use JavaScript, feel free to skip this step.
+But if you prefer to use types, you'll need to set up a few extra things.
 
 First, install TypeScript.
 
@@ -43,8 +44,6 @@ For example, here's a simple `index.ts`:
 
 ```typescript
 console.log("Hello!");
-
-export {}
 ```
 
 You can then build and run the file.

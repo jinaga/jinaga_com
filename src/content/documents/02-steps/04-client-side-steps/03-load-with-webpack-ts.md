@@ -1,5 +1,5 @@
 ---
-title: "Configure Webpack (TypeScript)"
+title: "Load with Webpack (TypeScript)"
 ---
 
 If you are using TypeScript and prefer to use [Webpack](https://webpack.js.org/) to bundle your client-side app, then you will need to take a few additional steps.
@@ -83,8 +83,10 @@ We are going to be building the client-side code using WebPack.
 
 ## Configure Webpack
 
-To get Webpack to compile your client-side code, you will need a `webpack.config.js`.
-This one runs `ts-loader` in order to compile the client-side TypeScript.
+The Webpack configuration file should be in the root of the project, where the `package.json` file is found.
+It should be called `webpack.config.js`.
+
+The example below runs `ts-loader` in order to compile the client-side TypeScript.
 It also sets up a couple of useful aliases.
 First, it aliases `@shared` to the shared source folder.
 And second, it aliases `jinaga` to the client-side bundle.
@@ -140,7 +142,7 @@ You can build this with `npx webpack`.
 ## Reference the Jinaga Client-Side Bundle
 
 Now that Webpack uses `jinaga` as an alias for the client-side bundle, you can just import it.
-Here's a `src/client/main.ts` that imports and initializes Jinaga.
+Create a file at `src/client/main.ts` that imports and initializes Jinaga.
 
 ```typescript
 import { JinagaBrowser } from "jinaga";
@@ -157,7 +159,7 @@ j.fact({
 
 ## Configure a Build Script
 
-To build both the client and server, combine the two commands from above into a single script.
+To build both the client and server, combine the client and server build commands into a single script.
 Edit your `package.json` to set up the build script.
 
 ```json
