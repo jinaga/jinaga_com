@@ -34,6 +34,8 @@ No tests were found!
 So write one.
 
 Create a new folder called `src`.
+Then create a subfolder called `shared`.
+We put code here that can be used by either the client or the server.
 Inside of this folder, create a file called `model.test.ts`:
 
 ```typescript
