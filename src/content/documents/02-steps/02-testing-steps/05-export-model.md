@@ -1,5 +1,5 @@
 ---
-title: "Exporting the Model"
+title: "Export the Model"
 ---
 
 We're having so much fun testing the app that we want to just keep going.
@@ -9,7 +9,7 @@ Let's take some of the template functions we've written and move them to a model
 
 ## Exporting Template Functions
 
-Create a new file called `src/model.js`.
+Create a new file called `src/shared/model.js`.
 Move the functions we've defined into that file.
 Notice that to do that, we need to know what `j` is.
 Before it was an instance of `Jinaga`, but now we'll define it as an alias for the `Jinaga` class itself.
@@ -89,7 +89,7 @@ Then we can use the constructor to create instances.
 
 ```javascript
 const person = await j.fact(
-    new User("---IF THIS WERE A REAL USER, THEIR PUBLIC KEY WOULD BE HERE---")
+    new User("---Blog Creator---")
 );
 
 const post = await j.fact(

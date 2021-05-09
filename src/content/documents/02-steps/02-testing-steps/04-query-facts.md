@@ -40,7 +40,7 @@ Create a preposition by passing the specification function to `j.for`.
 test("Can query for posts by author", async () => {
     const person = await j.fact({
         type: "Jinaga.User",
-        publicKey: "---IF THIS WERE A REAL USER, THEIR PUBLIC KEY WOULD BE HERE---"
+        publicKey: "---Blog Creator---"
     });
 
     await j.fact({

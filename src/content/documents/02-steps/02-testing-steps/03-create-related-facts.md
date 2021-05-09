@@ -19,7 +19,7 @@ For example, to create a blog post that refers to its author as a predecessor, y
 test("Can create a fact with a predecessor", async () => {
     const person = await j.fact({
         type: "Jinaga.User",
-        publicKey: "---IF THIS WERE A REAL USER, THEIR PUBLIC KEY WOULD BE HERE---"
+        publicKey: "---Blog Creator---"
     });
 
     const post = await j.fact({
@@ -28,7 +28,7 @@ test("Can create a fact with a predecessor", async () => {
         author: person
     });
 
-    expect(post.author.publicKey).toBe("---IF THIS WERE A REAL USER, THEIR PUBLIC KEY WOULD BE HERE---");
+    expect(post.author.publicKey).toBe("---Blog Creator---");
 });
 ```
 
@@ -45,7 +45,7 @@ As an example, you can add tags to a blog post.
 test("Can add several tags to a post", async () => {
     const person = await j.fact({
         type: "Jinaga.User",
-        publicKey: "---IF THIS WERE A REAL USER, THEIR PUBLIC KEY WOULD BE HERE---"
+        publicKey: "---Blog Creator---"
     });
 
     const tag1 = await j.fact({
