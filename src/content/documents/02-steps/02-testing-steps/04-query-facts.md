@@ -1,9 +1,9 @@
 ---
-title: "Querying Facts"
+title: "Query Facts"
 ---
 
-To query for related facts, you write a template function.
-The template function matches facts of a certain type having specified predecessors.
+To query for related facts, you write a specification function.
+The specification function matches facts of a certain type having specified predecessors.
 
 ## Query for Successors
 
@@ -19,9 +19,22 @@ function postsByAuthor(author) {
 }
 ```
 
+If you are using TypeScript, then specify a cast for the appropriate type.
+The cast is erased during the compilation step, so you still have to specify the type as a string.
+But this helps you verify that you are connecting your specification functions correctly.
+
+```typescript
+function postsByAuthor(author: Author) {
+    return j.match(<Post>{
+        type: "Blog.Post",
+        author
+    });
+}
+```
+
 To run the query, use `j.query`.
-Pass in the starting fact, and a specification.
-Create a specification by passing the template function to `j.for`.
+Pass in the starting fact, and a preposition.
+Create a preposition by passing the specification function to `j.for`.
 
 ```javascript
 test("Can query for posts by author", async () => {

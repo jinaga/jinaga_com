@@ -2,7 +2,7 @@
 title: Starter Kits
 ---
 
-If you follow the instructions in [Creating an Application](../creating-an-application/), you will end up with a working application.
+If you follow all of the [Steps](../), you will end up with a working application.
 Those steps are designed so that you can see each piece working one at a time.
 The starter kits provide a more complete developer experience.
 But if something goes wrong, they might be harder to diagnose.

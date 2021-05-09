@@ -1,5 +1,5 @@
 ---
-title: "Creating Related Facts"
+title: "Create Related Facts"
 ---
 
 The whole idea of Jinaga is that you are capturing immutable facts related to one another.

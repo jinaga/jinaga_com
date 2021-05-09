@@ -1,9 +1,10 @@
 ---
-title: "PostgreSQL"
+title: "Connect to PostgreSQL"
 ---
 
-Jinaga persists facts on the server in a PostgreSQL database.
-Create a new database instance for the application.
+Jinaga persists facts on the server in a [PostgreSQL](https://www.postgresql.org/) database.
+Install Postgres for your platform.
+This step will show you how to create a new database instance for the application.
 
 Log on to your PostgreSQL database as the `postgres` user.
 You can do this with the following `psql` command.
@@ -55,6 +56,5 @@ Modify the `JinagaServer` line in `jinaga-config.js` so that it specifies the Po
     });
 ```
 
-Start the application, and it will start counting from 1.
-If you stop and restart it, you will see that it continues from there.
-The server is now persisting your facts.
+Start the application, and it will persist all of your user's facts.
+If you stop and restart it, you will see that all of the data is still there.
