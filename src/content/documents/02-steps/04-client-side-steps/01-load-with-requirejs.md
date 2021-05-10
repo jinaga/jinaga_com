@@ -31,6 +31,9 @@ define(function (require) {
 });
 ```
 
+Notice the `httpEndpoint` setting.
+That connects the client to your server.
+
 Pull it all together with a `src/client/app.js`:
 
 ```javascript

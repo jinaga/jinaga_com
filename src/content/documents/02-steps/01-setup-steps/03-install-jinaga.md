@@ -24,3 +24,17 @@ To get the most out of the library, you will need to use them together.
 
 To use the library [in tests](../../testing-steps/write-some-tests-js/) or [on the server](../../server-side-steps/jinaga-server/), you can use `require` from a Node application.
 To use it on the client, use an [AMD module loader like RequireJS](../../client-side-steps/load-with-requirejs/), or a [bundler like Webpack](../../client-side-steps/load-with-webpack-js/).
+
+## Pick your Initializer
+
+To load, save, or project information, you will need an instance of the `Jinaga` class.
+Don't just create one yourself.
+Use an initializer that sets it up correctly for you.
+
+There are three ways to initialize Jinaga.
+
+| Context | Initializer   | Instructions                                                       |
+| ------- | ------------- | ------------------------------------------------------------------ |
+| Tests   | JinagaTest    | [Write Some Tests](../../testing-steps/write-some-tests-js/)       |
+| Server  | JinagaServer  | [Jinaga Server](../../server-side-steps/jinaga-server/)            |
+| Client  | JinagaBrowser | [Load With Webpack](../../client-side-steps/load-with-webpack-js/) |

@@ -57,6 +57,9 @@ test("Can create a fact", async () => {
 });
 ```
 
+You import `JinagaTest` so that you can initialize an instance of the `Jinaga` class.
+Since you are using TypeScript, you also import `Jinaga` so that you have the type information.
+
 Every test is going to have the same structure.
 Inside of `beforeEach`, you create an instance of Jinaga using the `JinagaTest` factory.
 You can then add facts, run queries, and perform all of the other operations in a testing sandbox.

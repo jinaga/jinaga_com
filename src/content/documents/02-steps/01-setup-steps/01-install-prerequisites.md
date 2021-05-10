@@ -1,5 +1,5 @@
 ---
-title: "Installing Prerequisites"
+title: "Install Prerequisites"
 ---
 
 Jinaga requires [Node](https://nodejs.org).

@@ -32,4 +32,5 @@ configureJinaga(app);
 ```
 
 Jinaga is now serving up data at `http://localhost:8080/jinaga`.
-When you connect the client to that endpoint, it will sync up.
+In the next few steps, you will connect the client to that endpoint.
+When you do, it will sync up.

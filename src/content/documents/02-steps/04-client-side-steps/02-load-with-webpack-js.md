@@ -81,6 +81,9 @@ j.fact({
 });
 ```
 
+Notice the `httpEndpoint` setting.
+That connects the client to your server.
+
 ## Load the Bundle Into the Page
 
 When you run `npm run build`, Webpack will produce a file in `dist\scripts`.
@@ -89,8 +92,6 @@ This hash lets you cache the script indefinitely, as any change to the code will
 
 The page needs to know the name of the bundle that was just produced.
 We can inject that name in the form of a `<script>` tag using the `HtmlWebpack` plugin.
-If you have followed the RequireJS step, then remove the line `<script data-main="scripts/app.js" src="scripts/require.js"></script>` from your `src/server/index.html`.
-We'll have the plugin inject a script tag for us.
 
 First, install the plugin:
 
@@ -108,6 +109,13 @@ module.exports = {
     // Inputs
     entry: {
         main: "./src/client/main.js"
+    },
+    resolve: {
+        extensions: [".js"],
+        alias: {
+            "@shared": path.resolve(__dirname, "./src/shared"),
+            "jinaga": "jinaga/dist/jinaga",
+        }
     },
 
     // Processing

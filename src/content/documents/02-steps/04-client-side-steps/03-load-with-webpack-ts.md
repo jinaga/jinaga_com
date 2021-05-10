@@ -157,6 +157,9 @@ j.fact({
 });
 ```
 
+Notice the `httpEndpoint` setting.
+That connects the client to your server.
+
 ## Configure a Build Script
 
 To build both the client and server, combine the client and server build commands into a single script.
