@@ -1,13 +1,13 @@
 ---
-title: "Export the Model"
+title: "Export the Model (JavaScript)"
 ---
 
 We're having so much fun testing the app that we want to just keep going.
 But the whole point of writing these tests is so that we can define a model.
 We can use the model to create the UI and business logic for the app.
-Let's take some of the template functions we've written and move them to a model source file that can be used within the app.
+Let's take some of the specification functions we've written and move them to a model source file that can be used within the app.
 
-## Exporting Template Functions
+## Exporting Specification Functions
 
 Create a new file called `src/shared/model.js`.
 Move the functions we've defined into that file.

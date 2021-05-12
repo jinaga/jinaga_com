@@ -2,7 +2,7 @@
 title: "JavaScript"
 ---
 
-The `class` feature of modern JavaScript offers a good way to group a fact constructor with a set of template functions.
+The `class` feature of modern JavaScript offers a good way to group a fact constructor with a set of specification functions.
 The type is added as a prototype field.
 
 ```javascript
@@ -23,9 +23,9 @@ A fact can then be created with the `new` operator.
 const tagReact = await j.fact(new Tag("React"));
 ```
 
-## Template Functions
+## Specification Functions
 
-Using `static` methods of a class, you can group template functions with the type to which they belong.
+Using `static` methods of a class, you can group specification functions with the type to which they belong.
 
 ```javascript
 class Post {
@@ -48,19 +48,19 @@ class Post {
 Post.Type = "Blog.Post";
 ```
 
-Template functions belong either with their parameter type or their result type.
-Successor templates as shown above are best kept with the result type.
+Specification functions belong either with their parameter type or their result type.
+Successor specifications as shown above are best kept with the result type.
 This is because the predecessor (the `author` in this example) has no dependency upon the successor.
-There is no need to create that dependency by putting the template function there.
+There is no need to create that dependency by putting the specification function there.
 This also makes the queries easier to read.
 
 ```javascript
 const posts = j.query(author, j.for(Post.byAuthor));
 ```
 
-## Predecessor Templates
+## Predecessor Specifications
 
-Some template functions return a predecessor.
+Some specification functions return a predecessor.
 This is most common in authorization rules.
 
 ```javascript
@@ -88,5 +88,5 @@ function authorizeBlog(a) {
 }
 ```
 
-By convention, the template function has the same name as the predecessor.
-It will not conflict, because the template function is static while the predecessor is an instance field.
+By convention, the specification function has the same name as the predecessor.
+It will not conflict, because the specification function is static while the predecessor is an instance field.

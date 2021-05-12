@@ -19,19 +19,6 @@ function postsByAuthor(author) {
 }
 ```
 
-If you are using TypeScript, then specify a cast for the appropriate type.
-The cast is erased during the compilation step, so you still have to specify the type as a string.
-But this helps you verify that you are connecting your specification functions correctly.
-
-```typescript
-function postsByAuthor(author: Author) {
-    return j.match(<Post>{
-        type: "Blog.Post",
-        author
-    });
-}
-```
-
 To run the query, use `j.query`.
 Pass in the starting fact, and a preposition.
 Create a preposition by passing the specification function to `j.for`.
