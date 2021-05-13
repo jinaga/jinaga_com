@@ -80,14 +80,14 @@ There is no need to create that dependency by putting the specification function
 This also makes the queries easier to read.
 
 ```typescript
-const posts = j.query(author, j.for(Post.byAuthor));
+const posts = await j.query(author, j.for(Post.byAuthor));
 ```
 
 The explicit cast causes the specification function to return an appropriately typed `Specification<T>`.
 Types are verified as specification functions are chained together.
 
 ```typescript
-const postTitles = j.query(author, j.for(Post.byAuthor).then(PostTitle.forPost));
+const postTitles = await j.query(author, j.for(Post.byAuthor).then(PostTitle.forPost));
 ```
 
 Furthermore, the result will have the correct type (`PostTitle[]` in the above example).
@@ -116,7 +116,7 @@ class Post {
     }
 }
 
-function authorizeBlog(a) {
+function authorizeBlog(a: AuthorizationRules) {
     return a
         .type(Post.Type, j.for(Post.author))
         ;

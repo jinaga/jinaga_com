@@ -113,7 +113,7 @@ Before it was an instance of `Jinaga`, but now we'll define it as an alias for t
 import { Jinaga as j } from "jinaga";
 ```
 
-Then you can use that template function directly from the class.
+Then you can use that specification function directly from the class.
 
 ```javascript
 const posts = await j.query(person, j.for(Post.byAuthor));

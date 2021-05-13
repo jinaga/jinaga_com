@@ -55,7 +55,7 @@ There is no need to create that dependency by putting the specification function
 This also makes the queries easier to read.
 
 ```javascript
-const posts = j.query(author, j.for(Post.byAuthor));
+const posts = await j.query(author, j.for(Post.byAuthor));
 ```
 
 ## Predecessor Specifications

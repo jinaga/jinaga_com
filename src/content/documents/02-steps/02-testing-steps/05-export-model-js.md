@@ -97,7 +97,7 @@ const post = await j.fact(
 );
 ```
 
-And we can use the static type in template functions.
+And we can use the static type in specification functions.
 
 ```javascript
 function postsByAuthor(author) {
@@ -108,7 +108,7 @@ function postsByAuthor(author) {
 }
 ```
 
-We can even define the template functions on the class prototype to keep things organized.
+We can even define the specification functions on the class prototype to keep things organized.
 
 ```javascript
 Post.byAuthor = function(author) {
@@ -119,7 +119,7 @@ Post.byAuthor = function(author) {
 }
 ```
 
-Then we can use that template function directly from the class.
+Then we can use that specification function directly from the class.
 
 ```javascript
 const posts = await j.query(person, j.for(Post.byAuthor));
