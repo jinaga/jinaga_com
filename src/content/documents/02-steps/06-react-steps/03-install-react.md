@@ -43,17 +43,11 @@ Open up `src/server/index.html` and add a `<div>` tag within the body.
 </html>
 ```
 
-Change `src/client/main.js` to `src/client/main.jsx`.
+In the previous step, you renamed your main entry point to either `main.jsx` or `main.tsx`.
 That extra `x` at the end tells the compiler that this file can contain HTML-like tags.
 It's pretty cool.
 
-Make the corresponding change in `webpack.config.js` so that it uses this entry point.
-
-```javascript
-
-```
-
-Add some code to `src/client/main.jsx` to render the component in that `<div>`.
+Now change the code in that file to render the component into the host `<div>`.
 
 ```javascript
 import { App } from "./app";
@@ -65,3 +59,7 @@ ReactDOM.render(
     document.getElementById("application-host")
 );
 ```
+
+Build and run your app to see if the message shows up on your page.
+If so, congratulations!
+You are now running a React front end.
