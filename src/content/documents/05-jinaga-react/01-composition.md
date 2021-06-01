@@ -44,7 +44,7 @@ const messageView = ({ message }) => {
         return <p>Loading</p>;
     }
     else {
-        const { text, sender } = message;
+        const { text, sender } = result;
 
         return (
             <>
