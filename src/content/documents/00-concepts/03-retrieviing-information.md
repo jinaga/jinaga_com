@@ -116,10 +116,62 @@ move down 175%
 move left until even with Z.w
 right
 
-box "watch:" big bold fill 0xf0a1e6 fit thick
+box "watch:" big bold  fit thick
 move down 100%
 move left until even with Z.w
 right
+
+circle wid 10%
+arrow right 200%
+oval "j.watch" fit
+arrow
+oval "(" fit
+arrow
+box "starterFact" italic fit
+arrow
+A:oval "," fit
+arrow 200%
+box "preposition" bold italic fit fill 0x8dd3c7
+arrow
+oval "," fit
+arrow
+box "resultAdded" italic fit
+arrow
+oval "," fit
+arrow
+box "resultRemoved" italic fit
+arrow
+B:oval ")" fit
+arrow 300%
+circle wid 10%
+arrow right from B.e then down then left
+C: [text " (  " bold
+move -charwid
+move -charwid
+text "watch"
+move -charwid
+text " ." bold]
+oval width C.width height C.height at C.center
+arrow left 200%
+arrow left until even with A.e + (0.15,0) then up then right
+
+//========== Split Watch ====================
+
+move down 200%
+move left until even with Z.w
+right
+
+box invisible "Watches can be chained together as shown above, however usually each level is assigned to its own constant." ljust "This allows one to call the \"stop\"-method on each level independently:" ljust fit 
+
+move down 100%
+move left until even with Z.w
+right
+
+//box "const level_0_Watch =" fit
+C: [text "const"
+move -2*charwid
+text "level_0_Watch =" bold] 
+box invisible width C.width height C.height at C.center
 
 circle wid 10%
 arrow right 200%
@@ -149,9 +201,15 @@ move down 100%
 move left until even with Z.w
 right
 
+C: [text "const"
+move -2.5*charwid
+text "level_x+1_Watch =" bold] 
+box invisible width C.width height C.height at C.center
+
 circle wid 10%
 arrow right 200%
-box "watch" bold italic fit fill 0xf0a1e6
+
+box "level_x_Watch" bold fit
 arrow
 oval ".watch" fit
 arrow
