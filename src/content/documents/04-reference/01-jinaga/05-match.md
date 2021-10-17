@@ -6,7 +6,7 @@ Used within a template function to specify the shape of the target facts.
 
 ```typescript
 static match<T>(
-    template: T
+    template: Partial<T>
 ): Specification<T>;
 ```
 

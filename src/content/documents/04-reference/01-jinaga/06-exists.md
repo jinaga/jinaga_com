@@ -6,7 +6,7 @@ Used in a template function to create a condition that is true if a matching fac
 
 ```typescript
 static exists<T>(
-    template: T
+    template: Partial<T>
 ): Condition<T>;
 ```
 
