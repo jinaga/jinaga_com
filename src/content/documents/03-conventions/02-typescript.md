@@ -6,12 +6,13 @@ When using TypeScript, Jinaga can verify that specification functions are used c
 This works best when fact types are specified as classes.
 
 Specify the type string as an upper-case static field, and use it to initialize a lower-case instance field.
+Use the `as const` type decoration so that the `Type` static (and subsequent `type` field) are strictly typed rather than allowing any `string`.
 Initialize all other fields by declaring them as `public` constructor parameters.
 The body of the constructor should be empty.
 
 ```typescript
 class Tag {
-    static Type = "Blog.Tag";
+    static Type = "Blog.Tag" as const;
     type = Tag.Type;
 
     constructor(
@@ -36,7 +37,7 @@ When declaring a date field in a fact, give it the type `Date | string`. This wi
 
 ```typescript
 class Post {
-    static Type = "Blog.Post";
+    static Type = "Blog.Post" as const;
     type = Post.Type;
 
     constructor (
@@ -52,11 +53,11 @@ As a result, they are portable across time zones within an application, and sort
 ## Specification Functions
 
 Using `static` methods of a class, you can group specification functions with the type to which they belong.
-Use an explicit cast within `j.match` to ensure that the compiler can verify types for you.
+Specify the type parameter of the `j.match` function to ensure that the compiler can verify types for you.
 
 ```typescript
 class Post {
-    static Type = "Blog.Post";
+    static Type = "Blog.Post" as const;
     type = Post.Type;
 
     constructor (
@@ -65,7 +66,7 @@ class Post {
     ) { }
 
     static byAuthor(author: Author) {
-        return j.match(<Post>{
+        return j.match<Post>({
             type: Post.Type,
             author
         });
@@ -102,7 +103,7 @@ This is required because the object that is actually passed to the specification
 
 ```typescript
 class Post {
-    static Type = "Blog.Post";
+    static Type = "Blog.Post" as const;
     type = Post.Type;
 
     constructor (

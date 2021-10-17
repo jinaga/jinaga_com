@@ -23,7 +23,7 @@ Declare them as `public` to make them instance fields.
 
 ```typescript
 export class User {
-    static Type = "Jinaga.User";
+    static Type = "Jinaga.User" as const;
     type = User.Type;
 
     constructor (
@@ -32,7 +32,7 @@ export class User {
 }
 
 export class Post {
-    static Type = "Blog.Post";
+    static Type = "Blog.Post" as const;
     type = Post.Type;
 
     constructor (
@@ -77,7 +77,7 @@ Once you have identified a class, copy the specification function into it and de
 
 ```typescript
 export class Post {
-    static Type = "Blog.Post";
+    static Type = "Blog.Post" as const;
     type = Post.Type;
 
     constructor (
@@ -86,7 +86,7 @@ export class Post {
     ) { }
 
     static byAuthor(author: Author) {
-        return j.match(<Post>{
+        return j.match<Post>({
             type: Post.Type,
             author
         });
