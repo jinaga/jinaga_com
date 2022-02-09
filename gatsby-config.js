@@ -10,7 +10,7 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "images",
-        path: `${__dirname}/src/images`,
+        path: "./src/images",
       },
     },
     "gatsby-transformer-sharp",
@@ -32,14 +32,14 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "posts",
-        path: `${__dirname}/src/content/`
+        path: "./src/content/"
       }
     },
     {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "examples",
-        path: `${__dirname}/src/examples/`,
+        path: "./src/examples/",
         ignore: [
           "**/*\.json"
         ]
@@ -49,7 +49,7 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "jinaga",
-        path: `${__dirname}/node_modules/jinaga/dist/types/`
+        path: "./node_modules/jinaga/dist/types/"
       }
     },
     {
