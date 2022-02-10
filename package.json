@@ -26,11 +26,10 @@
     "graphql": "^15.8.0",
     "has-binary2": "^2.0.0",
     "jinaga": "^2.5.2",
-    "jsonc-parser": "^2.3.1",
+    "jsonc-parser": "^3.0.0",
     "mlp-remark-graphviz": "file:plugins/mlp-remark-graphviz",
-    "monaco-editor": "^0.20.0",
-    "monaco-editor-webpack-plugin": "^1.9.1",
-    "posthtml": "^0.15.1",
+    "monaco-editor": "^0.32.1",
+    "posthtml": "^0.16.5",
     "prismjs": "^1.23.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -39,8 +38,8 @@
     "react-icons": "^4.3.1",
     "sass": "^1.49.7",
     "source-map-support": "^0.5.19",
-    "terminal-link": "^2.1.1",
-    "typescript": "^3.9.9"
+    "terminal-link": "^3.0.0",
+    "typescript": "^4.5.5"
   },
   "keywords": [
     "gatsby"
