@@ -47,7 +47,8 @@
     "snyk-protect": "snyk protect"
   },
   "devDependencies": {
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "webpack": "^5.68.0"
   },
   "repository": {
     "type": "git",
