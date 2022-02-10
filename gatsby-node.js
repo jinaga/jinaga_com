@@ -5,7 +5,6 @@
  */
 
 const { createFilePath } = require(`gatsby-source-filesystem`);
-const MonacoWebpackPlugin = require(`monaco-editor-webpack-plugin`);
 const path = require(`path`);
 
 function pathParent(path) {
@@ -49,14 +48,6 @@ exports.createPages = async ({ actions, graphql }) => {
         .forEach(page => createPage(page));
     (await loadExamplePages(graphql))
         .forEach(page => createPage(page));
-};
-
-exports.onCreateWebpackConfig = ({ actions }) => {
-    actions.setWebpackConfig({
-        plugins: [
-            new MonacoWebpackPlugin()
-        ]
-    });
 };
 
 async function loadDocumentPages(graphql, folder, template) {

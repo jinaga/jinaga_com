@@ -1,95 +1,95 @@
 module.exports = {
   siteMetadata: {
-    title: `Jinaga`,
-    description: `Resilient, reliable, and connected web applications.`,
-    author: `Michael L Perry`,
+    title: "Jinaga",
+    description: "Resilient, reliable, and connected web applications.",
+    author: "Michael L Perry",
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
+    "gatsby-plugin-react-helmet",
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
+        name: "images",
+        path: "./src/images",
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    "gatsby-transformer-sharp",
+    "gatsby-plugin-sharp",
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: "gatsby-plugin-manifest",
       options: {
-        name: `Jinaga`,
-        short_name: `Jinaga`,
-        start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/jinaga-icon.png`, // This path is relative to the root of the site.
+        name: "Jinaga",
+        short_name: "Jinaga",
+        start_url: "/",
+        background_color: "#663399",
+        theme_color: "#663399",
+        display: "minimal-ui",
+        icon: "src/images/jinaga-icon.png", // This path is relative to the root of the site.
       },
     },
-    `gatsby-plugin-sass`,
+    "gatsby-plugin-sass",
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: `posts`,
-        path: `${__dirname}/src/content/`
+        name: "posts",
+        path: "./src/content/"
       }
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: `examples`,
-        path: `${__dirname}/src/examples/`,
+        name: "examples",
+        path: "./src/examples/",
         ignore: [
-          `**/*\.json`
+          "**/*\.json"
         ]
       }
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: `jinaga`,
-        path: `${__dirname}/node_modules/jinaga/dist/types/`
+        name: "jinaga",
+        path: "./node_modules/jinaga/dist/types/"
       }
     },
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
           {
-            resolve: `gatsby-remark-images`,
+            resolve: "gatsby-remark-images",
             options: {
               maxWidth: 590
             }
           },
-          `gatsby-remark-pikchr`,
-          `mlp-remark-graphviz`,
+          "gatsby-remark-pikchr",
+          "mlp-remark-graphviz",
           {
-            resolve: `gatsby-remark-prismjs`,
+            resolve: "gatsby-remark-prismjs",
             options: {
               noInlineHighlight: true
             }
           },
-          `gatsby-remark-copy-linked-files`
+          "gatsby-remark-copy-linked-files"
         ]
       }
     },
     {
-      resolve: `gatsby-transformer-code`,
+      resolve: "gatsby-transformer-code",
       options: {
-        name: `jinaga`,
-        extensions: [ 'ts' ]
+        name: "jinaga",
+        extensions: [ "ts" ]
       }
     },
     {
-      resolve: `gatsby-transformer-code`,
+      resolve: "gatsby-transformer-code",
       options: {
-        name: `examples`,
-        extensions: [ 'ts' ]
+        name: "examples",
+        extensions: [ "ts" ]
       }
     },
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: "gatsby-plugin-google-analytics",
       options: {
         trackingId: "UA-389401-11",
         anonymize: true,
