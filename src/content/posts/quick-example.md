@@ -22,13 +22,13 @@ You don't need a custom API for that.
 
 ### Querying facts
 
-To find a set of facts, first define a **template function**.
+To find a set of facts, first define a **specification function**.
 
 ```javascript
-function tweetsFromSender(s) {
+function tweetsFromSender(sender) {
     return j.match({
         type: 'Tweet',
-        sender: s
+        sender
     });
 }
 ```
@@ -63,6 +63,67 @@ And then, as new tweets arrive, it will run the function for them as well.
 This will work as is for facts created in the browser by the logged in user.
 So a user can see his own tweets in real-time.
 But of course, you want users to collaborate with one another.
+
+### Binding to React Props
+
+You probably aren't writing a function like `displayTweet` to update the browser.
+What is this, jQuery?
+No, you have a React component that you need to update.
+
+First, write a property specification.
+
+```javascript
+const tweetSpec = specificationFor(Tweet, {
+    body: field(t => t.body),
+    sender: property(j.for(tweetSender).then(namesOfSender), n => n.value, "<sender>")
+});
+```
+
+Then map the specification to props of a component.
+
+```jsx
+const tweetMapping = mapProps(tweetSpec).to(({ body, sender, onReply }) => (
+    <>
+        <p className="tweet-body">{body}</p>
+        <p className="tweet-sender">{sender}</p>
+        <button onClick={onReply}>Reply</button>
+    </>
+));
+```
+
+Reference mappings inside of specifications to compose the application.
+
+```javascript
+const feedSpec = specificationFor(User, {
+    Tweets: collection(j.for(followedSenders).then(tweetsFromSender), tweetMapping)
+});
+
+const feedMapping = mapProps(feedSpec).to(({ Tweets }) => (
+    <>
+        <Tweets />
+    <>
+));
+```
+
+Top it all off with a container.
+
+```jsx
+const FeedContainer = jinagaContainer(j, feedMapping);
+
+function App({}) {
+    const [ user, setUser ] = useState(null);
+
+    useEffect(() => {
+        j.login().then(({ userFact }) => {
+            setUser(userFact);
+        });
+    }, []);
+
+    return (
+        <FeedContainer fact={user} />
+    );
+}
+```
 
 ### Subscribing to facts
 
