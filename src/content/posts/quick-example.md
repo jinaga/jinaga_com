@@ -2,116 +2,129 @@
 title: "Quick Example"
 ---
 
-### Creating facts
+### Facts
 
 A Jinaga data model is made of **facts**.
 A fact is an immutable JavaScript object which has a `type` field.
+Write a TypeScript or JavaScript class to help you create them.
+Here's an example in TypeScript.
 
-```javascript
-await j.fact({
-    type: 'Tweet',
-    sender: lewiscarroll,
-    body: 'Twas Brillig, and the slithy toves did gyre and gimble in the wabe.',
-    sent: '2018-12-05T10:54:42.356Z'
-});
-```
+```typescript
+class Tweet {
+    static Type = "Tweet" as const;
+    type = Tag.Type;
 
-Call the `fact` function within the browser whenever the user sends a tweet.
-It will be sent to the server, where it will be stored.
-You don't need a custom API for that.
-
-### Querying facts
-
-To find a set of facts, first define a **specification function**.
-
-```javascript
-function tweetsFromSender(sender) {
-    return j.match({
-        type: 'Tweet',
-        sender
-    });
+    constructor(
+        public body: string,
+        public sender: User,
+        public sent: Date | string
+    ) { }
 }
 ```
 
-The **query** method returns all facts matching the template.
+See that `User` type?
+That's another fact.
+That's how facts are related to each other.
+
+### Creating facts
+
+Whenever the user does something, like send a tweet, your app creates a fact.
+Use the function `j.fact` to do that.
 
 ```javascript
-const tweets = await j.query(lewiscarroll, j.for(tweetsFromSender));
+await j.fact(new Tweet(
+    "Twas Brillig, and the slithy toves did gyre and gimble in the wabe.",
+    lewiscarroll,
+    new Date()
+));
+```
 
-// tweets = [ { type: 'Tweet', ... }, { ... }, ... ];
+Call the `j.fact` function within the browser whenever you want to save something.
+It will be sent to the server, where it will be stored.
+You don't need a custom API for that.
+
+### Finding facts
+
+To find a set of facts, first define a **specification function**.
+These are usually static functions on the fact class.
+
+```typescript
+class Tweet {
+    // ...
+    static fromSender(sender: User) {
+        return j.match<Tweet>({
+            type: Tweet.Type,
+            sender
+        });
+    }
+}
+```
+
+The **query** method returns all facts matching the specification.
+
+```typescript
+const tweets = await j.query(lewiscarroll, j.for(Tweet.fromSender));
 ```
 
 Again, run this code in the browser.
 There is no need to set up an API to perform this query on the server.
 
-### Watching facts
+### Displaying facts
 
 A query is a one-time operation.
-If you want to update the UI every time a tweet is posted, set up a **watch**.
+If you want to update the UI every time a tweet is posted, compose a **projection specification**.
 
-```javascript
-function displayTweet(t) {
-    // Add the tweet to the UI.
-}
-
-await j.watch(lewiscarroll, j.for(tweetsFromSender), displayTweet);
-```
-
-This will run the query and call the function for each tweet.
-And then, as new tweets arrive, it will run the function for them as well.
-
-This will work as is for facts created in the browser by the logged in user.
-So a user can see his own tweets in real-time.
-But of course, you want users to collaborate with one another.
-
-### Binding to React Props
-
-You probably aren't writing a function like `displayTweet` to update the browser.
-What is this, jQuery?
-No, you have a React component that you need to update.
-
-First, write a property specification.
-
-```javascript
+```typescript
 const tweetSpec = specificationFor(Tweet, {
     body: field(t => t.body),
-    sender: property(j.for(tweetSender).then(namesOfSender), n => n.value, "<sender>")
+    sender: property(
+        j.for(Tweet.sender)
+            .then(User.names),
+        n => n.value,
+        "<sender>"
+    )
 });
 ```
 
 Then map the specification to props of a component.
 
-```jsx
-const tweetMapping = mapProps(tweetSpec).to(({ body, sender, onReply }) => (
-    <>
-        <p className="tweet-body">{body}</p>
-        <p className="tweet-sender">{sender}</p>
-        <button onClick={onReply}>Reply</button>
-    </>
+```tsx
+const tweetMapping = mapProps(tweetSpec).to(({ body, sender }) => (
+    <div>
+        <p>{body}</p>
+        <p>{sender}</p>
+    </div>
 ));
 ```
+
+### Composing components
 
 Reference mappings inside of specifications to compose the application.
 
 ```javascript
 const feedSpec = specificationFor(User, {
-    Tweets: collection(j.for(followedSenders).then(tweetsFromSender), tweetMapping)
+    Tweets: collection(
+        j.for(Follow.byUser)
+            .then(Follow.sender)
+            .then(Tweet.fromSender),
+        tweetMapping
+    )
 });
 
 const feedMapping = mapProps(feedSpec).to(({ Tweets }) => (
-    <>
+    <div>
         <Tweets />
-    <>
+    </div>
 ));
 ```
 
 Top it all off with a container.
 
-```jsx
+```tsx
 const FeedContainer = jinagaContainer(j, feedMapping);
 
 function App({}) {
-    const [ user, setUser ] = useState(null);
+    const [ user, setUser ] = useState<User | null>(null);
 
     useEffect(() => {
         j.login().then(({ userFact }) => {
@@ -130,7 +143,7 @@ function App({}) {
 To have new tweets pushed to the browser, call **subscribe**.
 
 ```javascript
-j.subscribe(lewiscarroll, j.for(tweetsFromSender));
+j.subscribe(lewiscarroll, j.for(Tweets.fromSender));
 ```
 
 And with this, facts created in one browser make their way to other browsers.
