@@ -3,6 +3,8 @@ import React from 'react';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import siteLogo from "../images/site-logo.png";
+import good from "../images/good.png";
+import bad from "../images/bad.png";
 
 
 const IndexPage = () => (
@@ -11,16 +13,23 @@ const IndexPage = () => (
     head={
       <div className="hero">
         <img src={siteLogo} alt="Jinaga" />
-        <p>Resilient, reliable, and connected web applications.</p>
+        <p>Application-agnostic back end for web applications.</p>
       </div>
     }>
     <SEO title="Jinaga" keywords={[`jinaga`, `node`, `typescript`, `javascript`]} />
-    <h2>Exchange Immutable Facts</h2>
+    <div>
+      <img src={bad} alt="Typically, all layers of an app are custom." />
+      <img style={{float: "right"}} src={good} alt="In Jinaga, only the front end is." />
+    </div>
+    <h2>Build Apps Faster</h2>
     <p>
-      JSON objects are durably stored on the back end,
-      and reliably transmitted between browsers.
-      The view is automatically updated as new facts
-      arrive, even from other users.
+      Typical web app architectures build domain knowledge into custom
+      database schemas, APIs, and front ends. That means you have to write
+      the same idea in three different ways. That slows you down.
+    </p>
+    <p>
+      Write your domain logic once. Jinaga provides an application-agnostic
+      API and database.
     </p>
     <Link className="cta" style={{ border: 'none' }} to={'/documents/concepts/'}>
       <div className="button-container">Learn the concepts</div>
