@@ -1,12 +1,14 @@
-import { graphql, StaticQuery } from 'gatsby';
-import React from 'react';
-import Layout from '../components/layout';
-import SEO from '../components/seo';
-
+import { graphql, StaticQuery } from 'gatsby'
+import React from 'react'
+import Layout from '../components/layout'
+import SEO from '../components/seo'
 
 const AboutPage = () => (
   <Layout className="body-container">
-    <SEO title="About" keywords={[`jinaga`, `node`, `typescript`, `javascript`]} />
+    <SEO
+      title="About"
+      keywords={[`jinaga`, `node`, `typescript`, `javascript`]}
+    />
     <StaticQuery
       query={graphql`
         query AboutQuery {
@@ -18,9 +20,10 @@ const AboutPage = () => (
       render={({ content }) => (
         <div
           className="page-content"
-          dangerouslySetInnerHTML={{ __html: content.html }} />
-      )}>
-    </StaticQuery>
+          dangerouslySetInnerHTML={{ __html: content.html }}
+        />
+      )}
+    ></StaticQuery>
   </Layout>
 )
 
