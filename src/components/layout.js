@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import '../stylesheets/main.scss';
-import Header from './header';
-
+import PropTypes from 'prop-types'
+import React from 'react'
+import '../stylesheets/main.scss'
+import Header from './header'
 
 const Layout = ({ className, children, head }) => (
   <>
@@ -10,9 +9,7 @@ const Layout = ({ className, children, head }) => (
       <Header />
       {head}
     </div>
-    <div className={className}>
-      {children}
-    </div>
+    <div className={className}>{children}</div>
   </>
 )
 
