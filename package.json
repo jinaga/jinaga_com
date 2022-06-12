@@ -44,7 +44,8 @@
     "start": "npm run dev",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "clean": "gatsby clean"
   },
   "devDependencies": {
     "prettier": "^2.2.1",
