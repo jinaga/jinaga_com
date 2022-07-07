@@ -37,7 +37,7 @@ const Header = () => (
         >
           <FaYoutube style={iconStyle} />
         </a>
-        <a className="user-icon" href="https://github.com/michaellperry/jinaga">
+        <a className="user-icon" href="https://github.com/jinaga/jinaga.js">
           <FaGithubAlt style={iconStyle} />
         </a>
         <a className="user-icon" href="https://twitter.com/michaellperry">
