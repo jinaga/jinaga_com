@@ -2,7 +2,7 @@
 title: "Read"
 ---
 
-To read data, `POST` a request to `http://localhost/jinaga/read`.
+To read data, `POST` a request to `http://localhost:8080/jinaga/read`.
 The body of the request should be raw text (`Content-Type: text/plain`).
 It is expressed in the Jinaga specification language.
 
