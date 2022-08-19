@@ -67,7 +67,37 @@ module.exports = {
           {
             resolve: "gatsby-remark-prismjs",
             options: {
-              noInlineHighlight: true
+              noInlineHighlight: true,
+              languageExtensions: [
+                {
+                  language: 'specification',
+                  definition: {
+                    string: {
+                      pattern: /(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,
+                      lookbehind: true,
+                      greedy: true
+                    },
+                    number: /-?\b\d+(?:\.\d+)?(?:e[+-]?\d+)?\b/i,
+                    boolean: /\b(?:false|true)\b/,
+                    "class-name": {
+                      pattern: /([:]\s*)[A-Z_][A-Z0-9_.]*/i,
+                      lookbehind: true
+                    },
+                    function: {
+                      pattern: /(->\s*)[A-Z_][A-Z0-9_]*/i,
+                      lookbehind: true
+                    },
+                    property: {
+                      pattern: /([.]\s*)[A-Z_][A-Z0-9_]*/i,
+                      lookbehind: true
+                    },
+                    keyword: /\b(let)\b/,
+                    operator: /(->|=>|\#|=|\.|!|\bE\b)/,
+                    punctuation: /[()\[\]{}:]/,
+                    variable: /[A-Z_][A-Z0-9_]*/i
+                  }
+                }
+              ]
             }
           },
           "gatsby-remark-copy-linked-files"

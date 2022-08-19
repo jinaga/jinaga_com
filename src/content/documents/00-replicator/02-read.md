@@ -9,7 +9,7 @@ It is expressed in the Jinaga specification language.
 The Jinaga specification language lets you declare a set of input facts, a specification body, and projections.
 The parts fit together like this:
 
-```
+```specification
 let variable: Type = <fact>
 
 (given: Type) {
@@ -36,7 +36,7 @@ You may also give the hash of a known fact.
 You can find the hash by performing a query and projecting the object using the # prefix.
 To use the hash in a later query, prefix the base64 hash code with #.
 
-```
+```specification
 let post: Blog.Post = #ONZGu5Uvdcdr...+igirQ==
 ```
 
@@ -52,7 +52,7 @@ The body of a specification defines a list of unknowns.
 Declare an unknown by name and type.
 Then in square brackets, list conditions that relate the unknown to the givens.
 
-```
+```specification
 comment: Blog.Comment [
     <conditions>
 ]
@@ -61,7 +61,7 @@ comment: Blog.Comment [
 One kind of condition is a path.
 Paths join the declared unknown to givens or previously declared unknowns.
 
-```
+```specification
 comment->post: Blog.Post = post
 ```
 
@@ -73,7 +73,7 @@ Another type of condition is an existential.
 It says whether it's looking for something to exist (`E`) or not exist (`!E`).
 And then it declares another tuple.
 
-```
+```specification
 E {
     approval: Blog.Comment.Approval [
         approval->comment: Blog.Comment = comment
@@ -93,7 +93,7 @@ But you might want to reshape your results.
 Projections turn tuples into meaningful results.
 They can select fields or hashes of facts in the tuple.
 
-```
+```specification
 => {
     id = #comment
     createdAt = comment.createdAt
@@ -105,7 +105,7 @@ A projection can also run child specifications.
 A child specification has its own list of unknowns.
 It can even have its own projection.
 
-```
+```specification
 from = {
     user: Jinaga.User [
         user = comment->from: Jinaga.User
@@ -127,7 +127,7 @@ This lets you build up a JSON structure containing just what you want.
 
 Here is the complete example that we built:
 
-```
+```specification
 let post: Blog.Post = #ONZGu5Uvdcdr...+igirQ==
 
 (post: Blog.Post) {
