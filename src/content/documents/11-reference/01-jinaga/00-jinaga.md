@@ -8,10 +8,11 @@ Then create facts and run queries in either place.
 
 ## Initializing Jinaga on the Server
 
+Install the server-side components with the package `jinaga-server`.
 To obtain an instance on the server, call `JinagaServer.create()`.
 
 ```typescript
-import { JinagaServer } from 'jinaga';
+import { JinagaServer } from 'jinaga-server';
 
 const pgConnection = process.env.JINAGA_POSTGRESQL || 'postgresql://user:pass@localhost:5432/app';
 const { handler, j } = JinagaServer.create({
