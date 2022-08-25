@@ -42,14 +42,14 @@ export default jinagaContainer(j, siteMapping);
 Now you can add this component to the app in `App.tsx`.
 
 ```tsx
-import SiteComponent from "./components/SiteComponent";
+import SiteContainer from "./components/SiteContainer";
 
 function App() {
   //...
 
   return (
     <div className="App">
-      <SiteComponent fact={site} />
+      <SiteContainer fact={site} />
     </div>
   )
 }
