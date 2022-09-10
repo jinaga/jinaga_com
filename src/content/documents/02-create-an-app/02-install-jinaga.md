@@ -2,13 +2,13 @@
 title: "Install Jinaga"
 ---
 
-Let's install Jinaga so that we can get connected to the Replicator.
+Let's install Jinaga so that we can get connected to the Replicator, by typing in VS Codes terminal window: 
 
 ```bash
 npm install jinaga jinaga-react
 ```
 
-Then create a file called `jinaga-config.ts` and add the following code:
+Then create a file called `jinaga-config.ts` in de `src` directory and add the following code:
 
 ```typescript
 import { JinagaBrowser } from "jinaga";

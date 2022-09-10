@@ -6,6 +6,9 @@ The Jinaga Replicator is a single machine in a network.
 It stores and shares facts.
 To get started, create a Replicator of your very own using [Docker](https://www.docker.com/products/docker-desktop/).
 
+If you run on Windows with WSL2, then install Docker Desktop for Windows.
+The following commands can be executed from the command prompt, as well as from PowerShell or from WSL.
+
 ```
 docker pull jinaga/jinaga-replicator
 docker run --name my-replicator -p8080:8080 jinaga/jinaga-replicator

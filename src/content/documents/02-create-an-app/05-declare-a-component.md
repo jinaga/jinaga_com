@@ -3,7 +3,7 @@ title: "Declare a Component"
 ---
 
 We'll declare a component to display a site.
-Create a folder called `components`.
+Inside de `src folder`, create a folder called `components`.
 Inside that folder, create a file called `SiteContainer.tsx`.
 
 With Jinaga-React, you can create a specification that reads properties from a starting fact.

@@ -6,8 +6,8 @@ To work with the facts you [added to the Replicator](../../replicator/write/), y
 The first kind of fact you added was a `Blog.Site`, which had a `domain` field.
 Let's start there.
 
-Create a folder called `model`.
-Inside that folder, create a file called `site.ts`.
+Create a folder called `model` in the `src` directory.
+Inside the `model` folder, create a file called `site.ts`.
 Add the following code:
 
 ```typescript
@@ -24,7 +24,7 @@ export class Site {
 The next fact you added was a `Blog.Post`, which had a `createdAt` field.
 It was related to a `site`.
 
-Create a file called `post.ts`.
+Create a file called `post.ts` in the `model` folder.
 Add the following code:
 
 ```typescript
