@@ -2,7 +2,7 @@
 title: "Install Jinaga"
 ---
 
-Let's install Jinaga so that we can get connected to the Replicator, by typing in VS Codes terminal window: 
+Let's install Jinaga so that we can get connected to the Replicator, by typing in VS Code's terminal window: 
 
 ```bash
 npm install jinaga jinaga-react
