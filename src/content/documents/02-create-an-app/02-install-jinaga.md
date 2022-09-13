@@ -8,7 +8,7 @@ Let's install Jinaga so that we can get connected to the Replicator, by typing i
 npm install jinaga jinaga-react
 ```
 
-Then create a file called `jinaga-config.ts` in de `src` directory and add the following code:
+Then create a file called `jinaga-config.ts` in the `src` directory and add the following code:
 
 ```typescript
 import { JinagaBrowser } from "jinaga";
