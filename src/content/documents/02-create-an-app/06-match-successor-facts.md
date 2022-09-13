@@ -8,9 +8,12 @@ We just told it what the domain is.
 Let's read some posts from the Replicator and show those.
 
 First we need to write a specification function that matches posts of a site.
-Let's do this inside of the `Post.ts` file:
+Let's add this specification function to the `post.ts` file:
 
 ```typescript
+import { j } from "../jinaga-config";
+//...
+
 export class Post {
   //...
 
