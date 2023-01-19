@@ -5,8 +5,8 @@
   "version": "0.1.0",
   "author": "Michael L Perry <michael@qedcode.com>",
   "dependencies": {
-    "gatsby": "^4.11.2",
-    "gatsby-plugin-google-analytics": "^4.11.0",
+    "gatsby": "^4.25.3",
+    "gatsby-plugin-google-analytics": "^5.4.0",
     "gatsby-plugin-image": "^2.11.1",
     "gatsby-plugin-manifest": "^4.11.1",
     "gatsby-plugin-react-helmet": "^5.11.0",
