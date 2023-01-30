@@ -19,7 +19,7 @@
     "gatsby-remark-prismjs": "^6.11.0",
     "gatsby-source-filesystem": "^4.11.1",
     "gatsby-transformer-code": "^0.2.0",
-    "gatsby-transformer-remark": "^5.25.1",
+    "gatsby-transformer-remark": "^6.5.0",
     "gatsby-transformer-sharp": "^4.11.0",
     "graphql": "^15.8.0",
     "jinaga": "^2.5.2",
