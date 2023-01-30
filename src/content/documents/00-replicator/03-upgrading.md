@@ -22,16 +22,16 @@ docker rename my-replicator my-old-replicator
 Then discover the name that Docker Desktop created for the managed volume.
 
 ```bash
-docker inspect -f '{{ .Mounts }}' my-old-replicator
+docker inspect -f '{{ (index .Mounts 0).Name }}' my-old-replicator
 ```
 
 This will output something like this:
 
 ```
-[{volume d656e6e25c8aad61cc3b0425939342e5e3ed80faf43b78b7c7fde670770b6da1 /var/lib/docker/volumes/d656e6e25c8aad61cc3b0425939342e5e3ed80faf43b78b7c7fde670770b6da1/_data /var/lib/postgresql/data local  true }]
+d656e6e25c8aad61cc3b0425939342e5e3ed80faf43b78b7c7fde670770b6da1
 ```
 
-The hexadecimal number that above starts with `d656` is the volume name.
+That hexadecimal number is the volume name.
 You will need this later.
 
 ## Copy Data to a New Volume
