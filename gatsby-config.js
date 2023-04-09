@@ -49,7 +49,7 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "jinaga",
-        path: "./node_modules/jinaga/dist/types/"
+        path: "./node_modules/jinaga/types/"
       }
     },
     {

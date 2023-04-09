@@ -1,5 +1,5 @@
 import { graphql } from 'gatsby'
-import { JinagaBrowser } from 'jinaga/dist/jinaga'
+import { JinagaBrowser } from 'jinaga'
 import React, { Component } from 'react'
 import Header from '../components/header'
 import MonacoEditor from '../components/MonacoEditor'
