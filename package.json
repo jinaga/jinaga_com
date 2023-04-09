@@ -51,6 +51,9 @@
     "prettier": "^2.2.1",
     "webpack": "^5.76.0"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby-starter-default"
