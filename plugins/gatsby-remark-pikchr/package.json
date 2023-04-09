@@ -9,7 +9,7 @@
   "author": "Jan Verhaegen <jan.verhaegen@tss.be",
   "license": "MIT",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.5",
+    "cheerio": "^1.0.0-rc.12",
     "pikchr": "0.0.5",
     "unist-util-visit": "^2.0.3"
   }
