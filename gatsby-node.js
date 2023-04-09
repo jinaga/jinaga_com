@@ -42,20 +42,20 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 exports.createPages = async ({ actions, graphql }) => {
     const { createPage } = actions;
   
-    (await loadDocumentPages(graphql, 'documents', 'src/templates/documentTemplate.js'))
+    (await loadDocumentsPages(graphql))
         .forEach(page => createPage(page));
-    (await loadDocumentPages(graphql, 'yourfirstpwa', 'src/templates/yourFirstPwaTemplate.js'))
+    (await loadYourFirstPWAPages(graphql))
         .forEach(page => createPage(page));
     (await loadExamplePages(graphql))
         .forEach(page => createPage(page));
 };
 
-async function loadDocumentPages(graphql, folder, template) {
-    const doumentTemplate = path.resolve(template);
+async function loadDocumentsPages(graphql) {
+    const documentTemplate = path.resolve("src/templates/documentTemplate.js");
     const result = await graphql(`
         {
             allMarkdownRemark(filter: { 
-                fields: { slug: { glob: "/${folder}/**" }}
+                fields: { slug: { glob: "/documents/**" }}
                 }) {
                 edges {
                     node {
@@ -75,7 +75,39 @@ async function loadDocumentPages(graphql, folder, template) {
     }
     return result.data.allMarkdownRemark.edges.map(edge => ({
         path: edge.node.fields.slug,
-        component: doumentTemplate,
+        component: documentTemplate,
+        context: {
+            slug: edge.node.fields.slug
+        }
+    }));
+}
+
+async function loadYourFirstPWAPages(graphql) {
+    const documentTemplate = path.resolve("src/templates/yourFirstPwaTemplate.js");
+    const result = await graphql(`
+        {
+            allMarkdownRemark(filter: { 
+                fields: { slug: { glob: "/yourfirstpwa/**" }}
+                }) {
+                edges {
+                    node {
+                        frontmatter {
+                            title
+                        }
+                        fields {
+                            slug
+                        }
+                    }
+                }
+            }
+        }
+    `);
+    if (result.errors) {
+        throw result.errors;
+    }
+    return result.data.allMarkdownRemark.edges.map(edge => ({
+        path: edge.node.fields.slug,
+        component: documentTemplate,
         context: {
             slug: edge.node.fields.slug
         }
