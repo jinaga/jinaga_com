@@ -1,1 +1,1 @@
-import { Jinaga } from "jinaga"; declare global { const j: Jinaga; } export {};
+import { Jinaga, Model, ModelBuilder, buildModel } from "jinaga"; declare global { const j: Jinaga; } export { buildModel };

@@ -1,16 +1,31 @@
-(async () => {
-    const person = await j.fact({
-        type: 'Jinaga.User',
-        publicKey: '---IF THIS WERE A REAL USER, THEIR PUBLIC KEY WOULD BE HERE---'
-    });
-    const post = await j.fact({
-        type: 'Blog.Post',
-        created: new Date(),
-        author: person
-    });
+class Site {
+  static Type = "Blog.Site" as const;
+  public type = Site.Type;
 
-    // A predecessor is just another JSON object.
-    // It's called a predecessor becuase it comes first.
-    // In this case, we have to have a person before they can write a post.
-    console.log(JSON.stringify(post, null, 2));
+  constructor(
+    public domain: string
+  ) { }
+}
+
+class Post {
+  static Type = "Blog.Post" as const;
+  public type = Post.Type;
+
+  constructor(
+    public createdAt: Date | string,
+    public site: Site
+  ) { }
+}
+
+(async () => {
+  const site = await j.fact(new Site('qedcode.com'));
+  const post = await j.fact(new Post(
+    new Date(),
+    site
+  ));
+
+  // A predecessor is just another JSON object.
+  // It's called a predecessor becuase it comes first.
+  // In this case, we have to have a site before we can write a post.
+  console.log(JSON.stringify(post, null, 2));
 })();

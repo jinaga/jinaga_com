@@ -15,7 +15,7 @@ class MonacoEditor extends Component {
         )
       })
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
-        'import { Jinaga } from "jinaga"; declare global { const j: Jinaga; } export {};',
+        'import { Jinaga, buildModel } from "jinaga"; declare global { const j: Jinaga; } export { buildModel };',
         'file:///globals.d.ts'
       )
 

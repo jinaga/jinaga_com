@@ -1,53 +1,53 @@
+class Site {
+  static Type = "Blog.Site" as const;
+  public type = Site.Type;
+
+  constructor(
+    public domain: string
+  ) { }
+}
+
+class Post {
+  static Type = "Blog.Post" as const;
+  public type = Post.Type;
+
+  constructor(
+    public createdAt: Date | string,
+    public site: Site
+  ) { }
+}
+
+const model = buildModel(b => b
+  .type(Site)
+  .type(Post, m => m
+    .predecessor("site", Site)
+  )
+);
+
+const postsInSite = model.given(Site).match((site, facts) =>
+  facts.ofType(Post)
+    .join(post => post.site, site)
+);
+
 (async () => {
-    const person = await populateData();
-
-    function postsByAuthor(a) {
-        return j.match({
-            type: 'Blog.Post',
-            author: a
-        });
-    }
-    
-    const posts = await j.query(person, j.for(postsByAuthor));
-
-    // Notice how all of these posts have the same author.
-    console.log(JSON.stringify(posts, null, 2));
+  const site = await populateData();
+  const posts = await j.query(postsInSite, site);
 })();
 
-// I put some data in here for you to query.
-// I even put in a post from a different user so you can see that it's not returned.
 async function populateData() {
-    const person = await j.fact({
-        type: 'Jinaga.User',
-        publicKey: '---IF THIS WERE A REAL USER, THEIR PUBLIC KEY WOULD BE HERE---'
-    });
+  const site = await j.fact(new Site('qedcode.com'));
+  await j.fact(new Post(
+    new Date(),
+    site
+  ));
+  await j.fact(new Post(
+    new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+    site
+  ));
+  await j.fact(new Post(
+    new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+    site
+  ));
 
-    await j.fact({
-        type: 'Blog.Post',
-        author: person,
-        title: 'What is Historical Modeling?'
-    });
-
-    await j.fact({
-        type: 'Blog.Post',
-        author: person,
-        title: 'Idempotency'
-    });
-
-    await j.fact({
-        type: 'Blog.Post',
-        author: person,
-        title: 'What Two Generals Can Teach Us About Web APIs'
-    });
-
-    await j.fact({
-        type: 'Blog.Post',
-        author: {
-            type: 'Jinaga.User',
-            publicKey: '---SOME OTHER USER---'
-        },
-        title: 'Pandas Eating Things'
-    });
-
-    return person;
+  return site;
 }
