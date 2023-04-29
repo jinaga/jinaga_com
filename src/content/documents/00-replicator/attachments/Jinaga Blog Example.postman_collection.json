@@ -1,0 +1,78 @@
+{
+	"info": {
+		"_postman_id": "1d7368f4-9855-4ffa-a65e-f8e0ae01d188",
+		"name": "Jinaga Blog Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9737762"
+	},
+	"item": [
+		{
+			"name": "Create blog post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "let site: Blog.Site = {\r\n    domain: \"qedcode.com\"\r\n}\r\n\r\nlet post: Blog.Post = {\r\n    createdAt: \"2022-08-16T15:23:13.231Z\",\r\n    site\r\n}\r\n\r\nlet title: Blog.Post.Title = {\r\n    post,\r\n    value: \"Introducing Jinaga Replicator\",\r\n    prior: []\r\n}\r\nlet title2: Blog.Post.Title = {\r\n    post,\r\n    value: \"Introduction to the Jinaga Replicator\",\r\n    prior: [ title ]\r\n}"
+				},
+				"url": {
+					"raw": "{{replicator_url}}/write",
+					"host": [
+						"{{replicator_url}}"
+					],
+					"path": [
+						"write"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read blog posts",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "let site: Blog.Site = {\r\n    domain: \"qedcode.com\"\r\n}\r\n\r\n(site: Blog.Site) {\r\n    post: Blog.Post [\r\n        post->site: Blog.Site = site\r\n        !E {\r\n            deleted: Blog.Post.Deleted [\r\n                deleted->post: Blog.Post = post\r\n            ]\r\n        }\r\n    ]\r\n} => {\r\n    id = #post\r\n    createdAt = post.createdAt\r\n    titles = {\r\n        title: Blog.Post.Title [\r\n            title->post: Blog.Post = post\r\n            !E {\r\n                next: Blog.Post.Title [\r\n                    next->prior: Blog.Post.Title = title\r\n                ]\r\n            }\r\n        ]\r\n    } => title.value\r\n}"
+				},
+				"url": {
+					"raw": "{{replicator_url}}/read",
+					"host": [
+						"{{replicator_url}}"
+					],
+					"path": [
+						"read"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "replicator_url",
+			"value": "https://repdev.jinaga.com/yourreplicatorurl"
+		}
+	]
+}

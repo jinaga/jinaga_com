@@ -2,9 +2,35 @@
 title: "Write"
 ---
 
-To store data, `POST` a request to `http://localhost:8080/jinaga/write`.
+To store data, `POST` a request to `https://repdev.jinaga.com/xyz123.../write`.
 The body of the request should be raw text (`Content-Type: text/plain`).
 It is expressed as the Jinaga fact language.
+
+The Jinaga fact language lets you declare a set of facts.
+You can download an <a href="./attachments/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> and enter your own replicator URL.
+Here is an example set:
+
+```specification
+let site: Blog.Site = {
+    domain: "qedcode.com"
+}
+
+let post: Blog.Post = {
+    createdAt: "2022-08-16T15:23:13.231Z",
+    site
+}
+
+let title: Blog.Post.Title = {
+    post,
+    value: "Introducing Jinaga Replicator",
+    prior: []
+}
+let title2: Blog.Post.Title = {
+    post,
+    value: "Introduction to the Jinaga Replicator",
+    prior: [ title ]
+}
+```
 
 ## Facts
 
