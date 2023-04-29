@@ -3,54 +3,48 @@ title: "Declare a Component"
 ---
 
 We'll declare a component to display a site.
-Inside de `src folder`, create a folder called `components`.
+Inside the `src` folder, create a folder called `components`.
 Inside that folder, create a file called `SiteContainer.tsx`.
 
-With Jinaga-React, you can create a specification that reads properties from a starting fact.
-Define a specification that starts with the `Site` fact.
+Let's create a simple component that displays the domain name of the site.
 
-```typescript
-import { field, jinagaContainer, mapProps, specificationFor } from "jinaga-react";
+```tsx
+import { Site } from '../model/blog';
 
-import { j } from "../jinaga-config";
-import { Site } from "../model/site";
+interface SiteContainerProps {
+  site: Site | null;
+}
 
-const siteSpecification = specificationFor(Site, {
-  domain: field(d => d.domain)
-});
-```
-
-So far we only have one property.
-It is mapped to the `domain` field of the `Site` fact.
-
-Now map that property to a React component.
-
-```typescript
-const siteMapping = mapProps(siteSpecification).to(({ domain }) => (
-  <div>
-    <h1>{domain}</h1>
-  </div>
-));
-```
-
-Finally, create a Jinaga container for that mapping.
-
-```typescript
-export default jinagaContainer(j, siteMapping);
+export function SiteContainer({ site }: SiteContainerProps) {
+  return (
+    <div>
+      <h1>{site?.domain}</h1>
+    </div>
+  )
+}
 ```
 
 Now you can add this component to the app in `App.tsx`.
 
 ```tsx
-import SiteContainer from "./components/SiteContainer";
+import { SiteContainer } from './components/SiteContainer';
 
 function App() {
   //...
 
   return (
     <div className="App">
-      <SiteContainer fact={site} />
+      <SiteContainer site={site} />
     </div>
-  )
+  );
 }
 ```
+
+Run the app and you'll see "qedcode.com" displayed on the page.
+Horray!
+
+![Site domain displayed in the container](./attachments/site-domain.png)
+
+OK, so maybe that's not so exciting.
+Wouldn't it be better to display the posts?
+Let's do that.

@@ -5,10 +5,10 @@ title: "Initialize a Starting Point"
 Now you can create a `Site` object as a starting point for your app.
 Replace the content of `App.tsx` with:
 
-```typescript
+```tsx
 import React from 'react';
 import { j } from "./jinaga-config";
-import { Site } from "./model/site";
+import { Site } from "./model/blog";
 
 async function makeSite() {
   const site = await j.fact(new Site("qedcode.com"));

@@ -10,7 +10,7 @@ Run the following command in the WSL-terminal:
 npx create-react-app my-application --template typescript
 ```
 
-Here we used the TypeScript template.
+Here we used the TypeScript template, which is recommended for Jinaga.
 If you prefer plain JavaScript, run the command without the `--template typescript` option.
 
 The above command will create a folder called `my-application` in the current directory.
