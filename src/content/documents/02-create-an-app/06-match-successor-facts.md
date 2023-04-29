@@ -56,7 +56,9 @@ We can use these fields to determine what to render.
       { loading ? <p>Loading...</p> : null }
       { error ? <p>Error: {error.message}</p> : null }
       { data ? <ul>
-        { data.map(post => <li key={post.createdAt.toString()}>{post.createdAt.toString()}</li>) }
+        { data.map(post =>
+          <li key={post.createdAt.toString()}>{post.createdAt.toString()}</li>
+        ) }
       </ul> : null }
     </div>
   );

@@ -58,7 +58,9 @@ Let's resolve it by listing all of the candidate titles.
 
 ```tsx
   { data ? <ul>
-    { data.map(post => <li key={post.hash}>{post.titles.join(', ')}</li>) }
+    { data.map(post =>
+      <li key={post.hash}>{post.titles.join(', ')}</li>
+    ) }
   </ul> : null }
 ```
 

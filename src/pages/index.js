@@ -12,7 +12,7 @@ const IndexPage = () => (
     head={
       <div className="hero">
         <img src={siteLogo} alt="Jinaga" />
-        <p>Application-agnostic back end for web applications.</p>
+        <p>Application-agnostic back end for web and mobile applications.</p>
       </div>
     }
   >
@@ -62,16 +62,6 @@ const IndexPage = () => (
         />
       )}
     ></StaticQuery>
-    <h2>Demos</h2>
-    <iframe
-      width="560"
-      height="315"
-      src="https://www.youtube.com/embed/videoseries?list=PLlxnyxE021G9zzD65CCt_Y0dvDvWBadKj"
-      title="YouTube video player"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
   </Layout>
 )
 
