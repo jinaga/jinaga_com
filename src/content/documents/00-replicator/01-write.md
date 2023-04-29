@@ -7,7 +7,7 @@ The body of the request should be raw text (`Content-Type: text/plain`).
 It is expressed as the Jinaga fact language.
 
 The Jinaga fact language lets you declare a set of facts.
-You can download an <a href="./attachments/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> and enter your own replicator URL.
+You can download an <a href="/public/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> and enter your own replicator URL.
 Here is an example set:
 
 ```specification
