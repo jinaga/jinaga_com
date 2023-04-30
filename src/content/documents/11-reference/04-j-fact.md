@@ -1,8 +1,8 @@
 ---
-title: fact
+title: "j.fact"
 ---
 
-Creates a new fact.
+Call `j.fact` to create a new fact.
 This method is asynchronous.
 It will be resolved when the fact has been persisted.
 It returns the fact that was just created.
@@ -13,17 +13,7 @@ fact<T>(
 ): Promise<T>;
 ```
 
-## Parameters
-
-* **prototype** - The fact to save and share
-
-## Returns
-
-* A promise that resolves to the fact that was just persisted
-
-## Throws
-
-* **Specify the type of the fact** if the `type` field is not provided
+Creating a fact stores it locally, shares it upstream to the replicator, and updates active watches.
 
 ## Examples
 
@@ -92,17 +82,3 @@ await j.fact({
 ```
 
 [Try it](/examples/fact/all-at-once)
-
-You may be feeling that Jinaga facts are upside down.
-Typically, a JSON object contains its children.
-But a Jinaga fact contains its parent.
-What's going on with that?
-
-This all stems from the fact that Jinaga facts are *immutable*.
-You cannot change a fact.
-If a fact contained an array of children, then you would never be able to add another child.
-And so the relationship has to be flipped.
-A child knows its parent, because that parent relationship never changes.
-
-To find all of the children of a fact, you need to write a query.
-By the way, we call these children *successors*, as you will soon see.
