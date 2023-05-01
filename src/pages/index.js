@@ -30,7 +30,7 @@ const IndexPage = () => (
     </div>
     <h2>Build Apps Faster</h2>
     <p>
-      Typical web app architectures build domain knowledge into custom database
+      Typical web and mobile app architectures build domain knowledge into custom database
       schemas, APIs, and front ends. That means you have to write the same idea
       in three different ways. That slows you down.
     </p>
