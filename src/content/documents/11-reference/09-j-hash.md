@@ -32,7 +32,7 @@ const projectsForUser = model.given(User).match((user, facts) =>
     .join(project => project.owner, user)
     .select(project => ({
       hash: j.hash(project),
-      name: project.name
+      identifier: project.identifier
     })
   );
 
@@ -45,7 +45,7 @@ export function ProjectsPage() {
       {data && <ul>
         {data.map(project => (
           <li key={project.hash}>
-            {project.name}
+            {project.identifier}
           </li>
         ))}
       </ul>}
