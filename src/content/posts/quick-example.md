@@ -37,7 +37,7 @@ await j.fact(new Post(
 ));
 ```
 
-Call the `j.fact` function within the browser whenever you want to save something.
+Call the `j.fact` function within the browser or mobile app whenever you want to save something.
 It will be sent to the server, where it will be stored.
 You don't need a custom API.
 
@@ -67,7 +67,7 @@ The **query** method returns all facts matching the specification.
 const posts = await j.query(postsInSite, site);
 ```
 
-Again, run this code in the browser.
+Again, run this code in the browser or mobile client.
 There is no need to set up an API to perform this query on the server.
 
 ### Displaying facts
@@ -99,16 +99,16 @@ Render the results in your component.
 
 ### Subscribing to facts
 
-To have new posts pushed to the browser, call **subscribe**.
+To have new posts pushed to the browser or mobile app, call **subscribe**.
 
 ```javascript
 j.subscribe(postsInSite, site);
 ```
 
-And with this, facts created in one browser make their way to other browsers.
+And with this, facts created by one user make their way to other users.
 You didn't write a custom API.
 You didn't set up a Web Socket listener.
 You didn't define a custom database schema.
 
-Jinaga synchronizes immutable facts from browser, to server, and back again.
+Jinaga synchronizes immutable facts from client, to server, and back again.
 It persists them durably, transmits them reliably, and updates the view automatically.
