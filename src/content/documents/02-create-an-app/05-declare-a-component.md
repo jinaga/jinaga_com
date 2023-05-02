@@ -8,6 +8,8 @@ Inside that folder, create a file called `SiteContainer.tsx`.
 
 Let's create a simple component that displays the domain name of the site.
 
+In React:
+
 ```tsx
 import { Site } from '../model/blog';
 
@@ -24,6 +26,24 @@ export function SiteContainer({ site }: SiteContainerProps) {
 }
 ```
 
+Or in React Native:
+
+```tsx
+import { Site } from '../model/blog';
+
+interface SiteContainerProps {
+  site: Site | null;
+}
+
+export function SiteContainer({ site }: SiteContainerProps) {
+  return (
+    <View>
+      <Text>{site?.domain}</Text>
+    </View>
+  )
+}
+```
+
 Now you can add this component to the app in `App.tsx`.
 
 ```tsx
@@ -33,7 +53,7 @@ function App() {
   //...
 
   return (
-    <div className="App">
+    <div className="App">  // or <View>
       <SiteContainer site={site} />
     </div>
   );

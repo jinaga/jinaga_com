@@ -3,10 +3,8 @@ title: "Initialize a Starting Point"
 ---
 
 Now you can create a `Site` object as a starting point for your app.
-Replace the content of `App.tsx` with:
 
-```tsx
-import React from 'react';
+```typescript
 import { j } from "./jinaga-config";
 import { Site } from "./model/blog";
 
@@ -14,15 +12,19 @@ async function makeSite() {
   const site = await j.fact(new Site("qedcode.com"));
   return site;
 }
+```
 
+Add the state and effect to `App.tsx`:
+
+```tsx
 function App() {
   const [ site, setSite ] = React.useState<Site | null>(null);
   React.useEffect(() => {
     makeSite().then(setSite);
   }, [ setSite ]);
-}
 
-export default App;
+  // ...
+}
 ```
 
 The `makeSite()` function creates a `Site` object.

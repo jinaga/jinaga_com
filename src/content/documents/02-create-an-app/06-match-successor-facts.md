@@ -48,6 +48,7 @@ The `data` variable is either a `Post[]` or `null`.
 And the `error` variable is either an `Error` or `null`.
 
 We can use these fields to determine what to render.
+In React it looks like this:
 
 ```tsx
   return (
@@ -61,6 +62,23 @@ We can use these fields to determine what to render.
         ) }
       </ul> : null }
     </div>
+  );
+```
+
+In React Native:
+
+```tsx
+  return (
+    <View>
+      <Text>{site?.domain}</Text>
+      { loading ? <Text>Loading...</Text> : null }
+      { error ? <Text>Error: {error.message}</Text> : null }
+      { data ? <FlatList
+        data={data}
+        renderItem={({ item }) => <Text>{item.createdAt.toString()}</Text>}
+        keyExtractor={item => item.createdAt.toString()}
+      /> : null }
+    </View>
   );
 ```
 

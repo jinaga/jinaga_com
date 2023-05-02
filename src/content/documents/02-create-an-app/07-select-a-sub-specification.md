@@ -56,12 +56,25 @@ If there are multiple titles, then a concurrent edit has occurred.
 We'll have to decide how to resolve that conflict.
 Let's resolve it by listing all of the candidate titles.
 
+In React:
+
 ```tsx
   { data ? <ul>
     { data.map(post =>
       <li key={post.hash}>{post.titles.join(', ')}</li>
     ) }
   </ul> : null }
+```
+
+In React Native:
+
+```tsx
+  { data ? <FlatList
+    data={data}
+    renderItem={({ item: post }) =>
+      <Text key={post.hash}>{post.titles.join(', ')}</Text>
+    }
+  /> : null }
 ```
 
 Run the application and see the titles of the posts.

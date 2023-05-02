@@ -129,7 +129,6 @@ const projectsToBeIndexed = model.given(Company).match((project, facts) =>
     .notExists(project => facts.ofType(ProjectIndexed)
       .join(indexed => indexed.project, project)
     )
-  )
 );
 
 const projectWatch = j.watch(projectsToBeIndexed, company, async (project) => {

@@ -2,6 +2,10 @@
 title: "Create React App"
 ---
 
+Jinaga.JS supports React and React Native.
+
+## React
+
 The easiest way to start is with [Create React App](https://create-react-app.dev/).
 
 Run the following command in the WSL-terminal:
@@ -22,3 +26,22 @@ code .
 ```
 
 Next open the terminal window in VS Code and from there run the app with `npm start`.
+
+## React Native
+
+The easiest way to start a React Native app is with [Expo](https://expo.io/).
+If you are on Windows, be sure to run this command in PowerShell, *not* in WSL.
+
+```bash
+npx create-expo-app my-application -t expo-template-blank-typescript
+```
+
+Then change to that folder and open VS Code:
+
+```bash
+cd my-application
+code .
+```
+
+In the original PowerShell window, run the app with `npm start`.
+It's best to use the PowerShell window for this, because it will show a QR code that you will need to scan with your phone.
