@@ -77,11 +77,12 @@ In React Native:
   /> : null }
 ```
 
-Run the application and see the titles of the posts.
+If you have initialized your replicator using the [write endpoint](../../replicator/write/), then you should have a post with two versions of its title.
+Run the application and see those titles.
 
 ![All titles of the post are shown](./attachments/post-all-titles.png)
 
-If you followed the instructions while writing to the replicator, then you should see two titles for the post.
+A post is supposed to have just one title, but the app is showing two.
 That's not right.
 One of them should have replaced the other.
 Let's fix that.

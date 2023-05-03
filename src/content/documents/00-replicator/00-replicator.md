@@ -8,7 +8,11 @@ To get started, create a Replicator of your very own on the [Jinaga Portal](http
 
 When you publish a Replicator, you will be given a URL.
 Use a tool like [Postman](https://www.postman.com/) to `POST` messages to `https://repdev.jinaga.com/xyz123.../write` and `/read`.
-You can download an <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> and enter your own replicator URL.
+
+You can download an <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> to try it yourself.
+Edit the collection and enter your own replicator URL.
+
+![Enter the replicator URL in the Postman collection variables](./attachments/postman.png)
 
 ## Docker
 
@@ -24,4 +28,8 @@ docker run --name my-replicator -p8080:8080 jinaga/jinaga-replicator
 This creates and starts a new container called `my-replicator`.
 The container is listening at port 8080 for commands.
 Use a tool like [Postman](https://www.postman.com/) to `POST` messages to `http://localhost:8080/jinaga/write` and `/read`.
-You can download an <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> and enter the replicator URL `http://localhost:8080/jinaga`.
+
+You can download an <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> to populate your replicator.
+Edit the collection variables and enter the replicator URL `http://localhost:8080/jinaga`.
+
+![Enter the local replicator URL in the Postman collection variables](./attachments/postman_localhost.png)

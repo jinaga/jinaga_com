@@ -2,4 +2,6 @@
 title: "Create an App"
 ---
 
-Once you have a Replicator up and running, and you have filled it with facts, create an app that displays those facts.
+Before using this walkthrough, please create a Jinaga [replicator](../replicator/).
+Initialize it with data representing a blog post.
+Once you have a Replicator running and initialized, create an app that displays those posts.

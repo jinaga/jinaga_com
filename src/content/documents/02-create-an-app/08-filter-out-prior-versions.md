@@ -23,7 +23,7 @@ const postsInSite = model.given(Site).match((site, facts) =>
 ```
 
 Take a look at the app now.
-You should see only the latest version of each post title.
+You should see only the latest version of the post title.
 
 ![Latest version of each post title](./attachments/post-one-title.png)
 

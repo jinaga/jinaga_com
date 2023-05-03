@@ -2,12 +2,17 @@
 title: "Write"
 ---
 
-To store data, `POST` a request to `https://repdev.jinaga.com/xyz123.../write`.
-The body of the request should be raw text (`Content-Type: text/plain`).
-It is expressed as the Jinaga fact language.
+The `/write` endpoint lets you initialize your replicator with some data.
+It is not used in production.
+Instead, it is a convenient way to populate your replicator with some data for testing.
 
-The Jinaga fact language lets you declare a set of facts.
+To store data, `POST` a request to the `/write` endpoint.
+The body of the request should be raw text (`Content-Type: text/plain`).
 You can download an <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> and enter your own replicator URL.
+Open the request called "Create blog post".
+
+The body is expressed as the Jinaga fact language.
+The Jinaga fact language lets you declare a set of facts.
 Here is an example set:
 
 ```specification

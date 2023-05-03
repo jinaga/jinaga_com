@@ -2,12 +2,17 @@
 title: "Read"
 ---
 
-To read data, `POST` a request to `https://repdev.jinaga.com/xyz123.../read`.
-The body of the request should be raw text (`Content-Type: text/plain`).
-It is expressed in the Jinaga specification language.
+The `/read` endpoint lets you look at the data in your replicator.
+It is not used in production.
+Instead, it is a convenient way to view the data in your replicator for testing.
 
-The Jinaga specification language lets you declare a set of input facts, a specification body, and projections.
+To read data, `POST` a request to `/read`.
+The body of the request should be raw text (`Content-Type: text/plain`).
 You can download an <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> and enter your own replicator URL.
+Open the request called "Read blog posts".
+
+The body is expressed in the Jinaga specification language.
+The Jinaga specification language lets you declare a set of input facts, a specification body, and projections.
 Here's an example specification:
 
 ```specification

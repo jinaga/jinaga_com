@@ -82,7 +82,8 @@ In React Native:
   );
 ```
 
-Refresh the page, and the post that you created in the replicator should appear.
+If you have initialized your replicator using the [write endpoint](../../replicator/write/), then you should have a post.
+Refresh the page, and that post should appear.
 
 ![Post shown by created date](./attachments/post-date.png)
 

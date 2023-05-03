@@ -2,6 +2,8 @@
 title: "Create React App"
 ---
 
+Before using this walkthrough, please create a Jinaga [replicator](../../replicator/).
+Initialize it using the [write endpoint](../../replicator/write/).
 Jinaga.JS supports React and React Native.
 
 ## React
