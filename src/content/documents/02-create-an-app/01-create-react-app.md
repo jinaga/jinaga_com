@@ -9,8 +9,11 @@ Jinaga.JS supports React and React Native.
 ## React
 
 The easiest way to start is with [Create React App](https://create-react-app.dev/).
+Be sure you have the latest version of [Node.js](https://nodejs.org/en/download) installed.
+If you are on Windows, be sure that Node is [installed in WSL](https://github.com/nodesource/distributions#using-ubuntu-1).
+If you seen an error about UNC paths, then it is running the Windows version.
 
-Run the following command in the WSL-terminal:
+Then run the following command in the WSL terminal:
 
 ```bash
 npx create-react-app my-application --template typescript
