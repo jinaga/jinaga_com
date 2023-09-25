@@ -7,10 +7,18 @@ It stores and shares facts.
 To get started, create a Replicator of your very own on the [Jinaga Portal](https://dev.jinaga.com/).
 
 When you publish a Replicator, you will be given a URL.
-Use a tool like [Postman](https://www.postman.com/) to `POST` messages to `https://repdev.jinaga.com/xyz123.../write` and `/read`.
+Use a tool like [httpYac](https://httpyac.github.io/) or [Postman](https://www.postman.com/) to `POST` messages to `https://repdev.jinaga.com/xyz123.../write` and `/read`.
 
-You can download an <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> to try it yourself.
-Edit the collection and enter your own replicator URL.
+You can download the <a href="" download>example httpYac files</a> or <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> to try it yourself.
+Edit the example and enter your own replicator URL.
+
+For httpYac, add your own `env.local` file with the following values:
+
+```
+replicatorUrl=https://repdev.jinaga.com/xyz123...
+```
+
+For Postman, enter the replicator URL in the Postman collection variables.
 
 ![Enter the replicator URL in the Postman collection variables](./attachments/postman.png)
 
