@@ -30,6 +30,19 @@ The container is listening at port 8080 for commands.
 Use a tool like [Postman](https://www.postman.com/) to `POST` messages to `http://localhost:8080/jinaga/write` and `/read`.
 
 You can download an <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> to populate your replicator.
-Edit the collection variables and enter the replicator URL `http://localhost:8080/jinaga`.
+
+If you are using httpYac, create a file called `.env.local` in the same folder as the request files.
+Copy the following configuration settings from your replicator.
+
+```
+replicatorUrl=https://repdev.jinaga.com/xxxx
+
+oauth2_authorizationEndpoint=https://repdev.jinaga.com/xxxx/auth/apple
+oauth2_tokenEndpoint=https://repdev.jinaga.com/xxxx/auth/token
+oauth2_clientId=xxxx
+oauth2_usePkce=true
+```
+
+If you are using Postman, edit the collection variables and enter the replicator URL `http://localhost:8080/jinaga`.
 
 ![Enter the local replicator URL in the Postman collection variables](./attachments/postman_localhost.png)
