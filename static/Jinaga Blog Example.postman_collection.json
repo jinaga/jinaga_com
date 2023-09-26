@@ -1,19 +1,19 @@
 {
 	"info": {
-		"_postman_id": "1d7368f4-9855-4ffa-a65e-f8e0ae01d188",
+		"_postman_id": "145c25a7-fee3-406a-954d-b032d128fb75",
 		"name": "Jinaga Blog Example",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9737762"
 	},
 	"item": [
 		{
-			"name": "Create blog post",
+			"name": "Create site sans auth",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "let site: Blog.Site = {\r\n    domain: \"qedcode.com\"\r\n}\r\n\r\nlet post: Blog.Post = {\r\n    createdAt: \"2022-08-16T15:23:13.231Z\",\r\n    site\r\n}\r\n\r\nlet title: Blog.Post.Title = {\r\n    post,\r\n    value: \"Introducing Jinaga Replicator\",\r\n    prior: []\r\n}\r\nlet title2: Blog.Post.Title = {\r\n    post,\r\n    value: \"Introduction to the Jinaga Replicator\",\r\n    prior: [ title ]\r\n}"
+					"raw": "let creator: Jinaga.User = {\r\n  publicKey: \"--- FAKE PUBLIC KEY ---\"\r\n}\r\n\r\nlet site: Blog.Site = {\r\n  creator,\r\n  domain: \"michaelperry.net\"\r\n}"
 				},
 				"url": {
 					"raw": "{{replicator_url}}/write",
@@ -28,13 +28,13 @@
 			"response": []
 		},
 		{
-			"name": "Read blog posts",
+			"name": "Get sites sans auth",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "let site: Blog.Site = {\r\n    domain: \"qedcode.com\"\r\n}\r\n\r\n(site: Blog.Site) {\r\n    post: Blog.Post [\r\n        post->site: Blog.Site = site\r\n        !E {\r\n            deleted: Blog.Post.Deleted [\r\n                deleted->post: Blog.Post = post\r\n            ]\r\n        }\r\n    ]\r\n} => {\r\n    id = #post\r\n    createdAt = post.createdAt\r\n    titles = {\r\n        title: Blog.Post.Title [\r\n            title->post: Blog.Post = post\r\n            !E {\r\n                next: Blog.Post.Title [\r\n                    next->prior: Blog.Post.Title = title\r\n                ]\r\n            }\r\n        ]\r\n    } => title.value\r\n}"
+					"raw": "let creator: Jinaga.User = {\r\n  publicKey: \"--- FAKE PUBLIC KEY ---\"\r\n}\r\n\r\n(creator: Jinaga.User) {\r\n  site: Blog.Site [\r\n    site->creator: Jinaga.User = creator\r\n  ]\r\n} => site.domain"
 				},
 				"url": {
 					"raw": "{{replicator_url}}/read",
@@ -43,6 +43,236 @@
 					],
 					"path": [
 						"read"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create post sans auth",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "let creator: Jinaga.User = {\r\n  publicKey: \"--- FAKE PUBLIC KEY ---\"\r\n}\r\n\r\nlet site: Blog.Site = {\r\n  creator,\r\n  domain: \"michaelperry.net\"\r\n}\r\n\r\nlet post: Blog.Post = {\r\n    createdAt: \"2022-08-16T15:23:13.231Z\",\r\n    site\r\n}\r\n\r\nlet title: Blog.Post.Title = {\r\n    post,\r\n    value: \"Introducing Jinaga Replicator\",\r\n    prior: []\r\n}\r\nlet title2: Blog.Post.Title = {\r\n    post,\r\n    value: \"Introduction to the Jinaga Replicator\",\r\n    prior: [ title ]\r\n}"
+				},
+				"url": {
+					"raw": "{{replicator_url}}/write",
+					"host": [
+						"{{replicator_url}}"
+					],
+					"path": [
+						"write"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get posts sans auth",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "let creator: Jinaga.User = {\r\n  publicKey: \"--- FAKE PUBLIC KEY ---\"\r\n}\r\n\r\nlet site: Blog.Site = {\r\n  creator,\r\n  domain: \"michaelperry.net\"\r\n}\r\n\r\n(site: Blog.Site) {\r\n    post: Blog.Post [\r\n        post->site: Blog.Site = site\r\n        !E {\r\n            deleted: Blog.Post.Deleted [\r\n                deleted->post: Blog.Post = post\r\n            ]\r\n        }\r\n    ]\r\n} => {\r\n    id = #post\r\n    createdAt = post.createdAt\r\n    titles = {\r\n        title: Blog.Post.Title [\r\n            title->post: Blog.Post = post\r\n            !E {\r\n                next: Blog.Post.Title [\r\n                    next->prior: Blog.Post.Title = title\r\n                ]\r\n            }\r\n        ]\r\n    } => title.value\r\n}"
+				},
+				"url": {
+					"raw": "{{replicator_url}}/read",
+					"host": [
+						"{{replicator_url}}"
+					],
+					"path": [
+						"read"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create post with auth",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "state",
+							"value": "randomstate",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "profile read write",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "{{client_id}}",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "{{access_token_url}}",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "{{auth_url}}",
+							"type": "string"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "{{callback_url}}",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code_with_pkce",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "let site: Blog.Site = {\r\n  creator: me,\r\n  domain: \"michaelperry.net\"\r\n}\r\n\r\nlet post: Blog.Post = {\r\n    createdAt: \"2022-08-16T15:23:13.231Z\",\r\n    site\r\n}\r\n\r\nlet title: Blog.Post.Title = {\r\n    post,\r\n    value: \"Introducing Jinaga Replicator\",\r\n    prior: []\r\n}\r\nlet title2: Blog.Post.Title = {\r\n    post,\r\n    value: \"Introduction to the Jinaga Replicator\",\r\n    prior: [ title ]\r\n}"
+				},
+				"url": {
+					"raw": "{{replicator_url}}/write",
+					"host": [
+						"{{replicator_url}}"
+					],
+					"path": [
+						"write"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get posts with auth",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "state",
+							"value": "randomstate",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "profile read write",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "{{client_id}}",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "{{access_token_url}}",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "{{auth_url}}",
+							"type": "string"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "{{callback_url}}",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code_with_pkce",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "let site: Blog.Site = {\r\n  creator: me,\r\n  domain: \"michaelperry.net\"\r\n}\r\n\r\n(site: Blog.Site) {\r\n    post: Blog.Post [\r\n        post->site: Blog.Site = site\r\n        !E {\r\n            deleted: Blog.Post.Deleted [\r\n                deleted->post: Blog.Post = post\r\n            ]\r\n        }\r\n    ]\r\n} => {\r\n    id = #post\r\n    createdAt = post.createdAt\r\n    titles = {\r\n        title: Blog.Post.Title [\r\n            title->post: Blog.Post = post\r\n            !E {\r\n                next: Blog.Post.Title [\r\n                    next->prior: Blog.Post.Title = title\r\n                ]\r\n            }\r\n        ]\r\n    } => title.value\r\n}"
+				},
+				"url": {
+					"raw": "{{replicator_url}}/read",
+					"host": [
+						"{{replicator_url}}"
+					],
+					"path": [
+						"read"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Define authorization rules",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{secret}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "authorization {\r\n  any Jinaga.User\r\n\r\n  (site: Blog.Site) {\r\n    creator: Jinaga.User [\r\n      creator = site->creator: Jinaga.User\r\n    ]\r\n  } => creator\r\n\r\n  (post: Blog.Post) {\r\n    creator: Jinaga.User [\r\n      creator = post->site: Blog.Site->creator: Jinaga.User\r\n    ]\r\n  } => creator\r\n\r\n  (title: Blog.Post.Title) {\r\n    creator: Jinaga.User [\r\n      creator = title->post: Blog.Post->site: Blog.Site->creator: Jinaga.User\r\n    ]\r\n  } => creator\r\n}"
+				},
+				"url": {
+					"raw": "{{authorization_endpoint}}",
+					"host": [
+						"{{authorization_endpoint}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Define distribution rules",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{secret}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "distribution {\r\n  share (site: Blog.Site) {\r\n      post: Blog.Post [\r\n          post->site: Blog.Site = site\r\n          !E {\r\n              deleted: Blog.Post.Deleted [\r\n                  deleted->post: Blog.Post = post\r\n              ]\r\n          }\r\n      ]\r\n  } => {\r\n      id = #post\r\n      createdAt = post.createdAt\r\n      titles = {\r\n          title: Blog.Post.Title [\r\n              title->post: Blog.Post = post\r\n              !E {\r\n                  next: Blog.Post.Title [\r\n                      next->prior: Blog.Post.Title = title\r\n                  ]\r\n              }\r\n          ]\r\n      } => title.value\r\n  }\r\n  with everyone\r\n}"
+				},
+				"url": {
+					"raw": "{{distribution_endpoint}}",
+					"host": [
+						"{{distribution_endpoint}}"
 					]
 				}
 			},
@@ -73,6 +303,34 @@
 		{
 			"key": "replicator_url",
 			"value": "https://repdev.jinaga.com/yourreplicatorurl"
+		},
+		{
+			"key": "callback_url",
+			"value": "http://localhost:3000/callback"
+		},
+		{
+			"key": "auth_url",
+			"value": "https://repdev.jinaga.com/xxxx/auth/apple"
+		},
+		{
+			"key": "access_token_url",
+			"value": "https://repdev.jinaga.com/xxxx/auth/token"
+		},
+		{
+			"key": "client_id",
+			"value": "xxxx"
+		},
+		{
+			"key": "authorization_endpoint",
+			"value": "https://dev.jinaga.com/xxxx/authorization"
+		},
+		{
+			"key": "secret",
+			"value": "yyyyy"
+		},
+		{
+			"key": "distribution_endpoint",
+			"value": "https://dev.jinaga.com/xxxx/distribution"
 		}
 	]
 }
