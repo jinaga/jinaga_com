@@ -9,16 +9,27 @@ To get started, create a Replicator of your very own on the [Jinaga Portal](http
 When you publish a Replicator, you will be given a URL.
 Use a tool like [httpYac](https://httpyac.github.io/) or [Postman](https://www.postman.com/) to `POST` messages to `https://repdev.jinaga.com/xyz123.../write` and `/read`.
 
-You can download the <a href="" download>example httpYac files</a> or <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> to try it yourself.
+You can download the <a href="/HttpFiles.zip" download>example httpYac files</a> or <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> to try it yourself.
 Edit the example and enter your own replicator URL.
 
 For httpYac, add your own `env.local` file with the following values:
 
-```
-replicatorUrl=https://repdev.jinaga.com/xyz123...
+```bash
+replicatorUrl=https://repdev.jinaga.com/xyz123
+
+oauth2_authorizationEndpoint=https://repdev.jinaga.com/xyz123/auth/apple
+oauth2_tokenEndpoint=https://repdev.jinaga.com/xyz123/auth/token
+oauth2_clientId=xyz123
+oauth2_usePkce=true
+
+authorizationEndpoint=https://dev.jinaga.com/xyz123/authorization
+distributionEndpoint=https://dev.jinaga.com/xyz123/distribution
+secret=zyx321
 ```
 
-For Postman, enter the replicator URL in the Postman collection variables.
+Get the actual values from your replicator after setting up authentication, authorization, and distribution.
+
+For Postman, enter the replicator URL and other values in the Postman collection variables.
 
 ![Enter the replicator URL in the Postman collection variables](./attachments/postman.png)
 
