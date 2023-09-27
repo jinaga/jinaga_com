@@ -97,14 +97,6 @@ Render the results in your component.
   );
 ```
 
-### Subscribing to facts
-
-To have new posts pushed to the browser or mobile app, call **subscribe**.
-
-```javascript
-j.subscribe(postsInSite, site);
-```
-
 And with this, facts created by one user make their way to other users.
 You didn't write a custom API.
 You didn't set up a Web Socket listener.
