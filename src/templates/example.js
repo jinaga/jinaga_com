@@ -3,7 +3,7 @@ import { JinagaBrowser } from 'jinaga'
 import React, { Component } from 'react'
 import Header from '../components/header'
 import MonacoEditor from '../components/MonacoEditor'
-import SEO from '../components/seo'
+import Seo from '../components/seo'
 import '../stylesheets/main.scss'
 
 class ExamplePage extends Component {
@@ -19,7 +19,7 @@ class ExamplePage extends Component {
     const { example, sourceFiles } = this.props.data
     return (
       <div className="tryit-container">
-        <SEO
+        <Seo
           title="Try It"
           keywords={[`jinaga`, `node`, `typescript`, `javascript`]}
         />
