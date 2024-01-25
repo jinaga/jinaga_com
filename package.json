@@ -24,7 +24,7 @@
     "graphql": "^16.8.1",
     "jinaga": "^6.0.1",
     "mlp-remark-graphviz": "file:plugins/mlp-remark-graphviz",
-    "monaco-editor": "^0.32.1",
+    "monaco-editor": "^0.45.0",
     "posthtml": "^0.16.5",
     "prismjs": "^1.27.0",
     "react": "^18.2.0",
