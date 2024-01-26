@@ -1,7 +1,7 @@
 import { graphql } from 'gatsby'
 import React from 'react'
 import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Seo from '../components/seo'
 import Breadcrumb from '../outline/breadcrumb'
 import ChildLinks from '../outline/childLinks'
 import NextLink from '../outline/next-link'
@@ -17,7 +17,7 @@ export default function Template({ data }) {
   const currentDocument = findDocumentBySlug(chapters, slug)
   return (
     <Layout className="document-container">
-      <SEO
+      <Seo
         title={document.frontmatter.title}
         keywords={[`jinaga`, `node`, `typescript`, `javascript`]}
       />

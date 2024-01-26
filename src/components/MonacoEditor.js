@@ -7,6 +7,15 @@ class MonacoEditor extends Component {
 
   componentDidMount() {
     import('monaco-editor').then((monaco) => {
+      // Configure the Monaco editor to run web workers from the same origin as the host page.
+      window.MonacoEnvironment = {
+        getWorkerUrl: function (workerId, label) {
+          return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
+                self.MonacoEnvironment = { baseUrl: '${window.location.origin}/' };
+            `)}`;
+        }
+      };
+
       const libraries = this.props.libraries || []
       libraries.forEach((library) => {
         monaco.languages.typescript.typescriptDefaults.addExtraLib(
@@ -15,7 +24,7 @@ class MonacoEditor extends Component {
         )
       })
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
-        'import { Jinaga, buildModel } from "jinaga"; declare global { const j: Jinaga; } export { buildModel };',
+        'import { Jinaga, buildModel, User } from "jinaga"; declare global { const j: Jinaga; } export { buildModel, User };',
         'file:///globals.d.ts'
       )
 

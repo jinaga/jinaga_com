@@ -1,7 +1,7 @@
 import { graphql, Link, StaticQuery } from 'gatsby'
 import React from 'react'
 import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Seo from '../components/seo'
 import siteLogo from '../images/site-logo.png'
 import good from '../images/good.png'
 import bad from '../images/bad.png'
@@ -16,7 +16,7 @@ const IndexPage = () => (
       </div>
     }
   >
-    <SEO
+    <Seo
       title="Jinaga"
       keywords={[`jinaga`, `node`, `typescript`, `javascript`]}
     />
