@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import '../stylesheets/main.scss'
 import Header from './header'
+import Footer from './footer'
 
 const Layout = ({ className, children, head }) => (
   <>
@@ -10,6 +11,7 @@ const Layout = ({ className, children, head }) => (
       {head}
     </div>
     <div className={className}>{children}</div>
+    <Footer />
   </>
 )
 

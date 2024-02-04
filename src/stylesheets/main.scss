@@ -194,6 +194,17 @@ a.user-icon {
     }
 }
 
+footer {
+    background: $theme-brand;
+    padding: 25px;
+    text-align: center;
+    color: rgb(184, 184, 184);
+
+    p {
+        margin: 5px;
+    }
+}
+
 .sidebar {
     grid-column: 1 / 2;
     grid-row: 1 / 3;
