@@ -302,7 +302,7 @@
 	"variable": [
 		{
 			"key": "replicator_url",
-			"value": "https://repdev.jinaga.com/yourreplicatorurl"
+			"value": "https://rep.jinaga.com/yourreplicatorurl"
 		},
 		{
 			"key": "callback_url",
@@ -310,11 +310,11 @@
 		},
 		{
 			"key": "auth_url",
-			"value": "https://repdev.jinaga.com/xxxx/auth/apple"
+			"value": "https://rep.jinaga.com/xxxx/auth/apple"
 		},
 		{
 			"key": "access_token_url",
-			"value": "https://repdev.jinaga.com/xxxx/auth/token"
+			"value": "https://rep.jinaga.com/xxxx/auth/token"
 		},
 		{
 			"key": "client_id",
@@ -322,7 +322,7 @@
 		},
 		{
 			"key": "authorization_endpoint",
-			"value": "https://dev.jinaga.com/xxxx/authorization"
+			"value": "https://app.jinaga.com/xxxx/authorization"
 		},
 		{
 			"key": "secret",
@@ -330,7 +330,7 @@
 		},
 		{
 			"key": "distribution_endpoint",
-			"value": "https://dev.jinaga.com/xxxx/distribution"
+			"value": "https://app.jinaga.com/xxxx/distribution"
 		}
 	]
 }

@@ -2,7 +2,7 @@
 title: "Upgrading the Container"
 ---
 
-If you are using the [Jinaga portal](https://dev.jinaga.com/), upgrades are automatic.
+If you are using the [Jinaga portal](https://app.jinaga.com/), upgrades are automatic.
 If you are running the replicator in Docker, you will need to upgrade the container yourself.
 
 An image cannot be upgraded from under an existing container.

@@ -4,10 +4,10 @@ title: "Replicator"
 
 The Jinaga Replicator is a single machine in a network.
 It stores and shares facts.
-To get started, create a Replicator of your very own on the [Jinaga Portal](https://dev.jinaga.com/).
+To get started, create a Replicator of your very own on the [Jinaga Portal](https://app.jinaga.com/).
 
 When you publish a Replicator, you will be given a URL.
-Use a tool like [httpYac](https://httpyac.github.io/) or [Postman](https://www.postman.com/) to `POST` messages to `https://repdev.jinaga.com/xyz123.../write` and `/read`.
+Use a tool like [httpYac](https://httpyac.github.io/) or [Postman](https://www.postman.com/) to `POST` messages to `https://rep.jinaga.com/xyz123.../write` and `/read`.
 
 You can download the <a href="/HttpFiles.zip" download>example httpYac files</a> or <a href="/Jinaga%20Blog%20Example.postman_collection.json" download>example Postman collection</a> to try it yourself.
 Edit the example and enter your own replicator URL.
@@ -15,15 +15,15 @@ Edit the example and enter your own replicator URL.
 For httpYac, add your own `.env.local` file with the following values:
 
 ```bash
-replicatorUrl=https://repdev.jinaga.com/xyz123
+replicatorUrl=https://rep.jinaga.com/xyz123
 
-oauth2_authorizationEndpoint=https://repdev.jinaga.com/xyz123/auth/apple
-oauth2_tokenEndpoint=https://repdev.jinaga.com/xyz123/auth/token
+oauth2_authorizationEndpoint=https://rep.jinaga.com/xyz123/auth/apple
+oauth2_tokenEndpoint=https://rep.jinaga.com/xyz123/auth/token
 oauth2_clientId=xyz123
 oauth2_usePkce=true
 
-authorizationEndpoint=https://dev.jinaga.com/xyz123/authorization
-distributionEndpoint=https://dev.jinaga.com/xyz123/distribution
+authorizationEndpoint=https://app.jinaga.com/xyz123/authorization
+distributionEndpoint=https://app.jinaga.com/xyz123/distribution
 secret=zyx321
 ```
 
