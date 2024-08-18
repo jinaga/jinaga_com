@@ -4,6 +4,9 @@
   "description": "Jinaga's home on the web",
   "version": "0.1.0",
   "author": "Michael L Perry <michael@qedcode.com>",
+  "overrides": {
+    "@swc/helpers": "0.4.35"
+  },
   "dependencies": {
     "gatsby": "^5.10.0",
     "gatsby-plugin-google-gtag": "^5.8.0",
