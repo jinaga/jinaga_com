@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "prettier": "^2.2.1",
-    "webpack": "^5.76.0"
+    "webpack": "^5.94.0"
   },
   "engines": {
     "node": ">=18.0.0"
