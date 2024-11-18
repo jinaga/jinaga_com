@@ -24,9 +24,8 @@ const model = buildModel(b => b
   )
 );
 
-const postsInSite = model.given(Site).match((site, facts) =>
-  facts.ofType(Post)
-    .join(post => post.site, site)
+const postsInSite = model.given(Site).match(site =>
+  site.successors(Post, post => post.site)
 );
 
 (async () => {

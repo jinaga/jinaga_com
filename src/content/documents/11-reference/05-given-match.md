@@ -6,21 +6,17 @@ Starting with a model, use the `given` and `match` functions to write a specific
 The specification can be used with `j.query`, `j.watch`, and `useSpecification` to retrieve results.
 
 ```typescript
-const projectsForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
-    .notExists(project => facts.ofType(ProjectDeleted)
-      .join(deleted => deleted.project, project))
+const projectsForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
+    .notExists(project => project.successors(ProjectDeleted, deleted => deleted.project))
     .select(project => ({
       hash: j.hash(project),
       identifier: project.identifier,
-      names: facts.ofType(ProjectName)
-        .join(name => name.project, project)
-        .notExists(name => facts.ofType(ProjectName)
-          .join(next => next.prior, name))
+      names: project.successors(ProjectName, name => name.project)
+        .notExists(name => name.successors(ProjectName, next => next.prior))
         .select(name => name.value)
     }))
-  );
+);
 ```
 
 ## Parameters
@@ -30,57 +26,40 @@ List the fact types in the `given` function.
 The `match` function expects a callback that takes those facts as parameters.
 
 ```typescript
-const tasksInProjectAssignedToUser = model.given(Project, User).match((project, user, facts) =>
+const tasksInProjectAssignedToUser = model.given(Project, User).match((project, user) =>
   // ...
 );
 ```
 
-The last parameter of the `match` callback is the fact repository.
+## Successors
 
-## Fact Repository
+Use the `successors` method to produce a stream of related facts.
+The first parameter of `successors` is the type of the successor you are looking for.
+The second is a callback that takes a successor fact and shows how it is connected to the first.
 
-The fact repository has a method called `ofType` that takes a fact type as a parameter.
-It returns a stream of facts of that type.
 
 ```typescript
-const tasksInProjectAssignedToUser = model.given(Project, User).match((project, user, facts) =>
-  facts.ofType(Task)
+const tasksInProjectAssignedToUser = model.given(Project, User).match((project, user) =>
+  user.successors(Task, task => task.project)
     // ...
 );
 ```
 
-## Join
-
-Use the `join` method to filter the stream to only the facts related to a given fact.
-The first parameter of `join` is a callback that returns a predecessor of the candidate fact.
-The second parameter is the given fact or one of its predecessors.
-
-To return successors, the first parameter should select a predecessor.
+Even though the method is called `successors`, it can be also used to return predecessors or siblings.
+To return predecessors, start from the predecessor and use the identity function.
 
 ```typescript
-const tasksInProjectAssignedToUser = model.given(Project, User).match((project, user, facts) =>
-  facts.ofType(Task)
-    .join(task => task.project, project)
+const companyOfProject = model.given(Project).match(project =>
+  project.company.successors(Company, company => company)
     // ...
 );
 ```
 
-To return predecessors, the second parameter should select a predecessor.
+Or to return siblings, start from their common predecessor.
 
 ```typescript
-const companyOfProject = model.given(Project).match((project, facts) =>
-  facts.ofType(Company)
-    .join(company => company, project.company)
-    // ...
-);
-```
-
-Or to return siblings, both parameters should select a common predecessor.
-
-```typescript
-const otherProjectsInCompany = model.given(Project).match((project, facts) =>
-  facts.ofType(Project)
-    .join(other => other.company, project.company)
+const otherProjectsInCompany = model.given(Project).match(project =>
+  project.company.successors(Project, other => other.company)
     // ...
 );
 ```
@@ -94,11 +73,9 @@ The callback will use the fact repository to see if successors are present.
 For example, to find all published posts, look for a successor of type `PostPublished`.
 
 ```typescript
-const publishedPosts = model.given(Site).match((site, facts) =>
-  facts.ofType(Post)
-    .join(post => post.site, site)
-    .exists(post => facts.ofType(PostPublished)
-      .join(published => published.post, post))
+const publishedPosts = model.given(Site).match(site =>
+  site.successors(Post, post => post.site)
+    .exists(post => post.successors(PostPublished, published => published.post))
     // ...
 );
 ```
@@ -110,11 +87,9 @@ Use the `notExists` method to filter the stream to only the facts that do *not* 
 It is common to use the `notExists` method to filter out deleted facts.
 
 ```typescript
-const projectsForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
-    .notExists(project => facts.ofType(ProjectDeleted)
-      .join(deleted => deleted.project, project))
+const projectsForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
+    .notExists(project => project.successors(ProjectDeleted, deleted => deleted.project))
     // ...
 );
 ```
@@ -141,39 +116,23 @@ class ProjectName {
 Then, to find the current value, filter out the facts that have a newer value.
 
 ```typescript
-const namesOfProject = model.given(Project).match((project, facts) =>
-  facts.ofType(ProjectName)
-    .join(name => name.project, project)
-    .notExists(name => facts.ofType(ProjectName)
-      .join(next => next.prior, name))
+const namesOfProject = model.given(Project).match(project =>
+  project.successors(ProjectName, name => name.project)
+    .notExists(name => name.successors(ProjectName, next => next.prior))
     // ...
-);
-```
-
-The `exists` and `notExists` functions can only be called after `join`.
-They cannot appear directly after `facts.ofType`.
-
-```typescript
-const projectsForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .notExists(project => facts.ofType(ProjectDeleted)    // Incorrect.
-      .join(deleted => deleted.project, project))
 );
 ```
 
 ## Select Many
 
-Use the `selectMany` function to bring in more facts from the fact repository.
+Use the `selectMany` function to bring in more facts.
 Pass in a callback that takes a fact from the current stream.
-Call `facts.ofType` to bring in more facts.
+Call `successors` to bring in more facts.
 
 ```typescript
-const allProjectTasksForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
-    .selectMany(project => facts.ofType(Task)
-      .join(task => task.project, project))
-    // ...
+const allProjectTasksForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
+    .selectMany(project => project.successors(Task, task => task.project))
 );
 ```
 
@@ -188,11 +147,9 @@ The callback can return results in a few specific ways.
 To return the value of a field, access the field of a fact from a stream.
 
 ```typescript
-const projectNames = model.given(Project).match((project, facts) =>
-  facts.ofType(ProjectName)
-    .join(name => name.project, project)
-    .notExists(name => facts.ofType(ProjectName)
-      .join(next => next.prior, name))
+const projectNames = model.given(Project).match(project =>
+  project.successors(ProjectName, name => name.project)
+    .notExists(name => name.successors(ProjectName, next => next.prior))
     .select(name => name.value)
 );
 ```
@@ -202,8 +159,8 @@ const projectNames = model.given(Project).match((project, facts) =>
 To return the hash of a fact, use the `j.hash` function.
 
 ```typescript
-const projectHashes = model.given(Project).match((project, facts) =>
-  facts.ofType(Project)
+const projectHashes = model.given(Project).match(project =>
+  project.successors(Project, project => project)
     .select(project => j.hash(project))
 );
 ```
@@ -214,11 +171,9 @@ To return a composite object, return an object from the callback.
 You will usually do this inside of a `selectMany`, where you have given names to several stream facts.
 
 ```typescript
-const projectHashesAndCompaniesForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
-    .selectMany(project => facts.ofType(Company)
-      .join(company => company, project.company)
+const projectHashesAndCompaniesForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
+    .selectMany(project => project.successors(Company, company => company)
       .select(company => ({
         projectHash: j.hash(project),
         company: company
@@ -228,13 +183,13 @@ const projectHashesAndCompaniesForUser = model.given(User).match((user, facts) =
 ```
 
 The values of the properties of the returned object can be fields, hashes, facts, or sub-specifications.
-If you want to return a predecessor fact in a property, please note that you must use the `selectMany` function to bring in that predecessor from the fact repository.
+They cannot be predecessors.
+If you want to return a predecessor fact in a property, you must use the `selectMany` and `successors` functions as shown above.
 You cannot simply reference the predecessor while building the composite.
 
 ```typescript
-const projectHashesAndCompaniesForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
+const projectHashesAndCompaniesForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
     .select(project => ({
       projectHash: j.hash(project),
       company: project.company      // Incorrect.
@@ -244,20 +199,17 @@ const projectHashesAndCompaniesForUser = model.given(User).match((user, facts) =
 
 ### Sub-Specification
 
-Within a composite, you can call the `facts.ofType` function to begin a sub specification.
+Within a composite, you can call the `successors` function to begin a sub specification.
 The sub specification will be evaluated for each fact in the current stream.
 The result will be an array of those results.
 
 ```typescript
-const projectHashesAndCompaniesForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
+const projectHashesAndCompaniesForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
     .select(project => ({
       projectHash: j.hash(project),
-      names: facts.ofType(ProjectName)
-        .join(name => name.project, project)
-        .notExists(name => facts.ofType(ProjectName)
-          .join(next => next.prior, name))
+      names: project.successors(ProjectName, name => name.project)
+        .notExists(name => name.successors(ProjectName, next => next.prior))
         .select(name => name.value)
     }))
 );

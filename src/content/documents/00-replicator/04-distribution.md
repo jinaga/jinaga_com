@@ -12,37 +12,31 @@ Write them as a function taking a model, rather than using the partially defined
 For example:
 
 ```typescript
-const invitedUsers = (project: LabelOf<Project>, facts: FactRepository) =>
-  facts.ofType(Invitation)
-    .join(invitation => invitation.project, project)
-    .selectMany(invitation => facts.ofType(User)
-      .join(user => user, invitation.user)
-    );
+const invitedUsers = (project: LabelOf<Project>) =>
+  project.successors(Invitation, invitation => invitation.project)
+    .selectMany(invitation => invitation.successors(User, user => user));
 
 export const projectDistribution = (model: Model) => (d: DistributionRules) => d
   // Share the project name with invited users.
-  .share(model.given(Project).match((project, facts) => facts.ofType(ProjectName)
-    .join(projectName => projectName.project, project)
-    .notExists(projectName => facts.ofType(ProjectName)
-      .join(next => next.prior, projectName)
-    )
+  .share(model.given(Project).match(project =>
+    project.successors(ProjectName, projectName => projectName.project)
+      .notExists(projectName => projectName.successors(ProjectName, next => next.prior))
   ))
-  .with(model.given(Project).match((project, facts) => invitedUsers(project, facts)))
+  .with(model.given(Project).match(project => invitedUsers(project)))
 
   // Share all project invitations with invited users.
-  .share(model.given(Project).match((project, facts) => facts.ofType(Invitation)
-    .join(invitation => invitation.project, project)
+  .share(model.given(Project).match(project =>
+    project.successors(Invitation, invitation => invitation.project)
   ))
-  .with(model.given(Project).match((project, facts) => invitedUsers(project, facts)))
+  .with(model.given(Project).match(project => invitedUsers(project)))
 
   // Share invitations with the user who was invited.
-  .share(model.given(User).match((self, facts) => facts.ofType(Invitation)
-    .join(invitation => invitation.user, self)
+  .share(model.given(User).match(self =>
+    self.successors(Invitation, invitation => invitation.user)
   ))
-  .with(model.given(User).match((self, facts) => facts.ofType(User)
-    .join(user => user, self)
-  ))
-  ;
+  .with(model.given(User).match(self =>
+    self.successors(User, user => user)
+  ));
 ```
 
 Then you can compose functions from different parts of the application into one central rule set.

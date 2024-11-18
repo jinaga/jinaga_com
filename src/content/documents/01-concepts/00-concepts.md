@@ -23,13 +23,11 @@ You write a specification to describe the shape of the information you want to r
 A specification function matches a template, and applies conditions.
 
 ```typescript
-const postsInSite = model.given(Site).match((site, facts) =>
-  facts.ofType(Post)
-    .join(post => post.site, site)
+const postsInSite = model.given(Site).match(site =>
+  site.successors(Post, post => post.site)
     .select(post => ({
       hash: j.hash(post),
-      titles: facts.ofType(PostTitle)
-        .join(title => title.post, post)
+      titles: site.successors(PostTitle, title => title.post)
         .select(title => title.value)
     }))
 );

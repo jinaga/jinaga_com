@@ -70,12 +70,9 @@ digraph {
 This authorization rule allows guest bloggers to post to the site.
 
 ```typescript
-const guestBloggers = model.Given(Post).match((post, facts) =>
-  facts.ofType(GuestInvitation)
-    .join(invitation => invitation.site, post.site)
-    .selectMany(invitation => facts.ofType(User)
-      .join(user => user, invitation.guest)
-    )
+const guestBloggers = model.Given(Post).match(post =>
+  post.site.successors(GuestInvitation, invitation => invitation.site)
+    .selectMany(invitation => invitation.successors(User, user => user))
 );
 
 const authorization = (a: AuthorizationRules) => a

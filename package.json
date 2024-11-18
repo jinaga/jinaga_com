@@ -25,7 +25,7 @@
     "gatsby-transformer-remark": "^6.8.0",
     "gatsby-transformer-sharp": "^5.12.3",
     "graphql": "^16.8.1",
-    "jinaga": "^6.0.1",
+    "jinaga": "^6.3.0",
     "mlp-remark-graphviz": "file:plugins/mlp-remark-graphviz",
     "monaco-editor": "^0.45.0",
     "posthtml": "^0.16.5",
