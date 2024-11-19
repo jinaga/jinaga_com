@@ -14,11 +14,8 @@ For example:
 export const projectAuthorization = (a: AuthorizationRules) => a
   .type(Project, p => p.creator)
   .type(ProjectName, n => n.project.creator)
-  .type(ProjectName, (n, facts) => facts.ofType(Invitation)
-    .join(invitation => invitation.project, n.project)
-    .selectMany(invitation => facts.ofType(User)
-      .join(user => user, invitation.user)
-    )
+  .type(ProjectName, n => n.project.successors(Invitation, invitation => invitation.project)
+    .selectMany(invitation => invitation.successors(User, user => user))
   )
   ;
 ```

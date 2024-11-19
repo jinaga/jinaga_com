@@ -27,14 +27,13 @@ You will also find it useful as a key for a React component.
 Use the `j.hash` function inside of the specification to produce a hash for each fact.
 
 ```tsx
-const projectsForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
+const projectsForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
     .select(project => ({
       hash: j.hash(project),
       identifier: project.identifier
-    })
-  );
+    }))
+);
 
 export function ProjectsPage() {
   const user = useUser();

@@ -7,16 +7,12 @@ We can do that with an existential condition `notExists`.
 We only want the `PostTitle` facts that are not the `prior` of another `PostTitle`.
 
 ```tsx
-const postsInSite = model.given(Site).match((site, facts) =>
-  facts.ofType(Post)
-    .join(post => post.site, site)
+const postsInSite = model.given(Site).match(site =>
+  site.successors(Post, post => post.site)
     .select(post => ({
       hash: j.hash(post),
-      titles: facts.ofType(PostTitle)
-        .join(title => title.post, post)
-        .notExists(title => facts.ofType(PostTitle)
-          .join(next => next.prior, title)
-        )
+      titles: post.successors(PostTitle, title => title.post)
+        .notExists(title => title.successors(PostTitle, next => next.prior))
         .select(title => title.value)
     }))
 );

@@ -11,17 +11,15 @@ Define this specification at the top of `SiteContainer.tsx`:
 import { model } from '../model';
 import { Post, Site } from '../model/blog';
 
-const postsInSite = model.given(Site).match((site, facts) =>
-  facts.ofType(Post)
-    .join(post => post.site, site)
+const postsInSite = model.given(Site).match(site =>
+  site.successors(Post, post => post.site)
 );
 ```
 
 Let's break this down.
 Starting from the model, we'll define a specification that takes a given `Site`.
 It matches facts based on a function.
-The `site` is the first parameter.
-The second one is a repository that we use to access the `facts`.
+The `site` is the parameter.
 
 In this function, we can get all facts of type `Post`.
 But we can't stop there.

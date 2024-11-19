@@ -7,14 +7,12 @@ If you are using React, you will call the `useSpecification` hook instead of dir
 Call `j.watch` to run a specification and receive the results as they change.
 
 ```typescript
-const projectsForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
+const projectsForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
     .select(project => ({
       hash: j.hash(project),
       identifier: project.identifier
-    })
-  )
+    }))
 );
 
 const projectWatch = j.watch(projectsForUser, user, (newProject) => {
@@ -61,17 +59,13 @@ To be notified when a result is removed from the result set, return a function f
 This will typically be used with a specification that has a `notExists` clause.
 
 ```typescript
-const projectsForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
-    .notExists(project => facts.ofType(ProjectDeleted)
-      .join(deleted => deleted.project, project)
-    )
+const projectsForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
+    .notExists(project => project.successors(ProjectDeleted, deleted => deleted.project))
     .select(project => ({
       hash: j.hash(project),
       identifier: project.identifier
-    })
-  )
+    }))
 );
 
 const projectWatch = j.watch(projectsForUser, user, (newProject) => {
@@ -91,19 +85,14 @@ An observable collection has an `onAdded` function that takes a callback.
 The callback will be called for each child result added to the collection.
 
 ```typescript
-const projectsForUser = model.given(User).match((user, facts) =>
-  facts.ofType(Project)
-    .join(project => project.owner, user)
+const projectsForUser = model.given(User).match(user =>
+  user.successors(Project, project => project.owner)
     .select(project => ({
       hash: j.hash(project),
-      names: facts.ofType(ProjectName)
-        .join(name => name.project, project)
-        .notExists(name => facts.ofType(ProjectName)
-          .join(next => next.prior, name)
-        )
+      names: project.successors(ProjectName, name => name.project)
+        .notExists(name => name.successors(ProjectName, next => next.prior))
         .select(name => name.value)
-    })
-  )
+    }))
 );
 
 const projectWatch = j.watch(projectsForUser, user, (newProject) => {

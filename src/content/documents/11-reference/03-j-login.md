@@ -65,9 +65,9 @@ export const UserContext = createContext<UserContextValue>({
   error: null,
 });
 
-const namesOfUser = model.given(User).match((user, facts) =>
-  facts.ofType(UserName)
-    .join(userName => userName.user, user));
+const namesOfUser = model.given(User).match(user =>
+  user.successors(UserName, userName => userName.user)
+);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);

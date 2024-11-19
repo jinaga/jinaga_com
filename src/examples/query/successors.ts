@@ -24,14 +24,14 @@ const model = buildModel(b => b
   )
 );
 
-const postsInSite = model.given(Site).match((site, facts) =>
-  facts.ofType(Post)
-    .join(post => post.site, site)
+const postsInSite = model.given(Site).match(site =>
+  site.successors(Post, post => post.site)
 );
 
 (async () => {
   const site = await populateData();
   const posts = await j.query(postsInSite, site);
+  console.log(JSON.stringify(posts, null, 2));
 })();
 
 async function populateData() {

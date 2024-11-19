@@ -7,13 +7,11 @@ That means that for each post, we need a sub-specification that matches the titl
 Use the `select` method to get facts of type `PostTitle`.
 
 ```tsx
-const postsInSite = model.given(Site).match((site, facts) =>
-  facts.ofType(Post)
-    .join(post => post.site, site)
+const postsInSite = model.given(Site).match(site =>
+  site.successors(Post, post => post.site)
     .select(post => ({
       hash: j.hash(post),
-      titles: facts.ofType(PostTitle)
-        .join(title => title.post, post)
+      titles: post.successors(PostTitle, title => title.post)
         .select(title => title.value)
     }))
 );
