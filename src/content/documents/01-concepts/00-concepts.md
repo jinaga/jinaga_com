@@ -20,7 +20,7 @@ await j.fact(new Post(
 ```
 
 You write a specification to describe the shape of the information you want to retrieve.
-A specification function matches a template, and applies conditions.
+A specification matches related facts, and projects them into your desired structure.
 
 ```typescript
 const postsInSite = model.given(Site).match(site =>

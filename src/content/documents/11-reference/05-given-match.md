@@ -173,7 +173,7 @@ You will usually do this inside of a `selectMany`, where you have given names to
 ```typescript
 const projectHashesAndCompaniesForUser = model.given(User).match(user =>
   user.successors(Project, project => project.owner)
-    .selectMany(project => project.successors(Company, company => company)
+    .selectMany(project => project.company.successors(Company, company => company)
       .select(company => ({
         projectHash: j.hash(project),
         company: company

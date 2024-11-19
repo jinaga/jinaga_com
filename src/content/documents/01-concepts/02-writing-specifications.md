@@ -16,13 +16,16 @@ const model = buildModel(b => b
 ```
 
 The model is used to create a specification.
-Given a starting point, the specification finds all facts that match a set of conditions.
+Given a starting point, the specification finds related facts.
+Usually, you want to find successors.
 
 ```typescript
 const postsInSite = model.given(Site).match(site =>
   site.successors(Post, post => post.site)
 );
 ```
+
+This specification finds all successors of type `Post` related to the predecessor `Site`.
 
 Call the `j.query` method to retrieve the facts.
 
