@@ -31,6 +31,7 @@ const postsInSite = model.given(Site).match(site =>
 (async () => {
   const site = await populateData();
   const posts = await j.query(postsInSite, site);
+  console.log(JSON.stringify(posts, null, 2));
 })();
 
 async function populateData() {

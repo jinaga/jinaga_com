@@ -1,5 +1,5 @@
 import { graphql } from 'gatsby'
-import { JinagaBrowser, User } from 'jinaga'
+import { buildModel, JinagaBrowser, User } from 'jinaga'
 import React, { Component } from 'react'
 import Header from '../components/header'
 import MonacoEditor from '../components/MonacoEditor'
@@ -105,6 +105,7 @@ class ExamplePage extends Component {
               },
               j: this.j,
               User: User,
+              buildModel: buildModel,
             })
           } catch (e) {
             output = e.message
