@@ -9,6 +9,43 @@ Purge conditions are how you provide that proof.
 
 Before using this feature, consider backing up your data using the [export feature](../../exporting-facts/exporting-from-postgres/).
 
+### Declare Purge Conditions
+
+To declare purge conditions, write a function that takes a `PurgeConditions` object and adds conditions to it.
+
+```typescript
+const purgeConditions = (p: PurgeConditions) => p
+    .whenExists(model.given(Contact).match(contact =>
+        contact.successors(ContactDeleted, contactDeleted => contactDeleted.contact)
+    ));
+```
+
+Use that function when initializing the Jinaga replicator.
+
+```typescript
+const { handler, j } = JinagaServer.create({
+    pgStore: process.env.JINAGA_POSTGRESQL ||
+        'postgresql://appuser:apppw@localhost:5432/appdb'
+    purgeConditions
+});
+```
+
+The effect of this declaration is that when the application uses this jinaga replicator to query, watch, or subscribe to a specification, the runtime will verify that the purge conditions are included.
+If a specification matches a `Contact` and does not include `notExists` for `ContactDeleted`, then the runtime will throw an exception.
+This proves that no specification will return information about a deleted contact.
+
+### Purge the Data
+
+To purge the data, call the `purge` method on the Jinaga client.
+
+```typescript
+await j.purge();
+```
+
+This will remove all successors of `Contact` facts when a `ContactDeleted` fact exists for that contact.
+The runtime must keep the `Contact` and the `ContactDeleted` facts to ensure that the replica doesn't later learn about the deleted contact.
+But it can remove other successors, such as the `Name` and `Email` facts for that contact.
+
 ## Example: Contact List
 
 Declare purge conditions when defining a model.
@@ -130,39 +167,5 @@ const contactsInList = model.given(List).match(list =>
 Notice how the specification excludes contacts that have been deleted.
 If all specifications did so, then we could safely purge information about deleted contacts from the replica.
 
-### Declare Purge Conditions
-
-To declare purge conditions, write a function that takes a `PurgeConditions` object and adds conditions to it.
-
-```typescript
-const purgeConditions = (p: PurgeConditions) => p
-    .whenExists(model.given(Contact).match(contact =>
-        contact.successors(ContactDeleted, contactDeleted => contactDeleted.contact)
-    ));
-```
-
-Use that function when initializing the Jinaga replicator.
-
-```typescript
-const { handler, j } = JinagaServer.create({
-    pgStore: process.env.JINAGA_POSTGRESQL ||
-        'postgresql://appuser:apppw@localhost:5432/appdb'
-    purgeConditions
-});
-```
-
-The effect of this declaration is that when the application uses this jinaga replicator to query, watch, or subscribe to a specification, the runtime will verify that the purge conditions are included.
-If a specification matches a `Contact` and does not include `notExists` for `ContactDeleted`, then the runtime will throw an exception.
-This proves that no specification will return information about a deleted contact.
-
-### Purge the Data
-
-To purge the data, call the `purge` method on the Jinaga client.
-
-```typescript
-await j.purge();
-```
-
-This will remove all successors of `Contact` facts when a `ContactDeleted` fact exists for that contact.
-The runtime must keep the `Contact` and the `ContactDeleted` facts to ensure that the replica doesn't later learn about the deleted contact.
-But it can remove the `Name` and `Email` facts for that contact.
+Then declare the purge conditions and call the `purge` method.
+Name and Email successors about deleted contacts will be purged from the replicator.
