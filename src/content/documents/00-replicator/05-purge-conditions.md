@@ -21,7 +21,7 @@ A contact has a name and an email address.
 ```typescript
 export class List {
   static Type = "CRM.List" as const;
-  type = CRM.Type;
+  type = List.Type;
 
   constructor(
     public owner: User,
@@ -31,7 +31,7 @@ export class List {
 
 export class Contact {
   static Type = "CRM.Contact" as const;
-  type = CRM.Type;
+  type = Contact.Type;
 
   constructor(
     public list: List,
@@ -41,7 +41,7 @@ export class Contact {
 
 export class Name {
   static Type = "CRM.Contact.Name" as const;
-  type = CRM.Type;
+  type = Name.Type;
 
   constructor(
     public contact: Contact,
@@ -52,7 +52,7 @@ export class Name {
 
 export class Email {
   static Type = "CRM.Contact.Email" as const;
-  type = CRM.Type;
+  type = Email.Type;
 
   constructor(
     public contact: Contact,
@@ -68,7 +68,7 @@ We could express that as a `Contact.Deleted` fact.
 ```typescript
 export class ContactDeleted {
   static Type = "CRM.Contact.Deleted" as const;
-  type = CRM.Type;
+  type = ContactDeleted.Type;
 
   constructor(
     public contact: Contact
