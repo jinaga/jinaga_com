@@ -27,7 +27,7 @@
     "graphql": "^16.8.1",
     "jinaga": "^6.3.0",
     "mlp-remark-graphviz": "file:plugins/mlp-remark-graphviz",
-    "monaco-editor": "^0.45.0",
+    "monaco-editor": "^0.52.0",
     "posthtml": "^0.16.5",
     "prismjs": "^1.27.0",
     "react": "^18.2.0",
@@ -52,7 +52,8 @@
   },
   "devDependencies": {
     "prettier": "^2.2.1",
-    "webpack": "^5.94.0"
+    "webpack": "^5.94.0",
+    "worker-loader": "^3.0.8"
   },
   "engines": {
     "node": ">=18.0.0"
