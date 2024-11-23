@@ -1,10 +1,12 @@
-import { graphql, Link, StaticQuery } from 'gatsby'
+import { Link } from 'gatsby'
 import React, { useState } from 'react'
+import HookContent from '../components/HookContent'
 import Layout from '../components/layout'
+import QuickExampleContent from '../components/QuickExampleContent'
 import Seo from '../components/seo'
-import siteLogo from '../images/site-logo.png'
-import good from '../images/good.png'
 import bad from '../images/bad.png'
+import good from '../images/good.png'
+import siteLogo from '../images/site-logo.png'
 
 const IndexPage = () => {
   // Make the drop-down menu visible when the user clicks the current language.
@@ -32,6 +34,7 @@ const IndexPage = () => {
         </div>
       </div>}
     >
+      <HookContent />
       <Seo
         title="Jinaga"
         keywords={[`jinaga`, `node`, `typescript`, `javascript`]} />
@@ -59,22 +62,7 @@ const IndexPage = () => {
       >
         <div className="button-container">Learn the concepts</div>
       </Link>
-      <StaticQuery
-        query={graphql`
-        query IndexQuery {
-          content: markdownRemark(
-            fields: { slug: { eq: "/posts/quick-example/" } }
-          ) {
-            html
-          }
-        }
-      `}
-        render={({ content }) => (
-          <div
-            className="page-content"
-            dangerouslySetInnerHTML={{ __html: content.html }} />
-        )}
-      ></StaticQuery>
+      <QuickExampleContent />
     </Layout>
   )
 }

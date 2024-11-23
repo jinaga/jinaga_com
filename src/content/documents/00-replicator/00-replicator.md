@@ -2,6 +2,14 @@
 title: "Replicator"
 ---
 
+The Jinaga Replicator is the central infrastructure component of your network.
+It plays the role of:
+
+- Database
+- REST API
+- Message queue
+- WebSocket server
+
 The Jinaga Replicator is a single machine in a network.
 It stores and shares facts.
 To get started, create a Replicator of your very own on the [Jinaga Portal](https://app.jinaga.com/).
