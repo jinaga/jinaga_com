@@ -45,7 +45,7 @@ html {
 
 .hero .language-container {
     margin: 0 auto; // This centers the language-container div
-    max-width: 400px;
+    max-width: 270px;
     position: relative; // This makes the .language-menu div position itself relative to the .hero div
 
     .language {
@@ -53,7 +53,7 @@ html {
         background-color: #393782;
         border: none;
         font-size: 2.5rem;
-        width: 400px;
+        width: 270px;
         cursor: pointer;
     }
     .language-menu {

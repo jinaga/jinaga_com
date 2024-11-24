@@ -21,14 +21,16 @@ const IndexPage = () => {
         <img src={siteLogo} alt="Jinaga" />
         <p>Local-first web and mobile application framework</p>
         <div className="language-container">
-          <button className="language" onClick={() => setMenuVisible(!menuVisible)}>
-            Choose your language: TypeScript▾
-          </button>
-          <div className={`language-menu ${menuVisible ? 'visible' : ''}`}>
-            <button className="language" onClick={handleLanguageSelect}>
-              .NET
+          <p>Choose your language:
+            <button className="language" onClick={() => setMenuVisible(!menuVisible)}>
+              TypeScript▾
             </button>
-          </div>
+            <div className={`language-menu ${menuVisible ? 'visible' : ''}`}>
+              <button className="language" onClick={handleLanguageSelect}>
+                .NET
+              </button>
+            </div>
+          </p>
         </div>
       </div>}
     >
