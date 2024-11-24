@@ -2,6 +2,13 @@
 title: "Hook"
 ---
 
+A Jinaga mobile or web app works with local data first.
+The app or PWA works offline.
+When the device comes online, the data synchronizes with the server.
+
+But that's just the start.
+The developer experience is incredible.
+
 Imagine coding a mobile app as if the data were already on the device.
 Or writing a web app that loads data from the local store, not the server.
 Imagine not maintaining a REST API.

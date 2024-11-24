@@ -19,10 +19,10 @@ const IndexPage = () => {
       className="body-container"
       head={<div className="hero">
         <img src={siteLogo} alt="Jinaga" />
-        <p>Application-agnostic back end for web and mobile applications</p>
+        <p>Local-first web and mobile application framework</p>
         <div className="language-container">
           <button className="language" onClick={() => setMenuVisible(!menuVisible)}>
-            in JavaScript▾
+            Choose your language: TypeScript▾
           </button>
           <div className={`language-menu ${menuVisible ? 'visible' : ''}`}>
             <button className="language" onClick={handleLanguageSelect}>
