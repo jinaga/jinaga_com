@@ -1,10 +1,10 @@
-import { graphql, Link, StaticQuery } from 'gatsby'
+import { Link } from 'gatsby'
 import React, { useState } from 'react'
+import HookContent from '../components/HookContent'
 import Layout from '../components/layout'
+import QuickExampleContent from '../components/QuickExampleContent'
 import Seo from '../components/seo'
 import siteLogo from '../images/site-logo.png'
-import good from '../images/good.png'
-import bad from '../images/bad.png'
 
 const IndexPage = () => {
   // Make the drop-down menu visible when the user clicks the current language.
@@ -19,39 +19,25 @@ const IndexPage = () => {
       className="body-container"
       head={<div className="hero">
         <img src={siteLogo} alt="Jinaga" />
-        <p>Application-agnostic back end for web and mobile applications</p>
+        <p>Local-first web and mobile application framework</p>
         <div className="language-container">
-          <button className="language" onClick={() => setMenuVisible(!menuVisible)}>
-            in JavaScript▾
-          </button>
-          <div className={`language-menu ${menuVisible ? 'visible' : ''}`}>
-            <button className="language" onClick={handleLanguageSelect}>
-              .NET
+          <p>Choose your language:
+            <button className="language" onClick={() => setMenuVisible(!menuVisible)}>
+              TypeScript▾
             </button>
-          </div>
+            <div className={`language-menu ${menuVisible ? 'visible' : ''}`}>
+              <button className="language" onClick={handleLanguageSelect}>
+                .NET
+              </button>
+            </div>
+          </p>
         </div>
       </div>}
     >
       <Seo
         title="Jinaga"
         keywords={[`jinaga`, `node`, `typescript`, `javascript`]} />
-      <div>
-        <img src={bad} alt="Typically, all layers of an app are custom." />
-        <img
-          style={{ float: 'right' }}
-          src={good}
-          alt="In Jinaga, only the front end is." />
-      </div>
-      <h2>Build Apps Faster</h2>
-      <p>
-        Typical web and mobile app architectures build domain knowledge into custom database
-        schemas, APIs, and front ends. That means you have to write the same idea
-        in three different ways. That slows you down.
-      </p>
-      <p>
-        Write your domain logic once. Jinaga provides an application-agnostic API
-        and database.
-      </p>
+      <HookContent />
       <Link
         className="cta"
         style={{ border: 'none' }}
@@ -59,22 +45,7 @@ const IndexPage = () => {
       >
         <div className="button-container">Learn the concepts</div>
       </Link>
-      <StaticQuery
-        query={graphql`
-        query IndexQuery {
-          content: markdownRemark(
-            fields: { slug: { eq: "/posts/quick-example/" } }
-          ) {
-            html
-          }
-        }
-      `}
-        render={({ content }) => (
-          <div
-            className="page-content"
-            dangerouslySetInnerHTML={{ __html: content.html }} />
-        )}
-      ></StaticQuery>
+      <QuickExampleContent />
     </Layout>
   )
 }
