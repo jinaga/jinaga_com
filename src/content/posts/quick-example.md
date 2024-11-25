@@ -95,18 +95,6 @@ Render the results in your component.
   );
 ```
 
-### Real-time updates
-
-Your app can be notified of new facts in real-time.
-Just change `useSpecification` to `useSubscription`.
-
-```typescript
-const { loading, data, error } = useSubscription(j, postsInSite, site);
-```
-
-With that one simple change, your app maintains a persistent connection to the replicator.
-When a new post is created, the replicator sends the new post to the client, and it appears on the user interface.
-
 ### Conclusion
 
 And with this, facts created by one user make their way to other users.
