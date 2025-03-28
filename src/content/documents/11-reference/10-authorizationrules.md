@@ -72,7 +72,7 @@ This authorization rule allows guest bloggers to post to the site.
 ```typescript
 const guestBloggers = model.Given(Post).match(post =>
   post.site.successors(GuestInvitation, invitation => invitation.site)
-    .selectMany(invitation => invitation.successors(User, user => user))
+    .selectMany(invitation => invitation.guest.predecessor())
 );
 
 const authorization = (a: AuthorizationRules) => a
