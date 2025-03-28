@@ -45,23 +45,37 @@ const tasksInProjectAssignedToUser = model.given(Project, User).match((project, 
 );
 ```
 
-Even though the method is called `successors`, it can be also used to return predecessors or siblings.
-To return predecessors, start from the predecessor and use the identity function.
-
-```typescript
-const companyOfProject = model.given(Project).match(project =>
-  project.company.successors(Company, company => company)
-    // ...
-);
-```
-
-Or to return siblings, start from their common predecessor.
+Even though the method is called `successors`, it can be also used to return siblings.
+Start from their common predecessor.
 
 ```typescript
 const otherProjectsInCompany = model.given(Project).match(project =>
   project.company.successors(Project, other => other.company)
     // ...
 );
+```
+
+## Predecessor
+
+If instead of successors or siblings you want to produce a stream of predecessors, use the `predecessor` method.
+Apply the method to the predecessor.
+
+```typescript
+const companyOfProject = model.given(Project).match(project =>
+  project.company.predecessor()
+    // ...
+);
+```
+
+You can even use the `predecessor` method to get the fact itself.
+This is necessary, for example, in a distribution rule where you want to match the user themselves.
+
+```typescript
+const distribution = (r: DistributionRules) => r
+  .share(model.given(User).match(user =>
+    user.successors(UserName, name => name.user)
+      .notExists(name => name.successors(UserName, next => next.prior))
+  )).with(user => user.predecessor())
 ```
 
 ## Exists and Not Exists
@@ -160,7 +174,7 @@ To return the hash of a fact, use the `j.hash` function.
 
 ```typescript
 const projectHashes = model.given(Project).match(project =>
-  project.successors(Project, project => project)
+  project.predecessor()
     .select(project => j.hash(project))
 );
 ```

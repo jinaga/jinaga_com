@@ -15,7 +15,7 @@ export const projectAuthorization = (a: AuthorizationRules) => a
   .type(Project, p => p.creator)
   .type(ProjectName, n => n.project.creator)
   .type(ProjectName, n => n.project.successors(Invitation, invitation => invitation.project)
-    .selectMany(invitation => invitation.successors(User, user => user))
+    .selectMany(invitation => invitation.guest.predecessor())
   )
   ;
 ```
