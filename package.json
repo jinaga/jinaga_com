@@ -29,7 +29,7 @@
     "mlp-remark-graphviz": "file:plugins/mlp-remark-graphviz",
     "monaco-editor": "^0.52.0",
     "posthtml": "^0.16.5",
-    "prismjs": "^1.27.0",
+    "prismjs": "^1.30.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
