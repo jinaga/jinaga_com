@@ -14,7 +14,7 @@ For example:
 ```typescript
 const invitedUsers = (project: LabelOf<Project>) =>
   project.successors(Invitation, invitation => invitation.project)
-    .selectMany(invitation => invitation.successors(User, user => user));
+    .selectMany(invitation => invitation.guest.predecessor());
 
 export const projectDistribution = (model: Model) => (d: DistributionRules) => d
   // Share the project name with invited users.
@@ -35,7 +35,7 @@ export const projectDistribution = (model: Model) => (d: DistributionRules) => d
     self.successors(Invitation, invitation => invitation.user)
   ))
   .with(model.given(User).match(self =>
-    self.successors(User, user => user)
+    self.predecessor()
   ));
 ```
 
