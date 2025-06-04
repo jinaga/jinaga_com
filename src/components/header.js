@@ -17,7 +17,7 @@ const Header = () => (
         {' '}
         HOME{' '}
       </Link>
-      <Link className="nav-link" to="/documents/replicator/">
+      <Link className="nav-link" to="/documents/concepts/">
         {' '}
         DOCS{' '}
       </Link>
