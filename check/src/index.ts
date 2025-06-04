@@ -1,18 +1,28 @@
-// Import Jinaga
-import { Jinaga, JinagaTest, JinagaClient } from "jinaga";
+// Define the FactType decorator
+import { JinagaTest } from "jinaga";
 
-// Create a Jinaga client for local state in IndexedDB
-const j = JinagaClient.create({
-  httpEndpoint: "https://rep.jinaga.com/myreplicator",
-  indexedDb: "my-application-state"
-});
+class User {
+  static Type = "Jinaga.User" as const;
+  type = User.Type;
 
-// Create a Jinaga client for unit tests with an in-memory store
-const testClient = JinagaTest.create({
+  constructor(public publicKey: string) {}
+}
+
+class Project {
+  static Type = "Construction.Project" as const;
+  type = Project.Type;
+
+  constructor(public creator: User, public id: string) {}
+}
+
+// Initialize Jinaga test client
+const j = JinagaTest.create({
   user: "--- TEST USER ---",
 });
 
-// Jinaga replicator configuration
-// Note: Replicators are servers that synchronize data with clients.
-// They are configured with security rules and can connect to other replicators
-// to form a mesh network for data flow.
+// Example usage
+(async () => {
+  const { userFact: user, profile } = await j.login<User>();
+  const project = await j.fact(new Project(user, crypto.randomUUID()));
+  console.log("Created project:", project);
+})();
