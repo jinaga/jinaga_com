@@ -6,6 +6,12 @@ class Project {
   type = Project.Type;
 
   constructor(public creator: User, public id: string) {}
+
+  static by(user: LabelOf<User>) {
+    return user.successors(Project, p => p.creator)
+      .notExists(p => p.successors(ProjectDeleted, d => d.project)
+        .notExists(d => d.successors(ProjectRestored, r => r.deleted)));
+  }
 }
 
 class ProjectDeleted {
@@ -141,5 +147,27 @@ const j = JinagaTest.create({
   // Query one final time - should show only the merged result
   const finalNames = await j.query(currentNamesOfProject, projectA);
   console.log("After merge (resolved):", finalNames.map(n => n.value));
+
+  console.log("\n=== Projections Pattern ===");
+
+  // Give names to the other projects
+  await j.fact(new ProjectName(projectB, "Pinecrest School Expansion", []));
+  await j.fact(new ProjectName(projectC, "Brookside Office Park Fit-Out", []));
+
+  // Create a projection using the encapsulated specifications
+  const projectsWithNamesCreatedByUser = model.given(User).match(u =>
+    Project.by(u)
+      .select(p => ({
+        projectId: p.id,
+        names: ProjectName.of(p)
+          .select(n => n.value)
+      }))
+  );
+
+  const projections = await j.query(projectsWithNamesCreatedByUser, user);
+  console.log("Projects with names:");
+  projections.forEach(p => {
+    console.log(`  ${p.projectId}: [${p.names.join(", ")}]`);
+  });
 })();
 

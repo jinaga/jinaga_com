@@ -17,6 +17,11 @@ class Project {
         this.id = id;
         this.type = Project.Type;
     }
+    static by(user) {
+        return user.successors(Project, p => p.creator)
+            .notExists(p => p.successors(ProjectDeleted, d => d.project)
+            .notExists(d => d.successors(ProjectRestored, r => r.deleted)));
+    }
 }
 Project.Type = "Construction.Project";
 class ProjectDeleted {
@@ -40,6 +45,10 @@ class ProjectName {
         this.value = value;
         this.prior = prior;
         this.type = ProjectName.Type;
+    }
+    static of(project) {
+        return project.successors(ProjectName, name => name.project)
+            .notExists(name => name.successors(ProjectName, next => next.prior));
     }
 }
 ProjectName.Type = "Construction.Project.Name";
@@ -99,8 +108,7 @@ const j = jinaga_1.JinagaTest.create({
     const projectAName2 = yield j.fact(new ProjectName(projectA, "Rivercrest Expansion", [projectAName1]));
     console.log("Changed project name:", projectAName2.value);
     // Query for current name (filtering out superseded versions)
-    const currentNamesOfProject = model.given(Project).match(project => project.successors(ProjectName, name => name.project)
-        .notExists(name => name.successors(ProjectName, next => next.prior)));
+    const currentNamesOfProject = model.given(Project).match(project => ProjectName.of(project));
     const currentNames = yield j.query(currentNamesOfProject, projectA);
     console.log("Current project names:", currentNames.map(n => n.value));
     // Simulate concurrent edit (another name change from original)
@@ -115,4 +123,20 @@ const j = jinaga_1.JinagaTest.create({
     // Query one final time - should show only the merged result
     const finalNames = yield j.query(currentNamesOfProject, projectA);
     console.log("After merge (resolved):", finalNames.map(n => n.value));
+    console.log("\n=== Projections Pattern ===");
+    // Give names to the other projects
+    yield j.fact(new ProjectName(projectB, "Pinecrest School Expansion", []));
+    yield j.fact(new ProjectName(projectC, "Brookside Office Park Fit-Out", []));
+    // Create a projection using the encapsulated specifications
+    const projectsWithNamesCreatedByUser = model.given(jinaga_1.User).match(u => Project.by(u)
+        .select(p => ({
+        projectId: p.id,
+        names: ProjectName.of(p)
+            .select(n => n.value)
+    })));
+    const projections = yield j.query(projectsWithNamesCreatedByUser, user);
+    console.log("Projects with names:");
+    projections.forEach(p => {
+        console.log(`  ${p.projectId}: [${p.names.join(", ")}]`);
+    });
 }))();

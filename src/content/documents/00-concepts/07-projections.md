@@ -5,37 +5,34 @@ title: "Projections"
 You can combine specifications to create a *projection*.
 This is how you will populate your user interface.
 
-Start your specification as before, and then use the `Select` method to project the results through a new specification.
+Start your specification as before, and then use the `select` method to project the results through a new specification.
 
-```csharp
-var projectsWithNameCreatedByUser = Given<User>.Match(u =>
-    u.Projects.Select(p =>
-        new
-        {
-            ProjectId = p.id,
-            Name = p.Names.Select(n => n.name)
-        }
-    )
+```typescript
+const projectsWithNamesCreatedByUser = model.given(User).match(u =>
+  Project.by(u)
+    .select(p => ({
+      projectId: p.id,
+      names: ProjectName.of(p)
+        .select(n => n.value)
+    }))
 );
 ```
 
 Let's give names to the other projects so that we can see them.
 
-```csharp
-await j.Fact(new ProjectName(projectB, "Pinecrest School Expansion", []));
-await j.Fact(new ProjectName(projectC, "Brookside Office Park Fit-Out", []));
+```typescript
+await j.fact(new ProjectName(projectB, "Pinecrest School Expansion", []));
+await j.fact(new ProjectName(projectC, "Brookside Office Park Fit-Out", []));
 ```
 
 And now we can use that projection to populate a user interface.
 
-```csharp
-var projections = await j.Query(projectsWithNamesCreatedByUser, user);
+```typescript
+const projections = await j.query(projectsWithNamesCreatedByUser, user);
 
-projections.Select(p => new
-{
-    p.ProjectId,
-    Names = $"[ {string.Join(", ", p.Names)} ]"
-}).AsTable()
+projections.forEach(p => {
+  console.log(`${p.projectId}: [${p.names.join(", ")}]`);
+});
 ```
 
 | ProjectId | Names |
