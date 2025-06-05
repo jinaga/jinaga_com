@@ -8,22 +8,19 @@ In this case, the meaning of that predecessor relationship is that the user crea
 
 Once you have predecessors, you can query for facts that are related to them.
 These, as you might have guessed, are called *successors*.
-You'll find the `Successors` extension method in the `Jinaga.Extensions` namespace.
 
 Let's query for all projects that a user has created.
 
 ```csharp
-using Jinaga.Extensions;
-
 // Create a couple more projects.
-Project projectB = await j.Fact(new Project(user, Guid.NewGuid()));
-Project projectC = await j.Fact(new Project(user, Guid.NewGuid()));
+const projectB = await j.fact(new Project(user, crypto.randomUUID()));
+const projectC = await j.fact(new Project(user, crypto.randomUUID()));
 
-var projectsCreatedByUser = Given<User>.Match(u =>
-    u.Successors().OfType<Project>(p => p.creator)
+const projectsCreatedByUser = model.given(User).match(u =>
+  u.successors(Project, p => p.creator)
 );
 
-ImmutableList<Project> projects = await j.Query(projectsCreatedByUser, user);
+const projects = await j.query(projectsCreatedByUser, user);
 ```
 
 ```dot
@@ -41,8 +38,9 @@ digraph {
 ```
 
 Let's break down that specification.
-Start with `Given` and the parameter type.
-Then use `Match` to write an expression that matches the facts you want.
+Start with the model that you built from all of your types.
+Call `given` to specify the type of the parameter.
+Then use `match` to write an expression that matches the facts you want.
 
-The `Successors` extension method finds all successors `OfType<T>` related to the given predecessor.
+The `successors` method finds all successors of the requested type related to the given predecessor.
 Provide a lambda that shows how the successors relate to the predecessor.

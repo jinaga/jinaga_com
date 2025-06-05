@@ -26,6 +26,16 @@ const j = JinagaTest.create({
 // Example usage
 (async () => {
   const { userFact: user, profile } = await j.login<User>();
-  const project = await j.fact(new Project(user, crypto.randomUUID()));
-  console.log("Created project:", project);
+  const projectA = await j.fact(new Project(user, crypto.randomUUID()));
+  console.log("Created project:", projectA);
+
+  // Create a couple more projects.
+  const projectB = await j.fact(new Project(user, crypto.randomUUID()));
+  const projectC = await j.fact(new Project(user, crypto.randomUUID()));
+
+  const projectsCreatedByUser = model.given(User).match(u =>
+    u.successors(Project, p => p.creator)
+  );
+
+  const projects = await j.query(projectsCreatedByUser, user);
 })();
