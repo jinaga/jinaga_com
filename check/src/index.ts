@@ -1,5 +1,5 @@
 // Define the FactType decorator
-import { buildModel, JinagaTest, ModelBuilder, User } from "jinaga";
+import { buildModel, JinagaTest, Label, LabelOf, ModelBuilder, User } from "jinaga";
 
 class Project {
   static Type = "Construction.Project" as const;
@@ -27,6 +27,11 @@ class ProjectName {
   type = ProjectName.Type;
 
   constructor(public project: Project, public value: string, public prior: ProjectName[]) {}
+
+  static of(project: LabelOf<Project>) {
+    return project.successors(ProjectName, name => name.project)
+      .notExists(name => name.successors(ProjectName, next => next.prior));
+  }
 }
 
 const constructionModel = (b: ModelBuilder) => b
@@ -115,8 +120,7 @@ const j = JinagaTest.create({
 
   // Query for current name (filtering out superseded versions)
   const currentNamesOfProject = model.given(Project).match(project =>
-    project.successors(ProjectName, name => name.project)
-      .notExists(name => name.successors(ProjectName, next => next.prior))
+    ProjectName.of(project)
   );
 
   const currentNames = await j.query(currentNamesOfProject, projectA);
@@ -138,3 +142,4 @@ const j = JinagaTest.create({
   const finalNames = await j.query(currentNamesOfProject, projectA);
   console.log("After merge (resolved):", finalNames.map(n => n.value));
 })();
+

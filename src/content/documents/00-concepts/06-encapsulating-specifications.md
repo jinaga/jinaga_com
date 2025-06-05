@@ -3,38 +3,30 @@ title: "Encapsulating Specifications"
 ---
 
 You can give a specification a name and attach it to a fact type.
-Use the `Relation` type to define a property.
+This is a convenient pattern for making specifications more readable, composable, and reusable.
 
-```csharp
-[FactType("Construction.Project")]
-public record Project(User creator, Guid id)
-{
-    public Relation<ProjectName> Names => Relation.Define(_ =>
-        this.Successors().OfType<ProjectName>(n => n.project)
-            .WhereCurrent((ProjectName next) => next.prior)
-    );
+Define a static function on the target fact type.
+Use the `LabelOf<T>` type decorator to take an input fact.
+By convention, the name of the function should be a preposition, like `in`, `on`, or `of`.
+
+```typescript
+class ProjectName {
+  static Type = "Construction.Project.Name" as const;
+  type = ProjectName.Type;
+
+  constructor(public project: Project, public value: string, public prior: ProjectName[]) {}
+
+  static of(project: LabelOf<Project>) {
+    return project.successors(ProjectName, name => name.project)
+      .notExists(name => name.successors(ProjectName, next => next.prior));
+  }
 }
-
-var namesOfProject = Given<Project>.Match(p =>
-    p.Names
-);
 ```
 
-Since the `Jinaga.User` type is defined in the Jinaga library, you need to use an extension member to add a relation to it.
+You can use this static function in place of the full specification.
 
-```csharp
-public static class UserExtensions
-{
-    extension(User user)
-    {
-        public Relation<Project> Projects => Relation.Define(_ =>
-            user.Successors().OfType<Project>(p => p.creator)
-                .WhereNotDeletedOrRestored((ProjectDeleted d) => d.project,
-                    (ProjectRestored r) => r.deleted));
-    }
-}
-
-var projectsCreatedByUser = Given<User>.Match(u =>
-    u.Projects
+```typescript
+const namesOfProject = model.given(Project).match(project =>
+  ProjectName.of(project)
 );
 ```
