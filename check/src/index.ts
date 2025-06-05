@@ -22,6 +22,13 @@ class ProjectRestored {
   constructor(public deleted: ProjectDeleted) {}
 }
 
+class ProjectName {
+  static Type = "Construction.Project.Name" as const;
+  type = ProjectName.Type;
+
+  constructor(public project: Project, public value: string, public prior: ProjectName[]) {}
+}
+
 const constructionModel = (b: ModelBuilder) => b
   .type(Project, m => m
     .predecessor("creator", User)
@@ -31,6 +38,10 @@ const constructionModel = (b: ModelBuilder) => b
   )
   .type(ProjectRestored, m => m
     .predecessor("deleted", ProjectDeleted)
+  )
+  .type(ProjectName, m => m
+    .predecessor("project", Project)
+    .predecessor("prior", ProjectName)
   )
   ;
 
@@ -91,4 +102,39 @@ const j = JinagaTest.create({
 
   const projectsAfterRestore = await j.query(projectsWithRestore, user);
   console.log("Projects (after restore filtering):", projectsAfterRestore.length);
+
+  console.log("\n=== Mutable Properties Pattern ===");
+
+  // Set initial project name
+  const projectAName1 = await j.fact(new ProjectName(projectA, "Cheyenne Expansion", []));
+  console.log("Set initial project name:", projectAName1.value);
+
+  // Change the name (create new fact with prior)
+  const projectAName2 = await j.fact(new ProjectName(projectA, "Rivercrest Expansion", [projectAName1]));
+  console.log("Changed project name:", projectAName2.value);
+
+  // Query for current name (filtering out superseded versions)
+  const currentNamesOfProject = model.given(Project).match(project =>
+    project.successors(ProjectName, name => name.project)
+      .notExists(name => name.successors(ProjectName, next => next.prior))
+  );
+
+  const currentNames = await j.query(currentNamesOfProject, projectA);
+  console.log("Current project names:", currentNames.map(n => n.value));
+
+  // Simulate concurrent edit (another name change from original)
+  const projectAName3 = await j.fact(new ProjectName(projectA, "Cheyenne Remodel", [projectAName1]));
+  console.log("Concurrent edit - created another name:", projectAName3.value);
+
+  // Query again - should show both concurrent values
+  const concurrentNames = await j.query(currentNamesOfProject, projectA);
+  console.log("After concurrent edit (conflict):", concurrentNames.map(n => n.value));
+
+  // Merge the conflicts by creating a new name that references both prior values
+  const projectAName4 = await j.fact(new ProjectName(projectA, "Rivercrest Remodel", concurrentNames));
+  console.log("Merged name:", projectAName4.value);
+
+  // Query one final time - should show only the merged result
+  const finalNames = await j.query(currentNamesOfProject, projectA);
+  console.log("After merge (resolved):", finalNames.map(n => n.value));
 })();

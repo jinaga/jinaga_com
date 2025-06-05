@@ -9,16 +9,24 @@ You would never be able to change it!
 Instead, you can define a successor that represents changing the project name.
 This is the pattern we use.
 
-```csharp
-[FactType("Construction.Project.Name")]
-public record ProjectName(Project project, string value, ProjectName[] prior);
+```typescript
+class ProjectName {
+  static Type = "Construction.Project.Name" as const;
+  type = ProjectName.Type;
+
+  constructor(
+    public project: Project,
+    public value: string,
+    public prior: ProjectName[]
+  ) { }
+}
 ```
 
 That `prior` array let's you overwrite a prior value.
 The first value will have an empty array, which means there is no prior value.
 
-```csharp
-ProjectName projectAName1 = await j.Fact(new ProjectName(projectA, "Cheyenne Expansion", []));
+```typescript
+const projectAName1 = await j.fact(new ProjectName(projectA, "Cheyenne Expansion", []));
 ```
 
 ```dot
@@ -35,8 +43,8 @@ digraph {
 
 To change the name, you create a new fact that has the old name as its prior value.
 
-```csharp
-ProjectName projectAName2 = await j.Fact(new ProjectName(projectA, "Rivercrest Expansion", [projectAName1]));
+```typescript
+const projectAName2 = await j.fact(new ProjectName(projectA, "Rivercrest Expansion", [projectAName1]));
 ```
 
 ```dot
@@ -56,27 +64,27 @@ digraph {
 
 To query for the current name, you look for a successor that does not appear in any list of `prior` values.
 
-```csharp
-var namesOfProject = Given<Project>.Match(p =>
-    p.Successors().OfType<ProjectName>(n => n.project)
-        .Where(p => !p.Successors().OfType<ProjectName>(next => next.prior).Any())
+```typescript
+const namesOfProject = model.given(Project).match(p =>
+  p.successors(ProjectName, n => n.project)
+    .notExists(n => n.successors(ProjectName, next => next.prior))
 );
 
-ImmutableList<ProjectName> names = await j.Query(namesOfProject, projectA);
+const names = await j.query(namesOfProject, projectA);
 
-names.Select(n => n.value)
+names.map(n => n.value)
 ```
 
-```
+```json
 [ "Rivercrest Expansion" ]
 ```
 
 Jinaga provides a shorthand for this pattern as well.
 
-```csharp
-var namesOfProject = Given<Project>.Match(p =>
-    p.Successors().OfType<ProjectName>(n => n.project)
-        .WhereCurrent((ProjectName next) => next.prior)
+```typescript
+const namesOfProject = model.given(Project).match(p =>
+  p.successors(ProjectName, n => n.project)
+    .notExists(n => n.successors(ProjectName, next => next.prior))
 );
 ```
 
@@ -85,8 +93,8 @@ var namesOfProject = Given<Project>.Match(p =>
 The reason that we use the `prior` array is to handle concurrent edits.
 If a user on a different device changes the name of the project, you will get a fork in the graph.
 
-```csharp
-ProjectName projectAName3 = await j.Fact(new ProjectName(projectA, "Cheyenne Remodel", [projectAName1]));
+```typescript
+const projectAName3 = await j.fact(new ProjectName(projectA, "Cheyenne Remodel", [projectAName1]));
 ```
 
 S
@@ -111,13 +119,13 @@ digraph {
 
 That will result in more than one successor matching the specification.
 
-```csharp
-ImmutableList<ProjectName> names = await j.Query(namesOfProject, projectA);
+```typescript
+const names = await j.query(namesOfProject, projectA);
 
-names.Select(n => n.value)
+names.map(n => n.value)
 ```
 
-```
+```json
 [ "Rivercrest Expansion", "Cheyenne Remodel" ]
 ```
 
@@ -127,8 +135,8 @@ It also shows you the candidate values for the project name.
 To merge, identify the correct value.
 Then create a new fact that sets the correct value and has all candidates in its `prior` array.
 
-```csharp
-ProjectName projectAName4 = await j.Fact(new ProjectName(projectA, "Rivercrest Remodel", names.ToArray()));
+```typescript
+const projectAName4 = await j.fact(new ProjectName(projectA, "Rivercrest Remodel", names));
 ```
 
 ```dot
@@ -155,12 +163,12 @@ digraph {
 
 And now only one successor matches the specification.
 
-```csharp
-ImmutableList<ProjectName> names = await j.Query(namesOfProject, projectA);
+```typescript
+const names = await j.query(namesOfProject, projectA);
 
-names.Select(n => n.value)
+names.map(n => n.value)
 ```
 
-```
+```json
 [ "Rivercrest Remodel" ]
 ```

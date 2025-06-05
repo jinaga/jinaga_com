@@ -34,13 +34,25 @@ class ProjectRestored {
     }
 }
 ProjectRestored.Type = "Construction.Project.Restored";
+class ProjectName {
+    constructor(project, value, prior) {
+        this.project = project;
+        this.value = value;
+        this.prior = prior;
+        this.type = ProjectName.Type;
+    }
+}
+ProjectName.Type = "Construction.Project.Name";
 const constructionModel = (b) => b
     .type(Project, m => m
     .predecessor("creator", jinaga_1.User))
     .type(ProjectDeleted, m => m
     .predecessor("project", Project))
     .type(ProjectRestored, m => m
-    .predecessor("deleted", ProjectDeleted));
+    .predecessor("deleted", ProjectDeleted))
+    .type(ProjectName, m => m
+    .predecessor("project", Project)
+    .predecessor("prior", ProjectName));
 const model = (0, jinaga_1.buildModel)(b => b
     .with(constructionModel));
 // Initialize Jinaga test client
@@ -79,4 +91,28 @@ const j = jinaga_1.JinagaTest.create({
         .notExists(d => d.successors(ProjectRestored, r => r.deleted))));
     const projectsAfterRestore = yield j.query(projectsWithRestore, user);
     console.log("Projects (after restore filtering):", projectsAfterRestore.length);
+    console.log("\n=== Mutable Properties Pattern ===");
+    // Set initial project name
+    const projectAName1 = yield j.fact(new ProjectName(projectA, "Cheyenne Expansion", []));
+    console.log("Set initial project name:", projectAName1.value);
+    // Change the name (create new fact with prior)
+    const projectAName2 = yield j.fact(new ProjectName(projectA, "Rivercrest Expansion", [projectAName1]));
+    console.log("Changed project name:", projectAName2.value);
+    // Query for current name (filtering out superseded versions)
+    const currentNamesOfProject = model.given(Project).match(project => project.successors(ProjectName, name => name.project)
+        .notExists(name => name.successors(ProjectName, next => next.prior)));
+    const currentNames = yield j.query(currentNamesOfProject, projectA);
+    console.log("Current project names:", currentNames.map(n => n.value));
+    // Simulate concurrent edit (another name change from original)
+    const projectAName3 = yield j.fact(new ProjectName(projectA, "Cheyenne Remodel", [projectAName1]));
+    console.log("Concurrent edit - created another name:", projectAName3.value);
+    // Query again - should show both concurrent values
+    const concurrentNames = yield j.query(currentNamesOfProject, projectA);
+    console.log("After concurrent edit (conflict):", concurrentNames.map(n => n.value));
+    // Merge the conflicts by creating a new name that references both prior values
+    const projectAName4 = yield j.fact(new ProjectName(projectA, "Rivercrest Remodel", concurrentNames));
+    console.log("Merged name:", projectAName4.value);
+    // Query one final time - should show only the merged result
+    const finalNames = yield j.query(currentNamesOfProject, projectA);
+    console.log("After merge (resolved):", finalNames.map(n => n.value));
 }))();
