@@ -31,7 +31,7 @@ Or to use Jinaga in a unit test, use an in-memory store:
 import { JinagaTest } from "jinaga";
 
 const testClient = JinagaTest.create({
-  user: "--- TEST USER ---",
+  user: new User("--- TEST USER ---")
 });
 ```
 

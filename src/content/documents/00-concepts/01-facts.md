@@ -52,3 +52,24 @@ digraph {
     "PYaXGGp+ksHg101LgyF/pB/OBQsixEhWZ9RDW9wxdwX/sVFWgyhpOZROgi4Gttdz1lWJ5Un0pJPJ5MvXEk1TCQ==" -> "Gs+Fo0xO04hUAteaPwrHZDmyovTwr7asnKsBrkRf3HE3M9nYIj4Sk7ZhR8YK5uMq1SMHPrQohtQNwo9B7whK0w==" [label=" creator"]
 }
 ```
+
+## Build a Model
+
+Before you can use these fact types in an application, you have to build a model.
+Start by adding all of your types to a model builder.
+
+```typescript
+const constructionModel = (b: ModelBuilder) => b
+  .type(Project, m => m
+    .predecessor("creator", User)
+  )
+  ;
+```
+
+Then you can compose a set of declarations into one model.
+
+```typescript
+const model = buildModel(b => b
+  .with(constructionModel)
+);
+```

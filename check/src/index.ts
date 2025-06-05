@@ -1,12 +1,5 @@
 // Define the FactType decorator
-import { JinagaTest } from "jinaga";
-
-class User {
-  static Type = "Jinaga.User" as const;
-  type = User.Type;
-
-  constructor(public publicKey: string) {}
-}
+import { buildModel, JinagaTest, ModelBuilder, User } from "jinaga";
 
 class Project {
   static Type = "Construction.Project" as const;
@@ -15,9 +8,19 @@ class Project {
   constructor(public creator: User, public id: string) {}
 }
 
+const constructionModel = (b: ModelBuilder) => b
+  .type(Project, m => m
+    .predecessor("creator", User)
+  )
+  ;
+
+const model = buildModel(b => b
+  .with(constructionModel)
+);
+
 // Initialize Jinaga test client
 const j = JinagaTest.create({
-  user: "--- TEST USER ---",
+  user: new User("--- TEST USER ---")
 });
 
 // Example usage
