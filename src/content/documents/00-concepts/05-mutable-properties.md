@@ -79,15 +79,6 @@ names.map(n => n.value)
 [ "Rivercrest Expansion" ]
 ```
 
-Jinaga provides a shorthand for this pattern as well.
-
-```typescript
-const namesOfProject = model.given(Project).match(p =>
-  p.successors(ProjectName, n => n.project)
-    .notExists(n => n.successors(ProjectName, next => next.prior))
-);
-```
-
 ## Concurrent Edits
 
 The reason that we use the `prior` array is to handle concurrent edits.

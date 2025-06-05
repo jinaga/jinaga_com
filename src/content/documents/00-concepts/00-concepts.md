@@ -20,8 +20,11 @@ For example, to store local state in IndexedDB, use this method:
 import { JinagaClient } from "jinaga";
 
 const j = JinagaClient.create({
-    httpEndpoint: "https://rep.jinaga.com/myreplicator",
-    indexedDb: "my-application-state"
+  // Connect to the Jinaga replicator that you host yourself, or that we host for you.
+  httpEndpoint: "https://rep.jinaga.com/myreplicator",
+
+  // Use the SQLite store to persist data locally.
+  indexedDb: "my-application-state"
 });
 ```
 
