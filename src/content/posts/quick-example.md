@@ -2,6 +2,28 @@
 title: "Quick Example"
 ---
 
+## Why a New Model?
+
+Most apps today follow a familiar pattern: store data in a central database, fetch it on the client, and send updates back to the server. That works — until it doesn't.
+
+What if users go offline?
+What if multiple people update the same record?
+What if those updates arrive out of order?
+
+Suddenly you’re dealing with sync logic, merge conflicts, and race conditions. Every app becomes a distributed systems problem.
+
+Jinaga takes a different approach.
+
+Instead of updating records in place, Jinaga lets you model your domain as a series of immutable facts. Each fact represents something that happened — a task created, a status changed, a user assigned. Facts never change; new facts are added as new events occur.
+
+From these facts, you define rules that describe what the current state should look like. Jinaga uses those rules to:
+-	Resolve updates from multiple users automatically
+-	Sync changes across devices
+-	Work seamlessly offline
+-	Track the full history of changes
+
+This model isn’t just for collaboration — it’s for resilience. It’s a way to build applications where data naturally converges across users and devices, without central coordination or complex conflict resolution.
+
 ### Facts
 
 A Jinaga data model is made of **facts**.
