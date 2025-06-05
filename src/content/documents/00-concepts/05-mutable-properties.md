@@ -88,8 +88,6 @@ If a user on a different device changes the name of the project, you will get a 
 const projectAName3 = await j.fact(new ProjectName(projectA, "Cheyenne Remodel", [projectAName1]));
 ```
 
-S
-
 ```dot
 digraph {
     rankdir=BT
