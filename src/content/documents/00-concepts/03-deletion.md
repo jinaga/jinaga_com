@@ -5,17 +5,33 @@ title: "Deletion"
 Facts are immutable, so you cannot really delete them.
 Instead, you can create a new fact that marks its predecessor as deleted.
 
-```csharp
-[FactType("Construction.Project.Deleted")]
-public record ProjectDeleted(Project project, DateTime deletedAt);
+```typescript
+class ProjectDeleted {
+  static Type = "Construction.Project.Deleted" as const;
+  type = ProjectDeleted.Type;
 
-var projectADeleted = await j.Fact(new ProjectDeleted(projectA, DateTime.UtcNow));
+  constructor(public project: Project, public deletedAt: Date) {}
+}
+
+const projectADeleted = await j.fact(new ProjectDeleted(projectA, new Date()));
+```
+
+Don't forget to include the `ProjectDeleted` type in your model:
+
+```typescript
+const constructionModel = (b: ModelBuilder) => b
+  .type(Project, m => m
+    .predecessor("creator", User)
+  )
+  .type(ProjectDeleted, m => m
+    .predecessor("project", Project)
+  );
 ```
 
 On its own, this fact does not do anything.
 
-```csharp
-ImmutableList<Project> projects = await j.Query(projectsCreatedByUser, user);
+```typescript
+const projects = await j.query(projectsCreatedByUser, user);
 ```
 
 ```dot
@@ -34,13 +50,13 @@ digraph {
 
 But if you include it in the specification, it will filter out the predecessor from the results.
 
-```csharp
-var projectsCreatedByUser = Given<User>.Match(u =>
-    u.Successors().OfType<Project>(p => p.creator)
-        .Where(p => !p.Successors().OfType<ProjectDeleted>(d => d.project).Any())
+```typescript
+const projectsCreatedByUser = model.given(User).match(u =>
+  u.successors(Project, p => p.creator)
+    .notExists(p => p.successors(ProjectDeleted, d => d.project))
 );
 
-ImmutableList<Project> projects = await j.Query(projectsCreatedByUser, user);
+const projects = await j.query(projectsCreatedByUser, user);
 ```
 
 ```dot
