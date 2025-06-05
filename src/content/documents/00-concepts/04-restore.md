@@ -5,23 +5,43 @@ title: "Restore"
 For completion, let's talk about restoring a deleted fact.
 You do this by defining yet another successor.
 
-```csharp
-[FactType("Construction.Project.Restored")]
-public record ProjectRestored(ProjectDeleted deleted);
+```typescript
+class ProjectRestored {
+  static Type = "Construction.Project.Restored" as const;
+  type = ProjectRestored.Type;
 
-await j.Fact(new ProjectRestored(projectADeleted));
+  constructor(public deleted: ProjectDeleted) {}
+}
+
+await j.fact(new ProjectRestored(projectADeleted));
+```
+
+Don't forget to include the `ProjectRestored` type in your model:
+
+```typescript
+const constructionModel = (b: ModelBuilder) => b
+  .type(Project, m => m
+    .predecessor("creator", User)
+  )
+  .type(ProjectDeleted, m => m
+    .predecessor("project", Project)
+  )
+  .type(ProjectRestored, m => m
+    .predecessor("deleted", ProjectDeleted)
+  )
+  ;
 ```
 
 Again, you need to add this fact to the specification for it to have an effect.
 
-```csharp
-var projectsCreatedByUser = Given<User>.Match(u =>
-    u.Successors().OfType<Project>(p => p.creator)
-        .Where(p => !p.Successors().OfType<ProjectDeleted>(d => d.project).Any(
-            d => !d.Successors().OfType<ProjectRestored>(r => r.deleted).Any()))
+```typescript
+const projectsCreatedByUser = model.given(User).match(u =>
+  u.successors(Project, p => p.creator)
+    .notExists(p => p.successors(ProjectDeleted, d => d.project)
+      .notExists(d => d.successors(ProjectRestored, r => r.deleted)))
 );
 
-ImmutableList<Project> projects = await j.Query(projectsCreatedByUser, user);
+const projects = await j.query(projectsCreatedByUser, user);
 ```
 
 ```dot
@@ -40,22 +60,9 @@ digraph {
 
 And it's back!
 
-### Pattern Extensions
+The query logic can be broken down as follows:
+- Find all projects created by the user
+- Exclude projects that have a `ProjectDeleted` successor
+- Unless that deletion has a `ProjectRestored` successor (using nested `notExists`)
 
-Because these are such common patterns, Jinaga provides some shorthand extensions to make them easier to write.
-You can find these in the `Jinaga.Patterns` namespace.
-
-```csharp
-using Jinaga.Patterns;
-
-var projectsCreatedByUserWithoutRestore = Given<User>.Match(u =>
-    u.Successors().OfType<Project>(p => p.creator)
-        .WhereNotDeleted((ProjectDeleted d) => d.project)
-);
-
-var projectsCreatedByUserWithRestore = Given<User>.Match(u =>
-    u.Successors().OfType<Project>(p => p.creator)
-        .WhereNotDeletedOrRestored((ProjectDeleted d) => d.project,
-            (ProjectRestored r) => r.deleted)
-);
-```
+This creates a complete delete/restore cycle where deleted items can be brought back into the active set.

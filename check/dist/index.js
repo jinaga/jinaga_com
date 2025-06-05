@@ -27,11 +27,20 @@ class ProjectDeleted {
     }
 }
 ProjectDeleted.Type = "Construction.Project.Deleted";
+class ProjectRestored {
+    constructor(deleted) {
+        this.deleted = deleted;
+        this.type = ProjectRestored.Type;
+    }
+}
+ProjectRestored.Type = "Construction.Project.Restored";
 const constructionModel = (b) => b
     .type(Project, m => m
     .predecessor("creator", jinaga_1.User))
     .type(ProjectDeleted, m => m
-    .predecessor("project", Project));
+    .predecessor("project", Project))
+    .type(ProjectRestored, m => m
+    .predecessor("deleted", ProjectDeleted));
 const model = (0, jinaga_1.buildModel)(b => b
     .with(constructionModel));
 // Initialize Jinaga test client
@@ -61,4 +70,13 @@ const j = jinaga_1.JinagaTest.create({
         .notExists(p => p.successors(ProjectDeleted, d => d.project)));
     const activeProjects = yield j.query(activeProjectsCreatedByUser, user);
     console.log("Active projects (after filtering deleted):", activeProjects.length);
+    // Restore projectA
+    const projectARestored = yield j.fact(new ProjectRestored(projectADeleted));
+    console.log("Restored project:", projectARestored);
+    // Query projects with deletion and restore filter
+    const projectsWithRestore = model.given(jinaga_1.User).match(u => u.successors(Project, p => p.creator)
+        .notExists(p => p.successors(ProjectDeleted, d => d.project)
+        .notExists(d => d.successors(ProjectRestored, r => r.deleted))));
+    const projectsAfterRestore = yield j.query(projectsWithRestore, user);
+    console.log("Projects (after restore filtering):", projectsAfterRestore.length);
 }))();

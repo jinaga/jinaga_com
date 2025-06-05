@@ -15,12 +15,22 @@ class ProjectDeleted {
   constructor(public project: Project, public deletedAt: Date) {}
 }
 
+class ProjectRestored {
+  static Type = "Construction.Project.Restored" as const;
+  type = ProjectRestored.Type;
+
+  constructor(public deleted: ProjectDeleted) {}
+}
+
 const constructionModel = (b: ModelBuilder) => b
   .type(Project, m => m
     .predecessor("creator", User)
   )
   .type(ProjectDeleted, m => m
     .predecessor("project", Project)
+  )
+  .type(ProjectRestored, m => m
+    .predecessor("deleted", ProjectDeleted)
   )
   ;
 
@@ -67,4 +77,18 @@ const j = JinagaTest.create({
 
   const activeProjects = await j.query(activeProjectsCreatedByUser, user);
   console.log("Active projects (after filtering deleted):", activeProjects.length);
+
+  // Restore projectA
+  const projectARestored = await j.fact(new ProjectRestored(projectADeleted));
+  console.log("Restored project:", projectARestored);
+
+  // Query projects with deletion and restore filter
+  const projectsWithRestore = model.given(User).match(u =>
+    u.successors(Project, p => p.creator)
+      .notExists(p => p.successors(ProjectDeleted, d => d.project)
+        .notExists(d => d.successors(ProjectRestored, r => r.deleted)))
+  );
+
+  const projectsAfterRestore = await j.query(projectsWithRestore, user);
+  console.log("Projects (after restore filtering):", projectsAfterRestore.length);
 })();

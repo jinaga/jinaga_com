@@ -25,7 +25,8 @@ const constructionModel = (b: ModelBuilder) => b
   )
   .type(ProjectDeleted, m => m
     .predecessor("project", Project)
-  );
+  )
+  ;
 ```
 
 On its own, this fact does not do anything.
