@@ -54,7 +54,8 @@
   "devDependencies": {
     "prettier": "^2.2.1",
     "webpack": "^5.94.0",
-    "worker-loader": "^3.0.8"
+    "worker-loader": "^3.0.8",
+    "baseline-browser-mapping": "latest"
   },
   "engines": {
     "node": ">=18.0.0"
