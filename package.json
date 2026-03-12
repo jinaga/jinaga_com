@@ -5,7 +5,8 @@
   "version": "0.1.0",
   "author": "Michael L Perry <michael@qedcode.com>",
   "overrides": {
-    "@swc/helpers": "0.4.35"
+    "@swc/helpers": "0.4.35",
+    "msgpackr": "1.9.3"
   },
   "dependencies": {
     "gatsby": "^5.15.0",
