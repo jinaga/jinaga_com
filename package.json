@@ -52,7 +52,6 @@
     "clean": "gatsby clean"
   },
   "devDependencies": {
-    "baseline-browser-mapping": "^2.10.0",
     "prettier": "^2.2.1",
     "webpack": "^5.94.0",
     "worker-loader": "^3.0.8",
